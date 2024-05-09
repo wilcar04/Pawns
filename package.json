@@ -1,0 +1,43 @@
+{
+  "name": "customers-portal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "@types/node": "20.2.6",
+    "@types/react": "18.2.9",
+    "@types/react-dom": "18.2.4",
+    "async-mutex": "^0.4.0",
+    "autoprefixer": "10.4.14",
+    "chart.js": "^4.3.0",
+    "dayjs": "^1.11.8",
+    "eslint": "8.42.0",
+    "eslint-config-next": "13.4.4",
+    "html-to-image": "^1.11.11",
+    "jwt-decode": "^3.1.2",
+    "next": "13.4.4",
+    "next-pwa": "^5.6.0",
+    "postcss": "8.4.24",
+    "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-currency-input-field": "^3.6.11",
+    "react-datepicker": "^4.16.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.44.3",
+    "react-hot-toast": "^2.4.1",
+    "react-phone-input-2": "^2.15.1",
+    "react-redux": "^8.1.0",
+    "tailwindcss": "3.3.2",
+    "typescript": "5.1.3"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^13.4.8",
+    "@types/react-datepicker": "^4.11.2"
+  }
+}
