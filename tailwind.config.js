@@ -11,6 +11,9 @@ export default {
         rojo: '#FF3131',
         azulClaro: '#7BC9C0',
         azulOscuro: '#19055B'
+      },
+      fontFamily: {
+        'poppins': ['Poppins', 'sans-serif']
       }
     },
   },
