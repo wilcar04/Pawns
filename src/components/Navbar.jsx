@@ -34,7 +34,9 @@ export default function Navbar(){
             </div>
 
             <div className="flex items-center relative justify-end text-black p-2 font-montserrat ml-auto mr-4">
+                <Link to="/Car">
                 <FaShoppingCart className='size-8 mr-4' />
+                </Link>
                 <FaCircleUser className='size-8'/>
             {/* <div className="absolute right-0 w-48 bg-white border rounded-md shadow-lg opacity-0 hover:opacity-100 transition duration-300">
                 <div className='cursor-pointer flex block-4 py-2 text-gray-800 hover:bg-gray-200' onClick={logout}>

@@ -5,7 +5,7 @@ export default function Card(){
         <div class="card contenedor" // creamos la card que envuelve la imagen izquierda y texto derecha
         > 
 
-        <img src='favicon1.png' style={{width:"200px" ,height:"200px"}} //imgen en izquierda
+        <img src='../../public/favicon1.png' style={{width:"200px" ,height:"200px"}} //imgen en izquierda
         />
      
         <div className='derecha ' style={{margin:"40px"}} // conjunto de info en la derecha dividido en dos
