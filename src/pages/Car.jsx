@@ -26,6 +26,11 @@ export default function Car(){
     }, []);
 
     let variableList = [];
+    let Productlist = [["0","redmi cuatro mega plus ultra","800000","30000","https://9822309932"],
+    ["1","1redmi cuatro mega plus ultra","800000","0","https://9822309932"],
+    ["2","2redmi cuatro mega plus ultra","800000","30000","https://9822309932"],
+    ["3","3redmi cuatro mega plus ultra","800000","30000","https://9822309932"],
+    ["4","4redmi cuatro mega plus ultra","800000","30000","https://9822309932"]]
   
     for(let i = 1; i <= 5; i++){
       const [count, setCount] = useState(0);
@@ -45,13 +50,13 @@ export default function Car(){
              <div class="izquierda" style={{width:"70%"}}>
              
              {variableList.map((item, index) => ( // iteramos el comonente card segun el numero de contadores
-              <Card key={index} count={item[0]} setCount={item[1]} />
+              <Card key={index} count={item[0]} setCount={item[1]} Pdprofile={Productlist[index]} />
 ))}
 
              </div>
              <div class="derecha" style={{width:"30px"}}>
                 
-                <Factura></Factura> {variableList[3][0]} 
+                <Factura></Factura>  
              
              
              </div>
