@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function Card(){
+const Card= ({ count, setCount }) => {
+  const increment = () => {
+    setCount(count + 1);
+  };
+
+  const decrement = () => {
+    setCount(count - 1);
+  };
+
+
     return (
         <div class="card contenedor" // creamos la card que envuelve la imagen izquierda y texto derecha
         > 
@@ -14,9 +23,9 @@ export default function Card(){
                 <p style={{fontSize:"20px"}} >Apple iPhone 13 (128 GB) Meia-noite - Distribuidor Autorizado</p>
                 <p style={{fontSize:"12px"}} >$877.000</p>
                 <div class="input-group center" style={{width:"100px"}}>
-                    <button id="decrement">-</button>
-                    <input style={{width:"50px"}} type="number" id="input" value="0" readonly/>
-                    <button id="increment">+</button>
+                <button onClick={increment}> + </button>
+                <input style={{width:"50px"}} type="number" id="input" value={count} readonly/>
+                <button onClick={decrement}> - </button>
                 </div>
                 <p  style={{color:"green"}}>ENVIO GRATIS</p>
                 <p >EN stock</p>
@@ -29,3 +38,5 @@ export default function Card(){
 
     )
 }
+
+export default Card;
