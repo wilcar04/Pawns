@@ -1,6 +1,5 @@
 import { Link, NavLink } from "react-router-dom"
-import { FaMapMarkerAlt, FaQuestionCircle, FaShoppingCart } from "react-icons/fa";
-import { FaCircleUser } from "react-icons/fa6";
+import { FaMapMarkerAlt, FaQuestionCircle } from "react-icons/fa";
 import navLogo from '../assets/navLogo.png'
 import facebookIcon from '../assets/facebookIcon.png'
 import instagramIcon from '../assets/instagramIcon.png'
