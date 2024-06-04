@@ -28,22 +28,22 @@ const products = [
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <>
-      <Route path="/Car" element={<Car />} />
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
-      <Route path="/EmpezarVender" element={<EmpezarVender />} />
-      <Route path="/MisEmpeños" element={<MisEmpeños />} />
-      <Route path="/MisCompras" element={<MisCompras />} />
-      <Route path="/EmpeñosActivos" element={<EmpeñosActivos />} />
-      <Route path="/about" element={<About />} />
 
-      
       <Route path="/" element={<Layout products={products} />}>
+        <Route path="/Car" element={<Car />} />
+        <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
+        <Route path="/EmpezarVender" element={<EmpezarVender />} />
+        <Route path="/MisEmpeños" element={<MisEmpeños />} />
+        <Route path="/MisCompras" element={<MisCompras />} />
+        <Route path="/EmpeñosActivos" element={<EmpeñosActivos />} />
+        <Route path="/about" element={<About />} />
         <Route path="pawnRequest" element={<PawnRequest />}/>
         <Route index element={<Landing products={products} />} />
         <Route path="product/:id" element={<ProductDetails products={products} />} />
       </Route>
+      
     </>
   ))
 
