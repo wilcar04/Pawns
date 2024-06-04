@@ -15,6 +15,8 @@ import ProductDetails from './pages/ProductDetails';
 import './App.css';
 import About from './pages/About'
 import Car from "./pages/Car"
+import PawnRequest from './pages/Pawn_request'
+
 
 const products = [
     { name: 'Pantalones Levis', brand: "Levi's", price: '$120.000 COP', discount: '$80.000 COP', img: 'pantalones_Levis.jpg' },
@@ -35,10 +37,12 @@ function App() {
       <Route path="/MisCompras" element={<MisCompras />} />
       <Route path="/EmpeñosActivos" element={<EmpeñosActivos />} />
       <Route path="/about" element={<About />} />
+
       
       <Route path="/" element={<Layout products={products} />}>
-          <Route index element={<Landing products={products} />} />
-          <Route path="product/:id" element={<ProductDetails products={products} />} />
+        <Route path="pawnRequest" element={<PawnRequest />}/>
+        <Route index element={<Landing products={products} />} />
+        <Route path="product/:id" element={<ProductDetails products={products} />} />
       </Route>
     </>
   ))
