@@ -12,6 +12,7 @@ import MisEmpeños from './pages/MisEmpeños'
 import MisCompras from './pages/MisCompras'
 import EmpeñosActivos from './pages/EmpeñosActivos'
 
+import About from './pages/About'
 
 import './App.css'
 
@@ -27,7 +28,7 @@ function App() {
       <Route path="/EmpeñosActivos" element={<EmpeñosActivos />} />
       
       <Route path="/" element={<Layout />}>
-        <Route index element={<Landing />}/>
+        <Route index element={<About />}/>
       </Route>
     </>
   ))
