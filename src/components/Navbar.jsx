@@ -1,9 +1,10 @@
 import { Link, NavLink } from "react-router-dom"
-import { FaMapMarkerAlt, FaQuestionCircle, FaShoppingCart } from "react-icons/fa";
-import { FaCircleUser } from "react-icons/fa6";
+import { FaMapMarkerAlt, FaQuestionCircle } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import navLogo from '../assets/navLogo.png'
 import facebookIcon from '../assets/facebookIcon.png'
 import instagramIcon from '../assets/instagramIcon.png'
+import UserMenu from './UserMenu'
 
 export default function Navbar(){
     return(
@@ -33,16 +34,12 @@ export default function Navbar(){
                 </div>
             </div>
 
-            <div className="flex items-center relative justify-end text-black p-2 font-montserrat ml-auto mr-4">
-                <FaShoppingCart className='size-8 mr-4' />
-                <FaCircleUser className='size-8'/>
-            {/* <div className="absolute right-0 w-48 bg-white border rounded-md shadow-lg opacity-0 hover:opacity-100 transition duration-300">
-                <div className='cursor-pointer flex block-4 py-2 text-gray-800 hover:bg-gray-200' onClick={logout}>
-                <ChevronDoubleLeftIcon className='size-6 mr-4'/>
-                <span> Cerrar sesión</span>
-                
-                </ div>
-            </div> */}  
+            <div className="inline-flex items-center mx-5 gap-x-5">
+                <Link to="">
+                    <FaShoppingCart className='size-7 hover:text-gray-500' />
+                </Link>
+                <UserMenu />
+
             </div>
         </nav>
     )
