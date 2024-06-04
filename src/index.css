@@ -7,3 +7,67 @@
         font-family: 'Poppins', sans-serif;
     }
 }
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.3), 4px 7px 15px rgba(0, 0, 0, 0.2),
+      9px 15px 25px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    width: "10px";
+    max-width: 360px;
+  }
+  
+
+.center {
+    margin: 0 auto; /*centra horizontalmente*/
+    text-align: center; /*centra el contenido dentro del div*/
+  }
+  .izquierda { /*junto a contenedor y derecha divide la pantalla en dos*/
+    flex: 2;
+    float: left;
+  }
+  
+  .derecha {
+    flex: 1;
+    float: right;
+  }
+  .contenedor {
+    display: flex;
+  }
+
+  .card { /* crea la tarjeta de producto en carrito*/
+    border-radius: 10px;
+    background-color: rgb(230, 230, 230);
+    margin: 40px;
+  }
+
+.navbar { /*estilos dinamicos para la barra de navegacon*/
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0 ;
+    background-color: white;
+    color: black;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 10%;
+    width: 100%;
+  }
+
+
+  .grow {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 40px;
+    margin-right: 10px;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    column-gap: 8px;
+    font-size: 70%;
+
+  }

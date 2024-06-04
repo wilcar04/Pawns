@@ -35,7 +35,7 @@ export default function Navbar(){
             </div>
 
             <div className="inline-flex items-center mx-5 gap-x-5">
-                <Link to="">
+                <Link to="/Car">
                     <FaShoppingCart className='size-7 hover:text-gray-500' />
                 </Link>
                 <UserMenu />

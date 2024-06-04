@@ -14,6 +14,7 @@ import EmpeñosActivos from './pages/EmpeñosActivos'
 import ProductDetails from './pages/ProductDetails';
 import './App.css';
 import About from './pages/About'
+import Car from "./pages/Car"
 
 const products = [
     { name: 'Pantalones Levis', brand: "Levi's", price: '$120.000 COP', discount: '$80.000 COP', img: 'pantalones_Levis.jpg' },
@@ -25,6 +26,7 @@ const products = [
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <>
+      <Route path="/Car" element={<Car />} />
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
