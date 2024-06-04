@@ -1,18 +1,20 @@
 import { Fragment } from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { FaCircleUser } from 'react-icons/fa6'
-import { FaRegCalendarMinus } from 'react-icons/fa'
-import { BsArrowLeftRight } from "react-icons/bs";
-import { IoBagOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
 import { SlLogout } from "react-icons/sl";
 import { Link } from 'react-router-dom';
+import ClientMenuOptions from './ClientMenuOptions';
+import AdminMenuOptions from './AdminMenuOptions';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Example() {
+
+  const isClient = false
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -35,57 +37,13 @@ export default function Example() {
             <h6 className='block px-4 pt-2 text-sm text-gray-900'>Nombre de usuario</h6>
             <p className='block px-4 pb-2 text-xs text-gray-700'>Correo@gmail.com</p>
           </div>
-          <div className="py-1">
-            <MenuItem>
-              {({ focus }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                    <div className="inline-flex items-center gap-x-2">
-                        <FaRegCalendarMinus className='size-4'/>
-                        <span>Mis solicitudes</span>
-                    </div>
-                </a>
-              )}
-            </MenuItem>
-            <MenuItem>
-              {({ focus }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                    <div className="inline-flex items-center gap-x-2">
-                        <BsArrowLeftRight className='size-4'/>
-                        <span>Mis empeños</span>
-                    </div>
-                </a>
-              )}
-            </MenuItem>
-            <MenuItem>
-              {({ focus }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                    <div className="inline-flex items-center gap-x-2">
-                        <IoBagOutline className='size-4'/>
-                        <span>Mis compras</span>
-                    </div>
-                  
-                </a>
-              )}
-            </MenuItem>
-          </div>
+
+          { isClient ? 
+            <ClientMenuOptions />
+            :
+            <AdminMenuOptions />
+          }
+
           <div className="py-1">
             <MenuItem>
               {({ focus }) => (
@@ -104,6 +62,7 @@ export default function Example() {
               )}
             </MenuItem>
           </div>
+            
           <div className="py-1">
             <MenuItem>
               {({ focus }) => (
