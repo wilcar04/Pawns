@@ -2,6 +2,7 @@ import { MenuItem } from '@headlessui/react'
 import { FaRegCalendarMinus } from 'react-icons/fa'
 import { BsArrowLeftRight } from "react-icons/bs";
 import { IoBagOutline } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -13,8 +14,8 @@ export default function ClientMenuOptions(){
         <div className="py-1">
         <MenuItem>
               {({ focus }) => (
-                <a
-                  href="#"
+                <Link
+                  to="#"
                   className={classNames(
                     focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -24,13 +25,13 @@ export default function ClientMenuOptions(){
                         <FaRegCalendarMinus className='size-4'/>
                         <span>Mis solicitudes</span>
                     </div>
-                </a>
+                </Link>
               )}
             </MenuItem>
             <MenuItem>
               {({ focus }) => (
-                <a
-                  href="#"
+                <Link
+                  to="/MisEmpeños"
                   className={classNames(
                     focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -40,13 +41,13 @@ export default function ClientMenuOptions(){
                         <BsArrowLeftRight className='size-4'/>
                         <span>Mis empeños</span>
                     </div>
-                </a>
+                </Link>
               )}
             </MenuItem>
             <MenuItem>
               {({ focus }) => (
-                <a
-                  href="#"
+                <Link
+                  to="/MisCompras"
                   className={classNames(
                     focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -57,7 +58,7 @@ export default function ClientMenuOptions(){
                         <span>Mis compras</span>
                     </div>
                   
-                </a>
+                </Link>
               )}
             </MenuItem>
           </div>

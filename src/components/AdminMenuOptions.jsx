@@ -14,8 +14,8 @@ export default function ClientMenuOptions(){
             <div className="py-1">
                 <MenuItem>
                     {({ focus }) => (
-                        <a
-                        href="#"
+                        <Link
+                        to="#"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -25,14 +25,14 @@ export default function ClientMenuOptions(){
                                 <RiLoader2Fill  className='size-4'/>
                                 <span>Empeños en proceso</span>
                             </div>
-                        </a>
+                        </Link>
                     )}
                 </MenuItem>
 
                 <MenuItem>
                     {({ focus }) => (
-                        <a
-                        href="#"
+                        <Link
+                        to="#"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -42,7 +42,7 @@ export default function ClientMenuOptions(){
                                 <FaRegCalendarMinus className='size-4'/>
                                 <span>Empeños activos</span>
                             </div>
-                        </a>
+                        </Link>
                     )}
                 </MenuItem>
             </div>
@@ -50,8 +50,8 @@ export default function ClientMenuOptions(){
             <div className="py-1">
                 <MenuItem>
                     {({ focus }) => (
-                        <a
-                        href="#"
+                        <Link
+                        to="#"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -62,13 +62,13 @@ export default function ClientMenuOptions(){
                                 <span>Solicitudes de empeños</span>
                             </div>
                         
-                        </a>
+                        </Link>
                     )}
                 </MenuItem>
                 <MenuItem>
                     {({ focus }) => (
-                        <a
-                        href="#"
+                        <Link
+                        to="#"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -79,7 +79,7 @@ export default function ClientMenuOptions(){
                                 <span>Solicitudes de venta</span>
                             </div>
                         
-                        </a>
+                        </Link>
                     )}
                 </MenuItem>
                 

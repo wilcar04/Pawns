@@ -12,7 +12,7 @@ export default function Footer(){
             </div>
 
             <div className="ml-16 inline-flex items-center gap-x-8 text-sm">
-                <Link className=" hover:text-gray-500">Sobre nosotros</Link>
+                <Link to="/about" className=" hover:text-gray-500">Sobre nosotros</Link>
                 <Link className=" hover:text-gray-500">Términos</Link>
                 <Link className=" hover:text-gray-500">PQR</Link>
             </div>

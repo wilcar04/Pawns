@@ -7,7 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        naranja: '#EB9F2C',
+        firstColor: '#5E1414',
+        secondColor: '#420C0C',
+        softColor: '#DFAFA4',
+        neutralColor: '#AD8786',
+        brilliantColor: '#F4D3CA',
         rojo: '#FF3131',
         azulClaro: '#7BC9C0',
         azulOscuro: '#19055B'
