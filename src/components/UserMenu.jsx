@@ -8,6 +8,7 @@ import ClientMenuOptions from './ClientMenuOptions';
 import AdminMenuOptions from './AdminMenuOptions';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
@@ -56,10 +57,12 @@ export default function Example() {
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                    <div className="inline-flex items-center gap-x-2">
-                        <CiUser className='size-5'/>
-                        <span>Mi perfil</span>
+                    <Link to="/CustomerInformation">
+                    <div className="inline-flex items-center gap-x-2 cursor-pointer">
+                      <CiUser className="size-5" />
+                      <span>Mi perfil</span>
                     </div>
+                  </Link>
                 </Link>
               )}
             </MenuItem>
