@@ -1,8 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import hombreEnCarrito from '../assets/hombre_en_carrito.png'; // Asegúrate de que la ruta es correcta
 import logo from '../assets/pawns_blanca.png'; // Importa el logo de tu carpeta assets
 import { Link } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import { useNavigate } from 'react-router-dom';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { BsExclamationTriangle } from 'react-icons/bs';
+import { logIn } from '../api/queries'
+ 
 function LoginForm() {
+  const [ form, setForm ] = useState({
+    email: '',
+    password: ''
+  })
+
+  function handleChange(event){
+    const { name, value } = event.target
+    setForm( prevForm => {
+      return {
+        ...prevForm,
+        [name]: value
+      }
+    })
+  }
+
+  const navigate = useNavigate();
+  const signIn = useSignIn();
+  const isAuthenticated = useIsAuthenticated();
+
+  const { isError, isPending, mutate: checkLogIn } = useMutation({
+    mutationFn: () => logIn(form.email, form.password),
+    onSuccess: (data) => handleSuccess(data),
+    onError: (e) => console.log(e)
+  });
+
+  useEffect(() => {
+    if (isAuthenticated){
+      navigate('/')
+    }
+  }, [])
+
+  function handleSuccess(data) {
+    signIn({
+      auth: {
+        token: data.token,
+        type: 'Bearer'
+      },
+      userState: {
+          id: data.data.idusuario,
+          name: data.data.nombre,
+          email: data.data.correo_electronico,
+          type: data.data.tipo
+      }
+    });
+
+    navigate('/');
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    checkLogIn()
+  };
+
+
   return (
     <div className="flex min-h-screen bg-white"> {/* Fondo general blanco */}
       {/* Div for the image and logo */}
@@ -27,7 +88,9 @@ function LoginForm() {
                 type="email"
                 id="email"
                 className="mt-1 block w-full px-4 py-5 text-sm border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm rounded-sm"
-                placeholder="xxx@gmail.com"
+                onChange={handleChange}
+                name="email"
+                value={form.email}
               />
             </div>
             <div className="mb-6 text-left">
@@ -38,14 +101,25 @@ function LoginForm() {
                 type="password"
                 id="password"
                 className="mt-1 block w-full px-4 py-5 text-sm border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm rounded-sm"
-                placeholder="************"
+                onChange={handleChange}
+                name="password"
+                value={form.password}
               />
             </div>
             <div className="mb-8">
+              { isError && 
+                <div className='flex content-center'>
+                  <BsExclamationTriangle color='red' className='size-5 mr-4'/>
+                  <span className='text-red-700'>Usuario o contraseña incorrectos</span>
+                </div>
+              }
+
               <button
-                className="text-white font-bold py-5 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                className={"mt-4 text-white font-bold py-5 px-4 rounded focus:outline-none focus:shadow-outline w-full " + (isPending ? "opacity-30" : "hover:shadow hover:shadow-secondColor")}
                 type="submit"
                 style={{ backgroundColor: "#AD8786" }}
+                disabled={isPending}
+                onClick={handleSubmit}
               >
                 Ingresar
               </button>

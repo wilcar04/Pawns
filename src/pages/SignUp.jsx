@@ -1,9 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import mujerConTableta from '../assets/mujer_en_pagina.png';  // Asegúrate de que la ruta es correcta
-import logo from '../assets/pawns_blanca.png'; // Asegúrate de que la ruta del logo es correcta
+import mujerConTableta from '../assets/mujer_en_pagina.png';
+import logo from '../assets/pawns_blanca.png';
+import { useNavigate } from 'react-router-dom';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import { useMutation } from '@tanstack/react-query';
+import { signUp } from '../api/queries';
 
 function SignUp() {
+  const navigate = useNavigate();
+  const isAuthenticated = useIsAuthenticated();
+
+  const [ form, setForm ] = useState({
+    name: '',
+    email: '',
+    password: '',
+    genre: 'masculino',
+    birthdate: ''
+  })
+
+  const { isError, isPending, mutate: mutateSignUp } = useMutation({
+    mutationFn: () => signUp(form.name, form.email, form.password, form.genre, form.birthdate, '+57 320 0384548'), // ! Telefono quemado
+    onSuccess: () => navigate('/'),
+    onError: (e) => console.log(e)
+  });
+
+  function handleChange(event){
+    const { name, value } = event.target
+    setForm( prevForm => {
+      return {
+        ...prevForm,
+        [name]: value
+      }
+    })
+  }
+
+  function handleSubmit(event){
+    event.preventDefault();
+    mutateSignUp();
+  }
+
+  useEffect(() => {
+    if (isAuthenticated){
+      navigate('/')
+    }
+  }, [])
+
   return (
     <div className="flex min-h-screen bg-white">
       {/* Div for the image with logo */}
@@ -32,9 +74,12 @@ function SignUp() {
                 type="text"
                 id="fullName"
                 className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
-                placeholder="Paulo Coelho"
+                onChange={handleChange}
+                name="name"
+                value={form.name}
               />
             </div>
+
             <div className="mb-4 text-left">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email:
@@ -43,9 +88,12 @@ function SignUp() {
                 type="email"
                 id="email"
                 className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
-                placeholder="xxx@email.com"
+                onChange={handleChange}
+                name="email"
+                value={form.email}
               />
             </div>
+
             <div className="mb-4 text-left">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Contraseña:
@@ -54,9 +102,12 @@ function SignUp() {
                 type="password"
                 id="password"
                 className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
-                placeholder="************"
+                onChange={handleChange}
+                name="password"
+                value={form.password}
               />
             </div>
+
             <div className="mb-4 text-left">
               <label htmlFor="gender" className="block text-sm font-medium text-gray-700">
                 Género:
@@ -64,12 +115,16 @@ function SignUp() {
               <select
                 id="gender"
                 className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
+                onChange={handleChange}
+                name="genre"
+                value={form.genre}
               >
-                <option>Masculino</option>
-                <option>Femenino</option>
-                <option>Otro</option>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+                <option value="otro">Otro</option>
               </select>
             </div>
+
             <div className="mb-6 text-left">
               <label htmlFor="birthdate" className="block text-sm font-medium text-gray-700">
                 Fecha de nacimiento:
@@ -78,15 +133,20 @@ function SignUp() {
                 type="date"
                 id="birthdate"
                 className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
-                defaultValue="2024-12-12"
+                onChange={handleChange}
+                name="birthdate"
+                value={form.birthdate}
               />
             </div>
+
             <button
-              className="w-full py-3 px-4 bg-5E1414 text-white rounded-md hover:bg-red-700 focus:outline-none"
+              className={"w-full py-3 px-4 bg-5E1414 text-white rounded-md hover:bg-red-700 focus:outline-none " + (isPending ? "opacity-30": "hover:shadow hover:shadow-secondColor")}
               type="submit"
               style={{ backgroundColor: "#5E1414" }}  // Updated button background color
+              onClick={ handleSubmit }
+              disabled={ isPending }
             >
-              Continua
+              Continuar
             </button>
           </form>
         </div>
