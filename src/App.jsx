@@ -24,19 +24,12 @@ import MisEmpeños from './pages/MisEmpeños'
 import MisCompras from './pages/MisCompras'
 import EmpeñosActivos from './pages/EmpeñosActivos'
 import ProductDetails from './pages/ProductDetails';
-import './App.css';
 import About from './pages/About'
 import Car from "./pages/Car"
 import PawnRequest from './pages/Pawn_request'
-
-
-
-const products = [
-    { name: 'Pantalones Levis', brand: "Levi's", price: '$120.000 COP', discount: '$80.000 COP', img: 'pantalones_Levis.jpg' },
-    { name: 'Apple iPhone 8 128Gb', brand: 'Apple', price: '$1.800.000 COP', discount: '$1.200.000 COP', img: 'apple_iphone_8.jpg' },
-    { name: 'Samsung Smart TV', brand: 'Samsung', price: '$1.800.000 COP', discount: '$1.200.000 COP', img: 'samsung_Smart_TV.jpg' },
-    { name: 'Gafas de Sol Negro Oro Gucci', brand: 'Gucci', price: '$13.000.000 COP', discount: '$9.200.000 COP', img: 'gafas_Gucci_Oro.jpg' }
-];
+import AllProducts from './pages/AllProducts';
+import AddProduct from './pages/AddProduct';
+import EditProduct from './pages/EditProduct';
 
 function App() {
   
@@ -45,7 +38,7 @@ function App() {
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/" element={<Layout products={products} />}>
+      <Route path="/" element={<Layout />}>
         <Route path="/Car" element={<Car />} />
         <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
@@ -57,8 +50,11 @@ function App() {
         <Route path="/OwnerInformation" element={<OwnerInformation />} />
         <Route path="/MetodoPago" element={<MetodoPago />} />
         <Route path="pawnRequest" element={<PawnRequest />}/>
-        <Route index element={<Landing products={products} />} />
-        <Route path="product/:id" element={<ProductDetails products={products} />} />
+        <Route path="/all-products" element={<AllProducts />} />
+        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/edit-product/:index" element={<EditProduct />} />
+        <Route index element={<Landing />} />
+        <Route path="product/:id" element={<ProductDetails />} />
       </Route>
       
     </>
