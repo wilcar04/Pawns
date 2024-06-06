@@ -180,3 +180,53 @@ export async function createProduct(name, description, category, image){
         return [];
     }
 }
+
+
+// *    Offer
+
+
+// Crear oferta de empeño
+export async function createOfferPawn(idUser, name, description, category, price, image){
+    const params = { 
+        nombre: name,
+        descripcion: description,
+        categoria: category,
+        precio: price,
+        id_usuario: idUser
+    };
+    const formData = new FormData();
+    formData.append('image', image);
+    try{
+        const response = await api.post(`/offer/MakePawnByClient`, formData, {
+            params: params
+        });
+        return response.data;
+    }
+    catch (error) {
+        console.error('Hubo un problema con la solicitud fetch:', error);
+        return [];
+    }
+}
+
+// Crear oferta de venta
+export async function createOfferSell(idUser, name, description, category, price, image){
+    const params = { 
+        nombre: name,
+        descripcion: description,
+        categoria: category,
+        precio: price,
+        id_usuario: idUser
+    };
+    const formData = new FormData();
+    formData.append('image', image);
+    try{
+        const response = await api.post(`/offer/MakeSellByClient`, formData, {
+            params: params
+        });
+        return response.data;
+    }
+    catch (error) {
+        console.error('Hubo un problema con la solicitud fetch:', error);
+        return [];
+    }
+}

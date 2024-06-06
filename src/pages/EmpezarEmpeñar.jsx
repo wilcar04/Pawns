@@ -15,9 +15,9 @@ const RedStripe = () => {
 const ButtonSingInRegister = () => {
   return (
     <div className='mt-5'>
-      <a href='/login' className='text-azulOscuro'>Iniciar sesion </a>
+      <a href='/login' className='text-azulOscuro'>Inicia sesión </a>
       o
-      <a href='SingUp' className='text-rojo'> registrate</a> 
+      <a href='SingUp' className='text-rojo'> regístrate</a> 
       
     </div>
   )

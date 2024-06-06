@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { useMutation } from '@tanstack/react-query';
 import { signUp } from '../api/queries';
+import { BsExclamationTriangle } from 'react-icons/bs';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -138,6 +139,13 @@ function SignUp() {
                 value={form.birthdate}
               />
             </div>
+
+            { isError && 
+                <div className='flex content-center'>
+                  <BsExclamationTriangle color='red' className='size-5 mr-4'/>
+                  <span className='text-red-700'>Ingresa todos los campos correctamente</span>
+                </div>
+              }
 
             <button
               className={"w-full py-3 px-4 bg-5E1414 text-white rounded-md hover:bg-red-700 focus:outline-none " + (isPending ? "opacity-30": "hover:shadow hover:shadow-secondColor")}
