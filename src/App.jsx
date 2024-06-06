@@ -5,6 +5,9 @@ import { Route,
 import Landing from './pages/Landing'
 import SignUp from './pages/SignUp'
 import LogIn from './pages/LogIn'
+import CustomerInformation from './pages/CustomerInformation'
+import OwnerInformation from './pages/OwnerInformation'
+import MetodoPago from './pages/MetodoPago'
 import Layout from './components/Layout'
 import EmpezarEmpeñar from './pages/EmpezarEmpeñar'
 import EmpezarVender from './pages/EmpezarVender'
@@ -16,6 +19,7 @@ import './App.css';
 import About from './pages/About'
 import Car from "./pages/Car"
 import PawnRequest from './pages/Pawn_request'
+
 
 
 const products = [
@@ -39,6 +43,9 @@ function App() {
         <Route path="/MisCompras" element={<MisCompras />} />
         <Route path="/EmpeñosActivos" element={<EmpeñosActivos />} />
         <Route path="/about" element={<About />} />
+        <Route path="/CustomerInformation" element={<CustomerInformation />} />
+        <Route path="/OwnerInformation" element={<OwnerInformation />} />
+        <Route path="/MetodoPago" element={<MetodoPago />} />
         <Route path="pawnRequest" element={<PawnRequest />}/>
         <Route index element={<Landing products={products} />} />
         <Route path="product/:id" element={<ProductDetails products={products} />} />
