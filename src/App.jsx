@@ -1,7 +1,16 @@
+import './App.css'
+
+// Dependencias
 import { Route, 
   RouterProvider, 
   createBrowserRouter, 
   createRoutesFromElements } from 'react-router-dom'
+import AuthProvider from 'react-auth-kit';
+import createStore from 'react-auth-kit/createStore';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
+
+// Imports de componentes
 import Landing from './pages/Landing'
 import SignUp from './pages/SignUp'
 import LogIn from './pages/LogIn'
@@ -13,9 +22,8 @@ import MisCompras from './pages/MisCompras'
 import EmpeñosActivos from './pages/EmpeñosActivos'
 
 
-import './App.css'
-
 function App() {
+  
   const router = createBrowserRouter(createRoutesFromElements(
     <>
       <Route path="/login" element={<LogIn />} />
@@ -31,11 +39,22 @@ function App() {
       </Route>
     </>
   ))
+  
+  const store = createStore({
+    authName:'_auth',
+    authType:'cookie',
+    cookieDomain: window.location.hostname,
+    cookieSecure: window.location.protocol === 'https:',
+  });
+
+  const queryClient = new QueryClient()
 
   return (
-    <>
-      <RouterProvider router={router} />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider store={store}>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   )
 }
 

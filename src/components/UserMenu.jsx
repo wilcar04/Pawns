@@ -6,12 +6,14 @@ import { SlLogout } from "react-icons/sl";
 import { Link } from 'react-router-dom';
 import ClientMenuOptions from './ClientMenuOptions';
 import AdminMenuOptions from './AdminMenuOptions';
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function Example() {
+  const signOut = useSignOut()
 
   const isClient = false
 
@@ -66,19 +68,18 @@ export default function Example() {
           <div className="py-1">
             <MenuItem>
               {({ focus }) => (
-                <a
-                  href="#"
+                <div
                   className={classNames(
                     focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                    <div className="inline-flex items-center gap-x-2">
+                    <div className="inline-flex items-center gap-x-2 cursor-pointer" onClick={() => signOut()}>
                         <SlLogout className='size-4'/>
                         <span>Cerrar sesión</span>
                     </div>
                   
-                </a>
+                </div>
               )}
             </MenuItem>
           </div>

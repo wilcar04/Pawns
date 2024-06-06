@@ -7,6 +7,7 @@ import instagramIcon from '../assets/instagramIcon.png'
 import UserMenu from './UserMenu'
 
 export default function Navbar(){
+
     return(
         <nav className="flex items-center justify-start p-1 max-h-20 bg-white text-black border-b border-b-gray-300 shadow">
             <Link to="/">

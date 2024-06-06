@@ -5,8 +5,14 @@ import api from './axiosConfig'
 
 // Iniciar sesión
 export async function logIn(email, password){
+    const params = { 
+        email: email,
+        password: password
+    };
     try{
-        const response = await api.get(`/user/${email}/${password}`);
+        const response = await api.post(`/user/login`, null, {
+            params: params
+        });
         return response.data;
     }
     catch (err) {
@@ -17,36 +23,41 @@ export async function logIn(email, password){
 // Actualizar usuario
 export async function updateUser(name, email, password){
     const body = {
-        idUsuario: 0,
-        nombre: name,
-        correo_electronico: email,
-        contrasennia: password,
-        tipo: "cliente" // ! Preguntar a Juanes cómo le mando esto
-    }
-    try{
-        const response = await api.put(`/user/`, body);
-        return response.data;
-    }
-    catch (err) {
-        throw new Error('Usuario o contraseña incorrectos');
-    }
-}
-
-// Registrar usuario
-export async function signUp(name, email, password){
-    const body = {
-        idUsuario: 0,
+        idusuario: 0,
         nombre: name,
         correo_electronico: email,
         contrasennia: password,
         tipo: "cliente"
     }
     try{
+        const response = await api.put(`/user/`, body);
+        return response.data;
+    }
+    catch (err) {
+        console.error('Hubo un problema con la solicitud fetch:', err);
+        return {}
+    }
+}
+
+// Registrar usuario
+export async function signUp(name, email, password, genre, birthdate, phone){
+    const body = {
+        idusuario: 0,
+        nombre: name,
+        correo_electronico: email,
+        contrasennia: password,
+        tipo: "cliente",
+        genero: genre,
+        nacimiento: birthdate,
+        telefono: phone
+    }
+    try{
         const response = await api.post(`/user/`, body);
         return response.data;
     }
     catch (err) {   
-        throw new Error('Usuario o contraseña incorrectos');
+        console.error('Hubo un problema con la solicitud fetch:', err);
+        return {}
     }
 }
 
@@ -57,7 +68,8 @@ export async function deleteUser(email){
         return response.data;
     }
     catch (err) {
-        throw new Error('Usuario o contraseña incorrectos');
+        console.error('Hubo un problema con la solicitud fetch:', err);
+        return {}
     }
 }
 
@@ -149,7 +161,7 @@ export async function deleteProduct(idProduct){
 }
 
 // Crear producto
-export async function updateProductImage(name, description, category, image){
+export async function createProduct(name, description, category, image){
     const params = { 
         nombre: name,
         descripcion: description,
