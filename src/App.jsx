@@ -46,6 +46,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
 
       <Route path="/" element={<Layout products={products} />}>
+        <Route index element={<Landing products={products} />} />
         <Route path="/Car" element={<Car />} />
         <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
@@ -57,7 +58,6 @@ function App() {
         <Route path="/OwnerInformation" element={<OwnerInformation />} />
         <Route path="/MetodoPago" element={<MetodoPago />} />
         <Route path="pawnRequest" element={<PawnRequest />}/>
-        <Route index element={<Landing products={products} />} />
         <Route path="product/:id" element={<ProductDetails products={products} />} />
       </Route>
       
