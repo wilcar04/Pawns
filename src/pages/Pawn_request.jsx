@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { TbCloudUpload } from "react-icons/tb";
+import { useMutation } from '@tanstack/react-query';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { useNavigate } from 'react-router-dom';
+import { createOfferPawn } from '../api/queries';
 
 export default function Pawn_request() {
   const [formData, setFormData] = useState({
@@ -14,6 +18,14 @@ export default function Pawn_request() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const auth = useAuthUser();
+  const navigate = useNavigate();
+
+  const { isError, isPending, mutate: mutateSendRequest } = useMutation({
+    mutationFn: () => createOfferPawn(auth.id, formData.itemName, formData.description, formData.category, formData.pawnValue, images[0]),
+    onSuccess: () => setIsSubmitted(true)
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -25,13 +37,13 @@ export default function Pawn_request() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (images.length < 3) {
-      setErrorMessage('Debes subir al menos 3 imágenes.');
-      return;
-    }
+    // if (images.length < 3) {
+    //   setErrorMessage('Debes subir al menos 3 imágenes.');
+    //   return;
+    // }
     console.log('Datos del formulario:', formData);
     console.log('Imágenes:', images);
-    setIsSubmitted(true);
+    mutateSendRequest();
   };
 
   return (
@@ -155,6 +167,7 @@ export default function Pawn_request() {
           <button
             type="submit"
             className="w-full py-2 px-4 bg-naranja text-white font-semibold rounded-md hover:bg-rojo"
+            onChange={handleSubmit}
           >
             Enviar
           </button>
