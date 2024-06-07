@@ -26,7 +26,7 @@ const ButtonSingInRegister = () => {
 function Layout(){
   return(
     <div class="min-h-screen flex flex-col">
-            <Navbar/>
+      
             <RedStripe></RedStripe>
             <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold">
               ¿Quieres empezar a vender?
@@ -35,7 +35,7 @@ function Layout(){
             <main className="flex-1">
                 <Outlet />
             </main>
-            <Footer/>
+        
         </div>
   )
 }
