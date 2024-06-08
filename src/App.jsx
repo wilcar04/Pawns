@@ -13,6 +13,7 @@ import ActivePawns from './pages/Tables/ActivePawns'
 import ActiveSales from './pages/Tables/ActiveSales'
 import MySales from './pages/Tables/MySales'
 import OnProcessPawns from './pages/Tables/OnProcessPawns'
+import OnProcessSales from './pages/Tables/OnProcessSales'
 import Pawn_request from './pages/Pawn_request'
 import SalesRequest from './pages/Tables/SalesRequest'
 import PawnsRequest from './pages/Tables/PawnsRequest'
@@ -27,6 +28,7 @@ function App() {
     <>
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/" element={<Layout />}>
       <Route path="/Landing" element={<Landing />} />
       <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
       <Route path="/EmpezarVender" element={<EmpezarVender />} />
@@ -35,6 +37,7 @@ function App() {
       <Route path="/ActiveSales" element={<ActiveSales />} />
       <Route path="/MySales" element={<MySales />} />
       <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
+      <Route path="/OnProcessSales" element={<OnProcessSales />} />
       <Route path="/Pawn_request" element={<Pawn_request />} />
       <Route path="/SalesRequest" element={<SalesRequest />} />
       <Route path="/PawnsRequest" element={<PawnsRequest />} />
@@ -42,7 +45,6 @@ function App() {
       <Route path="/MySalesRequest" element={<MySalesRequest />} />
 
  
-      <Route path="/" element={<Layout />}>
         <Route index element={<Landing />}/>
       </Route>
     </>
