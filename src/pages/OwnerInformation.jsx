@@ -5,7 +5,7 @@ const RedStripe = () => {
   return (
     <div className="bg-red-500 h-10 w-full flex justify-between items-center px-4">
       <span className="text-white text-xs">Mi Perfil</span>
-      <button className="bg-red-500 text-white py-1 px-4 text-xs">Inicio = Mi Peerfil</button>
+      <button className="bg-red-500 text-white py-1 px-4 text-xs">Inicio = Mi Perfil</button>
     </div>
   );
 };

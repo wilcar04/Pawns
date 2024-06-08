@@ -29,7 +29,7 @@ export default function Navbar(){
                 <NavLink to="/EmpezarEmpeñar" className={({isActive}) => "py-1 text-sm basis-1/6 text-balance flex items-center justify-center max-h-max content-center my-2 mx-6 rounded-2xl " + (isActive? "font-bold cursor-default" : "hover:bg-gray-200")}>
                     Empieza a empeñar
                 </NavLink>
-                <NavLink to="" className={({isActive}) => "py-1 text-sm basis-1/6 text-balance flex items-center justify-center h-min content-center my-2 mx-6 rounded-2xl " + (isActive? "font-bold cursor-default" : "hover:bg-gray-200")}>
+                <NavLink to="/all-products" className={({isActive}) => "py-1 text-sm basis-1/6 text-balance flex items-center justify-center h-min content-center my-2 mx-6 rounded-2xl " + (isActive? "font-bold cursor-default" : "hover:bg-gray-200")}>
                     Explorar productos
                 </NavLink>
                 

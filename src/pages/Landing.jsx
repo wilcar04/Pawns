@@ -4,6 +4,9 @@ import { faSearch, faTv, faTshirt, faHome, faHeartbeat, faFilm, faFutbol, faCar,
 import { Link } from 'react-router-dom';
 import { getProducts } from '../utils/localStorageUtils';
 import './Landing.css';
+import SliderLanding from '../components/SliderLanding';
+import { Carousel } from "flowbite-react";
+
 
 const categories = [
     { icon: faTv, name: 'Electrónica' },
@@ -122,90 +125,64 @@ export default function Landing() {
 
     return (
         <div className="landing-page">
-            <nav className="navbar">
-                <div className="search-bar">
-                    <input 
-                        type="text" 
-                        placeholder="Busca productos" 
-                        value={searchTerm}
-                        onChange={handleSearchChange}
-                    />
-                    <button onClick={handleClearFilters}><FontAwesomeIcon icon={faSearch} /></button>
-                </div>
-                <div className="search-bar">
-                    <select value={selectedCategory} onChange={handleCategoryChange}>
-                        <option value="">Categorías</option>
-                        {categories.map((category, index) => (
-                            <option key={index} value={category.name}>{category.name}</option>
-                        ))}
-                    </select>
-                    <button onClick={handleClearFilters}><FontAwesomeIcon icon={faSearch} /></button>
-                </div>
-            </nav>
+
+            <div className="py-8 px-28 h-96">
+                <Carousel pauseOnHover>
+                    <img src="https://img.freepik.com/foto-gratis/gente-tiro-completo-caminando-tienda-antiguedades_23-2149640710.jpg?t=st=1717804519~exp=1717808119~hmac=06bc75f895e63116e367b4fdeb0b9960944ee7f1a716329ee969691ecf5d0f99&w=1060" alt="..." />
+                    <img src="https://recordhead.biz/wp-content/uploads/2021/04/100_0222-800x445-1.jpg" alt="..." />
+                    
+                </Carousel>
+            </div>
 
             {!searchTerm && !selectedCategory && (
                 <>
-                    <div className="image-container">
-                        <button onClick={handleLeftArrowClick} className="arrow-button left-arrow"><FontAwesomeIcon icon={faChevronLeft} /></button>
-                        <div className="image-slider">
-                            {sliderImages.map((image, i) => (
-                                <div className="image-item" ref={el => imageRefs.current[i] = el} key={i}>
-                                    <img src={image} alt={`Slide ${i + 1}`} />
-                                </div>
-                            ))}
-                        </div>
-                        <button onClick={handleRightArrowClick} className="arrow-button right-arrow"><FontAwesomeIcon icon={faChevronRight} /></button>
-                    </div>
-                    <div className="image-nav">
-                        {sliderImages.map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => handleNavButtonClick(i)}
-                                className={`nav-button ${currentImageIndex === i ? 'active' : ''}`}
-                            >
-                                <div className="nav-button-inner">
-                                    {i + 1}
-                                </div>
-                            </button>
-                        ))}
-                    </div>
-                    <div className="categories-section">
-                        <h2 className="section-title">¡Explora las categorías más solicitadas con precios más bajos! <Link to="/all-products">
-                            <button className="view-all-button">Ver Todo</button>
-                        </Link></h2>
-                        <div className="category-buttons">
-                            {categories.map((category, index) => (
-                                <div key={index} className="category-button" onClick={() => handleCategoryChange({ target: { value: category.name } })}>
+                    <h3 className='font-bold uppercase text-lg mt-5'>Nuestros productos</h3>
+                    <div className=" h-48 flex justify-center items-center gap-x-8 mb-5">
+                        {categories.map((category, index) => (
+                            <div key={index} className=" w-24 flex flex-col items-center gap-y-3" onClick={() => handleCategoryChange({ target: { value: category.name } })}>
+                                <div className='rounded-full bg-firstColor text-white size-20 flex items-center justify-center'>
                                     <FontAwesomeIcon icon={category.icon} size="2x" />
-                                    <span className="category-name">{category.name}</span>
+                                
                                 </div>
-                            ))}
-                        </div>
+                                <span className="category-name">{category.name}</span>
+                            </div>
+                        ))}
                     </div>
                 </>
             )}
 
+            {/* <div className='w-full bg-firstColor h-8 flex items-center justify-center'>
+                <h2 className="text-white text-sm">¡Explora las categorías más solicitadas con precios más bajos! 
+                    <Link to="/all-products">
+                        <button className="text-firstColor opacity-90 font-extrabold ml-4 py-1 px-2 rounded h-full bg-white">Ver Todo</button>
+                    </Link>
+                </h2>
+            </div> */}
             <div className="products-section">
-                <h2 className="section-title">NUESTROS PRODUCTOS</h2>
                 <div className="product-row">
                     {displayedProducts.length > 0 ? (
                         displayedProducts.map((product, index) => (
-                            <div key={index} className="product-item">
-                                <div className="product-image-placeholder" style={{ backgroundImage: `url(${product.img})` }} />
-                                <div className="product-details">
-                                    <h3 className="product-name">{product.name}</h3>
-                                    <p className="product-category">{product.category}</p>
-                                    <p className="product-price original-price">{product.price}</p>
-                                    <Link to={`/product/${index}`} className="buy-button-link">
-                                        <button className="buy-button">Comprar</button>
-                                    </Link>
+                            <Link to={`/edit-product/${index}`}>
+                                <div key={index} className="product-item">
+                                    {product.img && <img src={product.img} alt={product.name} className="product-image" />}
+                                    <div className="pb-4">
+                                        <p className="text-gray-400 text-sm mb-1">{product.category}</p>
+                                        <h3 className="font-bold text-black text-xl">{product.name}</h3>
+                                        <p className="text-firstColor mt-2">${product.price}</p>
+
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         ))
                     ) : (
                         <p className="no-products-message">No tenemos el producto que buscas.</p>
                     )}
                 </div>
+            </div>
+            <div className="my-4 h-20">
+                <Link className='rounded-full border-firstColor border-4 p-3 hover:bg-firstColor hover:text-white'>
+                    Ver todos los productos.
+                </Link>
             </div>
         </div>
     );

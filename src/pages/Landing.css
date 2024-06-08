@@ -20,12 +20,6 @@ body {
     box-sizing: inherit;
 }
 
-.landing-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
 
 .navbar {
     display: flex;

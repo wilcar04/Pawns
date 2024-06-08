@@ -19,6 +19,8 @@
     "@mui/material": "^5.15.19",
     "@tanstack/react-query": "^5.40.1",
     "axios": "^1.7.2",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.9.0",
     "fortawesome": "^0.0.1-security",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
