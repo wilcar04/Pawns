@@ -14,15 +14,23 @@ import { QueryClient } from '@tanstack/react-query';
 import Landing from './pages/Landing'
 import SignUp from './pages/SignUp'
 import LogIn from './pages/LogIn'
-import CustomerInformation from './pages/CustomerInformation'
-import OwnerInformation from './pages/OwnerInformation'
-import MetodoPago from './pages/MetodoPago'
 import Layout from './components/Layout'
 import EmpezarEmpeñar from './pages/EmpezarEmpeñar'
 import EmpezarVender from './pages/EmpezarVender'
-import MisEmpeños from './pages/MisEmpeños'
-import MisCompras from './pages/MisCompras'
-import EmpeñosActivos from './pages/EmpeñosActivos'
+import MyPawns from './pages/Tables/MyPawns'
+import ActivePawns from './pages/Tables/ActivePawns'
+import ActiveSales from './pages/Tables/ActiveSales'
+import MySales from './pages/Tables/MySales'
+import OnProcessPawns from './pages/Tables/OnProcessPawns'
+import OnProcessSales from './pages/Tables/OnProcessSales'
+import Pawn_request from './pages/Pawn_request'
+import SalesRequest from './pages/Tables/SalesRequest'
+import PawnsRequest from './pages/Tables/PawnsRequest'
+import MyPawnRequest from './pages/Tables/MyPawnRequest'
+import MySalesRequest from './pages/Tables/MySalesRequest'
+
+
+import './App.css'
 import ProductDetails from './pages/ProductDetails';
 import About from './pages/About'
 import Car from "./pages/Car"
@@ -33,13 +41,26 @@ import EditProduct from './pages/EditProduct';
 import ProductContext from './components/ProductContext';
 
 function App() {
-  
   const router = createBrowserRouter(createRoutesFromElements(
     <>
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
-
       <Route path="/" element={<Layout />}>
+      <Route path="/Landing" element={<Landing />} />
+      <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
+      <Route path="/EmpezarVender" element={<EmpezarVender />} />
+      <Route path="/MyPawns" element={<MyPawns />} />
+      <Route path="/ActivePawns" element={<ActivePawns />} />
+      <Route path="/ActiveSales" element={<ActiveSales />} />
+      <Route path="/MySales" element={<MySales />} />
+      <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
+      <Route path="/OnProcessSales" element={<OnProcessSales />} />
+      <Route path="/Pawn_request" element={<Pawn_request />} />
+      <Route path="/SalesRequest" element={<SalesRequest />} />
+      <Route path="/PawnsRequest" element={<PawnsRequest />} />
+      <Route path="/MyPawnRequest" element={<MyPawnRequest />} />
+      <Route path="/MySalesRequest" element={<MySalesRequest />} />
+
         <Route element={<ProductContext />}>
           <Route index element={<Landing />} />
           <Route path="product/:id" element={<ProductDetails />} />
@@ -60,10 +81,9 @@ function App() {
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} />
       </Route>
-      
     </>
   ))
-  
+
   const store = createStore({
     authName:'_auth',
     authType:'cookie',
@@ -80,6 +100,7 @@ function App() {
       </AuthProvider>
     </QueryClientProvider>
   )
+
 }
 
-export default App;
+export default App
