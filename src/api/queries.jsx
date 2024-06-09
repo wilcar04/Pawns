@@ -62,24 +62,13 @@ export async function signUp(name, email, password, genre, birthdate, phone){
     }
 }
 
-// Eliminar usuario
-export async function deleteUser(email){
-    try{
-        const response = await api.delete(`/user/${email}`);
-        return response.data;
-    }
-    catch (err) {
-        console.error('Hubo un problema con la solicitud fetch:', err);
-        return {}
-    }
-}
-
 
 // *    Product
 
+// Obtener producto por Id
 export async function getProductById(idProduct){
     try {
-        const response = await api.get(`/product/${idProduct}`);
+        const response = await api.get(`/product/${idProduct}`); // ! Está en query y path a la vez
         return response.data;
     }
     catch (err) {
@@ -147,40 +136,6 @@ export async function updateProductImage(idProduct, image){
 
 
 
-// TODO: Preguntar a Juanes por qué está en path y en params el id ¿es un error?
-
-// Eliminar producto
-export async function deleteProduct(idProduct){
-    try {
-        const response = await api.delete(`/product/${idProduct}`);
-        return response.data;
-    }
-    catch (err) {
-        console.error('Hubo un problema con la solicitud fetch:', err);
-        return {}
-    }
-}
-
-// Crear producto
-export async function createProduct(name, description, category, image){
-    const params = { 
-        nombre: name,
-        descripcion: description,
-        categoria: category
-    };
-    const formData = new FormData();
-    formData.append('image', image);
-    try{
-        const response = await api.put(`/product/`, formData, {
-            params: params
-        });
-        return response.data;
-    }
-    catch (error) {
-        console.error('Hubo un problema con la solicitud fetch:', error);
-        return [];
-    }
-}
 
 
 // *    Offer
@@ -244,10 +199,22 @@ export async function getProducts(){
     }
 }
 
-// Obtener ofertas no finalizadas de usuario (empeño o venta)
-export async function getOffersNotFinished(idUser){
+// ! Pendiente: No sé qué es ésto
+export async function getAllPendingPawns(){
     try {
-        const response = await api.get(`/offer/pending_offers_not_finalized_by_userid/${idUser}`);
+        const response = await api.get(`/offer/SalesByShop`);
+        return response.data;
+    }
+    catch (err) {
+        console.error('Hubo un problema con la solicitud fetch:', err);
+        return []
+    }
+}
+
+// Obtener ofertas de empeño no finalizadas de un usuario
+export async function getPawnOffersNotFinished(idUser){
+    try {
+        const response = await api.get(`/offer/pending_pawn_offers_not_finalized_by_userid/${idUser}`);
         return response.data;
     }
     catch (err) {
@@ -256,10 +223,10 @@ export async function getOffersNotFinished(idUser){
     }
 }
 
-// Obtener ofertas de empeño pendientes
-export async function getPendingPawnOffers(idUser){
+// Obtener ofertas de venta no finalizadas de un usuario
+export async function getSellOffersNotFinished(idUser){
     try {
-        const response = await api.get(`/offer/user_pawn_offers_in_pending/${idUser}`);
+        const response = await api.get(`/offer/pending_sell_offers_not_finalized_by_userid/${idUser}`);
         return response.data;
     }
     catch (err) {
@@ -268,10 +235,10 @@ export async function getPendingPawnOffers(idUser){
     }
 }
 
-// Finalizar oferta (producto llegó)
-export async function finishOffer(idOffer){
+// Obtener empeños en camino
+export async function getOnTheWayOfferPawns(){
     try {
-        const response = await api.put(`/offer/finish_offer/${idOffer}`);
+        const response = await api.get(`/offer/on_the_way_offer_pawns`);
         return response.data;
     }
     catch (err) {
@@ -280,15 +247,56 @@ export async function finishOffer(idOffer){
     }
 }
 
-// Poner producto en estado 'en camino' (cliente confirmó la transacción)
-export async function confirmOffer(idOffer){
+// Obtener ventas en camino
+export async function getOnTheWayOfferSells(){
     try {
-        const response = await api.put(`/offer/change_offer_state_to_in_shipping/${idOffer}`);
+        const response = await api.get(`/offer/on_the_way_offer_sells`);
         return response.data;
     }
     catch (err) {
         console.error('Hubo un problema con la solicitud fetch:', err);
         return {}
+    }
+}
+
+// Obtener todas las solicitudes de venta no finalizadas
+export async function getNotFinalizedSellOffers(){
+    try {
+        const response = await api.get(`/offer/sell_offers_not_finalized`);
+        return response.data;
+    }
+    catch (err) {
+        console.error('Hubo un problema con la solicitud fetch:', err);
+        return {}
+    }
+}
+
+// Obtener todas las solicitudes de empeño no finalizadas
+export async function getNotFinalizedPawnOffers(){
+    try {
+        const response = await api.get(`/offer/pawn_offers_not_finalized`);
+        return response.data;
+    }
+    catch (err) {
+        console.error('Hubo un problema con la solicitud fetch:', err);
+        return {}
+    }
+}
+
+export async function changeOfferState(idOffer, newState){
+    const params = { 
+        id: idOffer,
+        state: newState
+    };
+    try{
+        const response = await api.post(`/offer/MakePawnByClient`, null, {
+            params: params
+        });
+        return response.data;
+    }
+    catch (error) {
+        console.error('Hubo un problema con la solicitud fetch:', error);
+        return [];
     }
 }
 
@@ -309,20 +317,36 @@ export async function getBoughtItems(idUser){
     }
 }
 
-// Comprar (cliente compra)
-export async function buyItem(idUser, price, date, idProduct, idBill){
+
+// TODO: Terminar request body
+// Cliente compra
+export async function clientBuysItem(idUser, price, date, idProduct, idBill){
     const params = { 
-        idcompra: 0,
-        precio: price,
-        fecha: date,
-        producto_idproducto: idProduct,
-        id_factura_compraventa: idBill,
-        id_usuario: idUser
+        seller_client_id : idUser
     };
+    const body = {
+
+    }
     try{
-        const response = await api.post(`/buy/`, null, {
+        const response = await api.post(`/buy/sell`, body, {
             params: params
         });
+        return response.data;
+    }
+    catch (error) {
+        console.error('Hubo un problema con la solicitud fetch:', error);
+        return [];
+    }
+}
+
+// TODO: Terminar request body
+// Tienda compra
+export async function shopBuysItem(idUser, price, date, idProduct, idBill){
+    const body = {
+
+    }
+    try{
+        const response = await api.post(`/buy/client`, body);
         return response.data;
     }
     catch (error) {
@@ -347,28 +371,6 @@ export async function getSoldItems(idUser){
     }
 }
 
-// Vender (tienda compra un producto de un usuario)
-export async function shopBuys(idUser, price, date, idProduct, idBill){
-    const params = { 
-        idventa: 0,
-        precio: price,
-        fecha: date,
-        producto_idproducto: idProduct,
-        id_factura_compraventa: idBill,
-        usuario_idusuario: idUser
-    };
-    try{
-        const response = await api.post(`/sell/`, null, {
-            params: params
-        });
-        return response.data;
-    }
-    catch (error) {
-        console.error('Hubo un problema con la solicitud fetch:', error);
-        return [];
-    }
-}
-
 
 // * Pawn
 
@@ -387,7 +389,7 @@ export async function getCurrentPawns(){
 // Obtener los empeños vigentes de un usuario
 export async function getUserCurrentPawns(idUser){
     try {
-        const response = await api.get(`/pawn/clientPawns/${idUser}`);
+        const response = await api.get(`/pawn/clientCurrentPawns/${idUser}`);
         return response.data;
     }
     catch (err) {
@@ -396,6 +398,10 @@ export async function getUserCurrentPawns(idUser){
     }
 }
 
+// TODO: Aquí va una que no sé bien qué hace
+
+
+// TODO: Verificar que éste funcione
 // Crear empeño
 export async function createPawn(idUser, idProduct, price){
     const body = {
@@ -420,6 +426,8 @@ export async function createPawn(idUser, idProduct, price){
     }
 }
 
+
+// TODO: Verificar
 // Cliente paga el empeño
 export async function payPawn(idPawn, idBill){
     const params = { 
@@ -440,4 +448,4 @@ export async function payPawn(idPawn, idBill){
 
 // *    Bill
 
-// ! Se va hacer o NO??
+// TODO: Preguntar a Juanes si ésto ya se hace automático (creo que sí)
