@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useOutletContext, useSearchParams } from 'react-router-dom';
 import { getProducts } from '../utils/localStorageUtils';
 import './AllProducts.css';
 import { IoIosSearch } from "react-icons/io";
@@ -12,104 +12,8 @@ const AllProducts = () => {
 
     const categoryFilter = searchParams.get("category")
 
-    const products = [
-        {
-        img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-        category: "Moda",
-        name: "Reloj",
-        price: 200
-        },
-        {
-            img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-            category: "Moda",
-            name: "Reloj",
-            price: 200
-            },
-            {
-        img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-        category: "Moda",
-        name: "Reloj",
-        price: 200
-        },
-        {
-            img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-            category: "Moda",
-            name: "Reloj",
-            price: 200
-            },
-            {
-                img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                category: "Moda",
-                name: "Reloj",
-                price: 200
-                },
-                {
-            img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-            category: "Moda",
-            name: "Reloj",
-            price: 200
-            },
-            {
-                img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                category: "Moda",
-                name: "Reloj",
-                price: 200
-                },
-                {
-                    img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                    category: "Moda",
-                    name: "Reloj",
-                    price: 200
-                    },
-                    {
-                img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                category: "Moda",
-                name: "Reloj",
-                price: 200
-                },
-        {
-            img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-            category: "Moda",
-            name: "Reloj",
-            price: 200
-            },
-            {
-                img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                category: "Moda",
-                name: "Reloj",
-                price: 200
-                },
-                        {
-            img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-            category: "Moda",
-            name: "Reloj",
-            price: 200
-            },
-            {
-                img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                category: "Moda",
-                name: "Reloj",
-                price: 200
-                },
-                {
-            img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-            category: "Moda",
-            name: "Reloj",
-            price: 200
-            },
-            {
-                img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                category: "Moda",
-                name: "Reloj",
-                price: 200
-                },
-                {
-                    img: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
-                    category: "Moda",
-                    name: "Reloj",
-                    price: 200
-                    },
-    ];
+    const products = useOutletContext();
+
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 12;
     const [searchTerm, setSearchTerm] = useState('');
@@ -132,16 +36,17 @@ const AllProducts = () => {
                 <h3 className='font-semibold mb-6 text-left text-black'>Categorías</h3>
                 {categories.map((category, index) => (
                     <button
+                        key={index}
                         onClick={() => setSearchParams({category: category})}
                         className={
-                            `block border border-firstColor rounded-full px-4 py-0.5 mb-2
+                            `block border text-gray-500 rounded-full px-4 py-0.5 mb-2
                             ${categoryFilter === category ? "bg-firstColor text-white" : ""}`
                         }
                     >{category}</button>
                     // <option key={index} value={category}>{category}</option>
                 ))}
             </div>
-            <div className="">
+            <div className="flex-1">
                 <div className="mx-52 mb-8">
                     <div className="relative flex items-center">
                         <IoIosSearch className='absolute left-4 size-4 text-gray-500' />
@@ -157,26 +62,26 @@ const AllProducts = () => {
                 {/* <Link to="/add-product">
                     <button className="add-product-button">Agregar Producto</button>
                 </Link> */}
+                {currentProducts.length > 0 ? (
                 <div className="grid grid-cols-4 gap-10">
-                    {currentProducts.length > 0 ? (
-                        currentProducts.map((product, index) => (
-                            <Link to={`/edit-product/${index}`}>
+                        {currentProducts.map((product, index) => (
+                            <Link to={`/product/${product.id}`}>
                                 <div key={index} className="product-item">
-                                    {product.img && <img src={product.img} alt={product.name} className="product-image" />}
+                                    {product.imagen && <img src={product.imagen} alt={product.nombre} className="product-image" />}
                                     <div className="pb-4">
-                                        <p className="text-gray-400 text-sm mb-1">{product.category}</p>
-                                        <h3 className="font-bold text-black text-xl">{product.name}</h3>
+                                        <p className="text-gray-400 text-sm mb-1">{product.categoria}</p>
+                                        <h3 className="font-bold text-black text-xl">{product.nombre}</h3>
                                         <p className="text-firstColor mt-2">${product.price}</p>
 
                                     </div>
                                 </div>
                             </Link>
-                        ))
-                    ) : (
-                        <p className="no-products-message">No tenemos el producto que buscas.</p>
-                    )}
+                        ))}
                 </div>
-                <div className="pagination gap-x-2">
+                    ) : (
+                        <p className="no-products-message mt-20">No tenemos el producto que buscas.</p>
+                )}
+                        <div className="pagination gap-x-2">
                     {[...Array(Math.ceil(filteredProducts.length / productsPerPage)).keys()].map(number => (
                         <button
                             key={number + 1}

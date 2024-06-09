@@ -14,7 +14,7 @@ export default function Footer(){
             <div className="ml-16 inline-flex items-center gap-x-8 text-sm">
                 <Link to="/about" className=" hover:text-gray-500">Sobre nosotros</Link>
                 <Link className=" hover:text-gray-500">Términos</Link>
-                <Link className=" hover:text-gray-500">PQR</Link>
+                <a href="https://forms.gle/ETjvi8XaMMpW4STh7" target="_blank" className=" hover:text-gray-500">PQR</a>
             </div>
 
             <div className='ml-auto text-start leading-10'>

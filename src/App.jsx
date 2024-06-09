@@ -30,6 +30,7 @@ import PawnRequest from './pages/Pawn_request'
 import AllProducts from './pages/AllProducts';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
+import ProductContext from './components/ProductContext';
 
 function App() {
   
@@ -39,7 +40,12 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
 
       <Route path="/" element={<Layout />}>
-        <Route index element={<Landing />} />
+        <Route element={<ProductContext />}>
+          <Route index element={<Landing />} />
+          <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="/all-products" element={<AllProducts />} />
+        </Route>
+        
         <Route path="/Car" element={<Car />} />
         <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
@@ -51,10 +57,8 @@ function App() {
         <Route path="/OwnerInformation" element={<OwnerInformation />} />
         <Route path="/MetodoPago" element={<MetodoPago />} />
         <Route path="pawnRequest" element={<PawnRequest />}/>
-        <Route path="/all-products" element={<AllProducts />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} />
-        <Route path="product/:id" element={<ProductDetails />} />
       </Route>
       
     </>
