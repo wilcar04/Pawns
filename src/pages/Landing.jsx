@@ -51,7 +51,7 @@ export default function Landing() {
         <div className="landing-page">
 
             <div className="py-8 px-28 h-96">
-                <Carousel pauseOnHover slideInterval={8000} >
+                <Carousel pauseOnHover slideInterval={6500} >
                     <img src={imagenCarrusel2} alt="..." />
                     <img src={imagenCarrusel3} alt="..." />
                     <img src={imagenCarrusel1} alt="..." />
@@ -86,13 +86,13 @@ export default function Landing() {
             <div className="products-section">
                 <div className="product-row">
                     {products?.map((product, index) => (
-                        <Link to={`/edit-product/${product.idproducto}`} key={index}>
+                        <Link to={`/product/${product.producto_idproducto}`} key={index}>
                             <div key={index} className="product-item">
                                 {product.img && <img src={product.imagen} alt={product.name} className="product-image" />}
                                 <div className="pb-4">
-                                    <p className="text-gray-400 text-sm mb-1">{product.categoria}</p>
+                                    <p className="text-gray-400 text-sm mb-1 capitalize">{product.categoria}</p>
                                     <h3 className="font-bold text-black text-xl">{product.nombre}</h3>
-                                    <p className="text-firstColor mt-2">${product.price}</p>
+                                    <p className="text-firstColor mt-2">${product.precio}</p>
 
                                 </div>
                             </div>

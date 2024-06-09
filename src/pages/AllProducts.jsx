@@ -65,13 +65,13 @@ const AllProducts = () => {
                 {currentProducts.length > 0 ? (
                 <div className="grid grid-cols-4 gap-10">
                         {currentProducts.map((product, index) => (
-                            <Link to={`/product/${product.id}`}>
+                            <Link to={`/product/${product.producto_idproducto}`}>
                                 <div key={index} className="product-item">
                                     {product.imagen && <img src={product.imagen} alt={product.nombre} className="product-image" />}
                                     <div className="pb-4">
-                                        <p className="text-gray-400 text-sm mb-1">{product.categoria}</p>
+                                        <p className="text-gray-400 text-sm mb-1 capitalize">{product.categoria}</p>
                                         <h3 className="font-bold text-black text-xl">{product.nombre}</h3>
-                                        <p className="text-firstColor mt-2">${product.price}</p>
+                                        <p className="text-firstColor mt-2">${product.precio}</p>
 
                                     </div>
                                 </div>

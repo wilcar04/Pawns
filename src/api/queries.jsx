@@ -13,6 +13,7 @@ export async function logIn(email, password){
         const response = await api.post(`/user/login`, null, {
             params: params
         });
+
         return response.data;
     }
     catch (err) {

@@ -10,7 +10,7 @@ const ProductDetails = () => {
   const products = useOutletContext();
 
   useEffect(() => {
-    setProduct(products.find(product => id === product.id));
+    setProduct(products.find(product => id == product.producto_idproducto));
   }, [id]);
 
   if (!product) return <p>Producto no encontrado.</p>;
