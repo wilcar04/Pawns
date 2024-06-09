@@ -46,20 +46,20 @@ function App() {
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/" element={<Layout />}>
-      <Route path="/Landing" element={<Landing />} />
-      <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
-      <Route path="/EmpezarVender" element={<EmpezarVender />} />
-      <Route path="/MyPawns" element={<MyPawns />} />
-      <Route path="/ActivePawns" element={<ActivePawns />} />
-      <Route path="/ActiveSales" element={<ActiveSales />} />
-      <Route path="/MySales" element={<MySales />} />
-      <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
-      <Route path="/OnProcessSales" element={<OnProcessSales />} />
-      <Route path="/Pawn_request" element={<Pawn_request />} />
-      <Route path="/SalesRequest" element={<SalesRequest />} />
-      <Route path="/PawnsRequest" element={<PawnsRequest />} />
-      <Route path="/MyPawnRequest" element={<MyPawnRequest />} />
-      <Route path="/MySalesRequest" element={<MySalesRequest />} />
+        <Route path="/Landing" element={<Landing />} />
+        <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
+        <Route path="/EmpezarVender" element={<EmpezarVender />} />
+        <Route path="/MyPawns" element={<MyPawns />} />
+        <Route path="/ActivePawns" element={<ActivePawns />} />
+        <Route path="/ActiveSales" element={<ActiveSales />} />
+        <Route path="/MySales" element={<MySales />} />
+        <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
+        <Route path="/OnProcessSales" element={<OnProcessSales />} />
+        <Route path="/Pawn_request" element={<Pawn_request />} />
+        <Route path="/SalesRequest" element={<SalesRequest />} />
+        <Route path="/PawnsRequest" element={<PawnsRequest />} />
+        <Route path="/MyPawnRequest" element={<MyPawnRequest />} />
+        <Route path="/MySalesRequest" element={<MySalesRequest />} />
 
         <Route element={<ProductContext />}>
           <Route index element={<Landing />} />
@@ -68,11 +68,6 @@ function App() {
         </Route>
         
         <Route path="/Car" element={<Car />} />
-        <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
-        <Route path="/EmpezarVender" element={<EmpezarVender />} />
-        <Route path="/MisEmpeños" element={<MisEmpeños />} />
-        <Route path="/MisCompras" element={<MisCompras />} />
-        <Route path="/EmpeñosActivos" element={<EmpeñosActivos />} />
         <Route path="/about" element={<About />} />
         <Route path="/CustomerInformation" element={<CustomerInformation />} />
         <Route path="/OwnerInformation" element={<OwnerInformation />} />
