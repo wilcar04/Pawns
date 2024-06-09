@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useOutletContext, useParams, useSearchParams } from 'react-router-dom';
 import { getProducts } from '../utils/localStorageUtils';
 import './ProductDetails.css';
+import NoInfo from '../components/NoInfo';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -13,7 +14,7 @@ const ProductDetails = () => {
     setProduct(products.find(product => id == product.producto_idproducto));
   }, [id]);
 
-  if (!product) return <p>Producto no encontrado.</p>;
+  return ( <NoInfo message={"No se encontró"}/>)
 
   return (
     <div className="flex flex-col items-center py-8">
