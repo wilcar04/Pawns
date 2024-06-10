@@ -199,10 +199,10 @@ export async function getProducts(){
     }
 }
 
-// ! Pendiente: No sé qué es ésto
+// Obtener todas las solicitudes de empeño que están en pendiente
 export async function getAllPendingPawns(){
     try {
-        const response = await api.get(`/offer/SalesByShop`);
+        const response = await api.get(`/offer/getAllPendingPawns`);
         return response.data;
     }
     catch (err) {
@@ -283,11 +283,21 @@ export async function getNotFinalizedPawnOffers(){
     }
 }
 
-export async function changeOfferState(idOffer, newState){
-    const params = { 
-        id: idOffer,
-        state: newState
-    };
+// Cambiar estado de oferta
+export async function changeOfferState(idOffer, newState, id_Acceptant=undefined){
+    let params;
+    if (id_Acceptant === undefined) {
+        params = { 
+            id: idOffer,
+            state: newState
+        };
+    } else {
+        params = { 
+            id: idOffer,
+            state: newState,
+            id_acceptant: id_Acceptant
+        };
+    }
     try{
         const response = await api.post(`/offer/MakePawnByClient`, null, {
             params: params
@@ -304,7 +314,6 @@ export async function changeOfferState(idOffer, newState){
 // *    Buy
 
 
-// TODO No necesito tanto las información de la oferta, necesito el producto
 // Obtener las ofertas que un cliente ha comprado
 export async function getBoughtItems(idUser){
     try {
@@ -317,15 +326,39 @@ export async function getBoughtItems(idUser){
     }
 }
 
+// Tienda compra
+export async function clientBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
+    phone, email, additionalInfo
+){
+    const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
 
-// TODO: Terminar request body
-// Cliente compra
-export async function clientBuysItem(idUser, price, date, idProduct, idBill){
     const params = { 
         seller_client_id : idUser
     };
     const body = {
-
+        buy: {
+            idcompra: 0,
+            precio: price,
+            fecha: date,
+            usuario_idusuario: 0,
+            producto_idproducto: idProduct,
+            id_factura_compraventa: 0
+        },
+        bill: {
+            idFacturaCompra: 0,
+            medio_pago: "PSE",
+            total: 0,
+            nombres: name,
+            apellidos: lastName,
+            direccion: address,
+            departamento: department,
+            municipio: municipality,
+            telefono: phone,
+            correo: email,
+            precio_envio: 0,
+            precio_IVA: 0,
+            info_adicional: additionalInfo
+        }
     }
     try{
         const response = await api.post(`/buy/sell`, body, {
@@ -339,11 +372,36 @@ export async function clientBuysItem(idUser, price, date, idProduct, idBill){
     }
 }
 
-// TODO: Terminar request body
-// Tienda compra
-export async function shopBuysItem(idUser, price, date, idProduct, idBill){
-    const body = {
+// Cliente compra
+export async function shopBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
+    phone, email, additionalInfo
+){
+    const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
 
+    const body = {
+        buy: {
+            idcompra: 0,
+            precio: price,
+            fecha: date,
+            usuario_idusuario: idUser,
+            producto_idproducto: idProduct,
+            id_factura_compraventa: 0
+        },
+        bill: {
+            idFacturaCompra: 0,
+            medio_pago: "PSE",
+            total: 0,
+            nombres: name,
+            apellidos: lastName,
+            direccion: address,
+            departamento: department,
+            municipio: municipality,
+            telefono: phone,
+            correo: email,
+            precio_envio: 0,
+            precio_IVA: 0,
+            info_adicional: additionalInfo
+        }
     }
     try{
         const response = await api.post(`/buy/client`, body);
