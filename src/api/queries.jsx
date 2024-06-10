@@ -299,7 +299,7 @@ export async function changeOfferState(idOffer, newState, id_Acceptant=undefined
         };
     }
     try{
-        const response = await api.post(`/offer/MakePawnByClient`, null, {
+        const response = await api.put(`/offer/update_offer_state`, null, {
             params: params
         });
         return response.data;
@@ -327,9 +327,7 @@ export async function getBoughtItems(idUser){
 }
 
 // Tienda compra
-export async function clientBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
-    phone, email, additionalInfo
-){
+export async function shopBuysItem(idUser, price, idProduct){
     const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
 
     const params = { 
@@ -348,16 +346,16 @@ export async function clientBuysItem(idUser, price, idProduct, name, lastName, a
             idFacturaCompra: 0,
             medio_pago: "PSE",
             total: 0,
-            nombres: name,
-            apellidos: lastName,
-            direccion: address,
-            departamento: department,
-            municipio: municipality,
-            telefono: phone,
-            correo: email,
+            nombres: "Propietario",
+            apellidos: "Pawns",
+            direccion: "Cra. 80 # 77 - 35",
+            departamento: "Antioquia",
+            municipio: "Medellín",
+            telefono: "+57 305 3382615",
+            correo: "pawns@gmail.com",
             precio_envio: 0,
             precio_IVA: 0,
-            info_adicional: additionalInfo
+            info_adicional: "La tienda ha comprado un nuevo artilugio"
         }
     }
     try{
@@ -373,7 +371,7 @@ export async function clientBuysItem(idUser, price, idProduct, name, lastName, a
 }
 
 // Cliente compra
-export async function shopBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
+export async function clientBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
     phone, email, additionalInfo
 ){
     const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
@@ -484,17 +482,27 @@ export async function createPawn(idUser, idProduct, price){
     }
 }
 
-
-// TODO: Verificar
 // Cliente paga el empeño
-export async function payPawn(idPawn, idBill){
-    const params = { 
-        id_factura_pago_cliente_empennio: idBill,
-    };
+export async function payPawn(idPawn, name, lastName, address, department, municipality, 
+    phone, email, info
+){
+    const body = {
+        idFacturaEmpennio: 0,
+        medio_pago: "PSE",
+        total: 0,
+        nombres: name,
+        apellidos: lastName,
+        direccion: address,
+        departamento: department,
+        municipio: municipality,
+        telefono: phone,
+        correo: email,
+        precio_envio: 0,
+        precio_IVA: 0,
+        info_adicional: info
+    }
     try{
-        const response = await api.put(`/pawn/payPawn/${idPawn}`, null, {
-            params: params
-        });
+        const response = await api.put(`/pawn/payPawn/${idPawn}`, body);
         return response.data;
     }
     catch (error) {

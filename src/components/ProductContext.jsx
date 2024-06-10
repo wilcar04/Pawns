@@ -14,7 +14,6 @@ export default function ProductContext() {
     if (isLoading) {
         return <Loading />
     }
-    console.log(products)
 
     return (
         <Outlet context={products} />

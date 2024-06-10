@@ -47,26 +47,7 @@ export default function Example() {
             <AdminMenuOptions />
           }
 
-          <div className="py-1">
-            <MenuItem>
-              {({ focus }) => (
-                <Link
-                  to="#"
-                  className={classNames(
-                    focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                    <Link to="/CustomerInformation">
-                    <div className="inline-flex items-center gap-x-2 cursor-pointer">
-                      <CiUser className="size-5" />
-                      <span>Mi perfil</span>
-                    </div>
-                  </Link>
-                </Link>
-              )}
-            </MenuItem>
-          </div>
+
             
           <div className="py-1">
             <MenuItem>

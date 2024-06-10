@@ -14,8 +14,6 @@ const ProductDetails = () => {
     setProduct(products.find(product => id == product.producto_idproducto));
   }, [id]);
 
-  return ( <NoInfo message={"No se encontró"}/>)
-
   return (
     <div className="flex flex-col items-center py-8">
       <h2 className=' font-medium text-2xl text-gray-500'>Detalles de producto</h2>

@@ -23,22 +23,25 @@ import ActiveSales from './pages/Tables/ActiveSales'
 import MySales from './pages/Tables/MySales'
 import OnProcessPawns from './pages/Tables/OnProcessPawns'
 import OnProcessSales from './pages/Tables/OnProcessSales'
-import Pawn_request from './pages/Pawn_request'
+import Pawn_request from './pages/CreatePawnRequest'
 import SalesRequest from './pages/Tables/SalesRequest'
 import PawnsRequest from './pages/Tables/PawnsRequest'
 import MyPawnRequest from './pages/Tables/MyPawnRequest'
 import MySalesRequest from './pages/Tables/MySalesRequest'
 
-
-import './App.css'
 import ProductDetails from './pages/ProductDetails';
 import About from './pages/About'
 import Car from "./pages/Car"
-import PawnRequest from './pages/Pawn_request'
+import PawnRequest from './pages/CreatePawnRequest'
 import AllProducts from './pages/AllProducts';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
 import ProductContext from './components/ProductContext';
+import Sandbox from './Sandbox';
+import AccountInfo from './pages/CustomerInformation';
+import CreateSellRequest from './pages/CreateSellRequest copy';
+import CreatePawnRequest from './pages/CreatePawnRequest';
+import ProductDetailsRequest from './pages/ProductDetailsRequest';
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
@@ -46,20 +49,31 @@ function App() {
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/" element={<Layout />}>
-        <Route path="/Landing" element={<Landing />} />
+
+        {/* Colocarlo en condicional? */}
         <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
+
         <Route path="/MyPawns" element={<MyPawns />} />
+        <Route path="/MyShopping" element={<MySales />} />
+
         <Route path="/ActivePawns" element={<ActivePawns />} />
         <Route path="/ActiveSales" element={<ActiveSales />} />
-        <Route path="/MySales" element={<MySales />} />
+
         <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
         <Route path="/OnProcessSales" element={<OnProcessSales />} />
-        <Route path="/Pawn_request" element={<Pawn_request />} />
+
         <Route path="/SalesRequest" element={<SalesRequest />} />
+        <Route path="SalesRequest/:id" element={<ProductDetailsRequest />} />
+
         <Route path="/PawnsRequest" element={<PawnsRequest />} />
+        <Route path="PawnsRequest/:id" element={<ProductDetailsRequest />} />
+
         <Route path="/MyPawnRequest" element={<MyPawnRequest />} />
         <Route path="/MySalesRequest" element={<MySalesRequest />} />
+
+        <Route path="/createSell" element={<CreateSellRequest />} />
+        <Route path="/createPawn" element={<CreatePawnRequest />} />
 
         <Route element={<ProductContext />}>
           <Route index element={<Landing />} />
@@ -67,14 +81,15 @@ function App() {
           <Route path="/all-products" element={<AllProducts />} />
         </Route>
         
-        <Route path="/Car" element={<Car />} />
+        {/* <Route path="/Car" element={<Car />} /> */}
         <Route path="/about" element={<About />} />
-        <Route path="/CustomerInformation" element={<CustomerInformation />} />
-        <Route path="/OwnerInformation" element={<OwnerInformation />} />
-        <Route path="/MetodoPago" element={<MetodoPago />} />
+        <Route path="/CustomerInformation" element={<AccountInfo />} />
         <Route path="pawnRequest" element={<PawnRequest />}/>
-        <Route path="/add-product" element={<AddProduct />} />
-        <Route path="/edit-product/:index" element={<EditProduct />} />
+        {/* <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/edit-product/:index" element={<EditProduct />} /> */}
+
+
+        <Route path="s" element={ <Sandbox />} />
       </Route>
     </>
   ))

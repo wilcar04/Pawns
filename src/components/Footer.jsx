@@ -27,9 +27,15 @@ export default function Footer(){
             </div>
             <h6 className='text-sm ms-10'>+57 305 3382615</h6>
             <div className='flex flex-row ml-8 space-x-4'>
-                <FaFacebook />
-                <FaInstagram />
-                <FaTwitter />
+                <a href="https://www.facebook.com/">
+                    <FaFacebook />
+                </a>
+                <a href="https://www.instagram.com/">
+                    <FaInstagram />
+                </a>
+                <a href="https://x.com/">
+                    <FaTwitter />
+                </a>
             </div>
         </footer>
     )

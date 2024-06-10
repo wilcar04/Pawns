@@ -2,6 +2,7 @@ import { MenuItem } from '@headlessui/react'
 import { FaRegCalendarMinus } from 'react-icons/fa'
 import { BsArrowLeftRight } from "react-icons/bs";
 import { IoBagOutline } from "react-icons/io5";
+import { MdAttachMoney } from "react-icons/md";
 import { Link } from 'react-router-dom';
 
 function classNames(...classes) {
@@ -12,10 +13,10 @@ export default function ClientMenuOptions(){
     return (
         <>
         <div className="py-1">
-        <MenuItem>
+            <MenuItem>
               {({ focus }) => (
                 <Link
-                  to="#"
+                  to="/MyPawnRequest"
                   className={classNames(
                     focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -23,7 +24,7 @@ export default function ClientMenuOptions(){
                 >
                     <div className="inline-flex items-center gap-x-2">
                         <FaRegCalendarMinus className='size-4'/>
-                        <span>Mis solicitudes</span>
+                        <span>Solicitudes de Empeño</span>
                     </div>
                 </Link>
               )}
@@ -31,7 +32,23 @@ export default function ClientMenuOptions(){
             <MenuItem>
               {({ focus }) => (
                 <Link
-                  to="/MisEmpeños"
+                  to="/MySalesRequest"
+                  className={classNames(
+                    focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}
+                >
+                    <div className="inline-flex items-center gap-x-2">
+                        <MdAttachMoney className='size-4'/>
+                        <span>Solicitudes de Venta</span>
+                    </div>
+                </Link>
+              )}
+            </MenuItem>
+            <MenuItem>
+              {({ focus }) => (
+                <Link
+                  to="/MyPawns"
                   className={classNames(
                     focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -47,7 +64,7 @@ export default function ClientMenuOptions(){
             <MenuItem>
               {({ focus }) => (
                 <Link
-                  to="/MisCompras"
+                  to="/MyShopping"
                   className={classNames(
                     focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                     'block px-4 py-2 text-sm'
@@ -58,6 +75,27 @@ export default function ClientMenuOptions(){
                         <span>Mis compras</span>
                     </div>
                   
+                </Link>
+              )}
+            </MenuItem>
+          </div>
+
+          <div className="py-1">
+            <MenuItem>
+              {({ focus }) => (
+                <Link
+                  to="/CustomerInformation"
+                  className={classNames(
+                    focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}
+                >
+                    <Link to="/CustomerInformation">
+                    <div className="inline-flex items-center gap-x-2 cursor-pointer">
+                      <CiUser className="size-5" />
+                      <span>Mi perfil</span>
+                    </div>
+                  </Link>
                 </Link>
               )}
             </MenuItem>
