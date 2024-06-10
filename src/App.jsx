@@ -16,7 +16,7 @@ import SignUp from './pages/SignUp'
 import LogIn from './pages/LogIn'
 import Layout from './components/Layout'
 import  { useEffect } from 'react';
-import {getCarStorageItem,setCarStorageItem,removeCarStorageItem} from "./components/carrostorage"
+import { getCarStorageItem, setCarStorageItem, removeCarStorageItem } from "./components/carrostorage"
 import Checkout from "./pages/checkout"
 import EmpezarEmpeñar from './pages/EmpezarEmpeñar'
 import EmpezarVender from './pages/EmpezarVender'
@@ -85,9 +85,9 @@ function App() {
         
         <Route path="/Car" element={<Car />} />
         <Route path="/about" element={<About />} />
-        <Route path="/CustomerInformation" element={<CustomerInformation />} />
-        <Route path="/OwnerInformation" element={<OwnerInformation />} />
-        <Route path="/MetodoPago" element={<MetodoPago />} />
+        {/* <Route path="/CustomerInformation" element={<CustomerInformation />} />
+        <Route path="/OwnerInformation" element={<OwnerInformation />} /> */}
+        {/* <Route path="/MetodoPago" element={<MetodoPago />} /> */}
         <Route path="pawnRequest" element={<PawnRequest />}/>
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} />

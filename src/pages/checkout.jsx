@@ -12,12 +12,19 @@ const handleClick = () => {
   
 function requestCar(bol) {
     return bol;
-}
-;
+};
 
 
 export default function Checkout(){
-    const [Productlist, setProductlist] = useState(JSON.parse(getCarStorageItem()));
+    const [Productlist, setProductlist] = useState([{
+        imagen: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
+        categoria: "Moda",
+      nombre: "Reloj",
+      precio: 200,
+      descripcion: 'Lorem ipsum dolor sit amet'
+      }]);
+
+
 
     const calculateSubTotal = () => {
       let subTotal = 0;
