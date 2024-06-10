@@ -19,7 +19,7 @@ class Box extends React.Component {
     return (
       <div>
         {gifPlayed ? (
-          <img src="../../public/anim.gif" style={{width:"150px",height:"300px"}} className="center" alt="Gif"  />
+          <img src="anim.gif" style={{width:"150px",height:"300px"}} className="center" alt="Gif"  />
         ) : null}  
       </div>
     );

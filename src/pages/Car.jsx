@@ -88,7 +88,7 @@ export default function Car(){
               <label></label>
              <div className="izquierda" style={{width:"70%"}}>
              
-             {Productlist.map((item, index) => ( // iteramos el comonente card segun el numero de contadores
+             {Productlist.map((item, index) => ( // iteramos el componente card segun el numero de contadores
               <Card key={index} Pdprofile={Productlist[index]} />
 ))}
 
@@ -118,7 +118,7 @@ export default function Car(){
                            // si no muestra el siguiente div
             <div>
                 <div>  
-                    <img src="../../public/box.svg" className="center" style={{ width:"130px",height:"170px"}}/>
+                    <img src="box.svg" className="center" style={{ width:"130px",height:"170px"}}/>
                     <hr className="center" style={{width:"25%", height:"3px" , backgroundColor:"black"}}/>
                     <p style={{color:"red"}}>¡TU CARRITO ESTA VACIO!</p>
                     <hr className="center" style={{width:"25%", height:"3px" , backgroundColor:"black"}}/>
