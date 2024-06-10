@@ -1,22 +1,27 @@
+const flowbite = require("flowbite-react/tailwind");
+
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
+    // Agrega las rutas de contenido necesarias
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
   ],
   theme: {
     extend: {
       colors: {
-        naranja: '#EB9F2C',
-        rojo: '#FF3131',
-        azulClaro: '#7BC9C0',
-        azulOscuro: '#19055B'
+        firstColor: '#5E1414',
+        secondColor: '#FAD3CA',
+        highlightColor: '#AD706E',
       },
       fontFamily: {
         'poppins': ['Poppins', 'sans-serif']
       }
     },
   },
-  plugins: [],
-}
-
+  plugins: [
+    // Agrega el plugin de Flowbite
+    flowbite.plugin(),
+  ],
+};

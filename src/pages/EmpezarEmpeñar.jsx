@@ -1,0 +1,50 @@
+
+import Navbar from '../components/Navbar';
+import { Outlet } from "react-router-dom";
+import Footer from '../components/Footer';
+
+const RedStripe = () => {
+  return (
+    <div className="bg-rojo h-10 w-full flex justify-between items-center px-4">
+      <span className="text-white text-xs">Empezar a empeñar</span>
+      <button className="bg-rojo text-white py-1 px-4 text-xs">Inicio = Empezar a empeñar </button>
+    </div>
+  );
+};
+
+const ButtonSingInRegister = () => {
+  return (
+    <div className='mt-5'>
+      <a href='/login' className='text-azulOscuro'>Inicia sesión </a>
+      o
+      <a href='SingUp' className='text-rojo'> regístrate</a> 
+      
+    </div>
+  )
+}
+
+function Layout(){
+  return(
+    <div class="min-h-screen flex flex-col">
+     
+            <RedStripe></RedStripe>
+            <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold">
+              ¿Quieres empezar a empeñar?
+            </div>
+            <ButtonSingInRegister></ButtonSingInRegister>
+            <main className="flex-1">
+                <Outlet />
+            </main>
+         
+        </div>
+  )
+}
+
+
+export default function EmpezarEmpeñar() {
+  return (
+    <div>
+      <Layout></Layout>
+    </div>
+  );
+}

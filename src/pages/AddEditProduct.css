@@ -1,0 +1,66 @@
+/* AddEditProduct.css */
+
+.add-edit-product {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #fff;
+}
+
+.add-edit-product h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-edit-product form div {
+    margin-bottom: 15px;
+}
+
+.add-edit-product label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.add-edit-product input[type="text"],
+.add-edit-product textarea,
+.add-edit-product input[type="file"],
+.add-edit-product select {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-edit-product textarea {
+    resize: vertical;
+}
+
+.add-edit-product .image-preview {
+    display: block;
+    margin: 10px auto;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.add-edit-product .submit-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-edit-product .submit-button:hover {
+    background-color: #0056b3;
+}
