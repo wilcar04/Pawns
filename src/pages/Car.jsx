@@ -4,20 +4,62 @@ import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import Card from "../components/Card"
 import { useState,useEffect } from 'react';
-import Factura from "../components/Factura";
-
+import Checkout from "../pages/checkout"
+import { Navigate } from "react-router-dom";
+import {getCarStorageItem,setCarStorageItem,removeCarStorageItem} from "../components/carrostorage"
 const handleClick = () => {
     window.location.href = "/";
   };
   
-function requestCar() {
-    return true;
-}
-;
+
 
 
 export default function Car(){
+    const [Productlist, setProductlist] = useState(JSON.parse(getCarStorageItem()));
+
+    const calculateSubTotal = () => {
+      let subTotal = 0;
+      Productlist.forEach(item => {
+        subTotal += parseInt(item[2]);
+      });
+    
+      return subTotal;
+    };
+    
+    
+    const calculateIva = () => {
+      const subTotal = calculateSubTotal();
+      const iva = subTotal * 0.19;
+    
+      return iva;
+    };
+    
+    const calculateOrderTotal = () => {
+      const subTotal = calculateSubTotal();
+      const iva = calculateIva();
+      const orderTotal = subTotal + iva;
+    
+      return orderTotal;
+    };
+
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        setProductlist(JSON.parse(getCarStorageItem()));
+      }, 100);
+  
+      // Limpia el intervalo cuando el componente se desmonta
+      return () => clearInterval(intervalId);
+    }, []);    
+
     const [NetwordPlayed, setLoading] = useState(false);
+
+    function requestCar() {
+     if ((getCarStorageItem())===(JSON.stringify([]))) {
+      return false
+     }else{return true}
+  }
+  ;
 
     useEffect(() => {
       setTimeout(() => {
@@ -26,12 +68,8 @@ export default function Car(){
     }, []);
 
     let variableList = [];
-    let Productlist = [["0","redmi cuatro mega plus ultra","800000","30000","https://9822309932"],
-    ["1","1redmi cuatro mega plus ultra","800000","0","https://9822309932"],
-    ["2","2redmi cuatro mega plus ultra","800000","30000","https://9822309932"],
-    ["3","3redmi cuatro mega plus ultra","800000","30000","https://9822309932"],
-    ["4","4redmi cuatro mega plus ultra","800000","30000","https://9822309932"]]
-  
+
+
     for(let i = 1; i <= 5; i++){
       const [count, setCount] = useState(0);
       variableList.push([count, setCount]);
@@ -41,22 +79,36 @@ export default function Car(){
 
         NetwordPlayed?  (
         
-        <div class="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col">
             <Navbar // insertamos barra de navegacion
             /> 
             <main className="flex-1">
             {requestCar()? // si tenemos datos de la request de la api rest muestra el siguiente div
-            <div class="contenedor">
-             <div class="izquierda" style={{width:"70%"}}>
+            <div className="contenedor">
+              <label></label>
+             <div className="izquierda" style={{width:"70%"}}>
              
-             {variableList.map((item, index) => ( // iteramos el comonente card segun el numero de contadores
-              <Card key={index} count={item[0]} setCount={item[1]} Pdprofile={Productlist[index]} />
+             {Productlist.map((item, index) => ( // iteramos el comonente card segun el numero de contadores
+              <Card key={index} Pdprofile={Productlist[index]} />
 ))}
 
              </div>
-             <div class="derecha" style={{width:"30px"}}>
-                
-                <Factura></Factura>  
+             <div className="derecha" style={{width:"30px"}}>
+            <div className="card " style={{backgroundColor:"white",borderColor:"purple",border:"2px solid purple"}}// creamos la card que envuelve la imagen izquierda y texto derecha
+             > 
+             <div className='contenedor' style={{margin:"10px"}}> </div>
+             <div className='contenedor' style={{margin:"20px"}}> <p style={{textAlign:"left"}}>TU COMPRA</p> </div>
+             <div className='contenedor' style={{margin:"10px",marginLeft:"20px"}}> <p style={{textAlign:"left",color:"grey"}} className='izquierda'>Sub Total</p> <p className='derecha'>{calculateSubTotal()}</p></div>
+             <hr className="center" style={{width:"90%", height:"3px" , backgroundColor:"grey"}}/>
+             <div className='contenedor' style={{margin:"10px",marginLeft:"20px"}}> <p style={{textAlign:"left",color:"grey"}} className='izquierda'>Descuentos Aplicables</p> <p className='derecha'>0.00</p></div>
+             <hr className="center" style={{width:"90%", height:"3px" , backgroundColor:"grey"}}/>
+             <div className='contenedor' style={{margin:"10px",marginLeft:"20px"}}> <p style={{textAlign:"left",color:"grey"}} className='izquierda'>Iva</p> <p className='derecha'>{calculateIva()}</p></div>
+             <hr className="center" style={{width:"90%", height:"3px" , backgroundColor:"grey"}}/>
+             <div className='contenedor' style={{margin:"10px",marginLeft:"20px"}}> <p style={{textAlign:"left"}} className='izquierda'>ORDEN TOTAL</p> <p className='derecha'>{calculateOrderTotal()}</p></div>
+             <button onClick={() =>{""}} style={{margin:"10px",minHeight:"60px",minWidth:"170px",borderRadius:"10px" ,
+              color:"white" ,backgroundColor:"darkblue"}} >PAGAR</button>
+             </div>
+
              
              
              </div>
@@ -75,12 +127,11 @@ export default function Car(){
                 </div>
             </div>    
             }
-
             </main>
             <Footer //insertamos footer 
             />
         </div>      )
-        : <div class="min-h-screen flex flex-col">
+        : <div className="min-h-screen flex flex-col">
             <Navbar // insertamos barra de navegacion
             />
               <main className="flex-1">
