@@ -31,7 +31,8 @@ export default function Landing() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
 
-    const products = useOutletContext();
+    const contextProducts = useOutletContext();
+    const products = contextProducts.slice(0, 5)
 
     const handleCategoryChange = (e) => {
         const category = e.target.value;
@@ -65,13 +66,15 @@ export default function Landing() {
                     <h3 className='font-bold uppercase text-lg mt-5'>Nuestros productos</h3>
                     <div className=" h-48 flex justify-center items-center gap-x-8 mb-5">
                         {categories.map((category, index) => (
-                            <div key={index} className=" w-24 flex flex-col items-center gap-y-3" onClick={() => handleCategoryChange({ target: { value: category.name } })}>
-                                <div className='rounded-full bg-firstColor text-white size-20 flex items-center justify-center'>
-                                    <FontAwesomeIcon icon={category.icon} size="2x" />
+                            <Link to={`/all-products?category=${category.name}`}>
+                                <div key={index} className=" w-24 flex flex-col items-center gap-y-3" onClick={() => handleCategoryChange({ target: { value: category.name } })}>
+                                    <div className='rounded-full bg-firstColor text-white size-20 flex items-center justify-center'>
+                                        <FontAwesomeIcon icon={category.icon} size="2x" />
                                 
+                                    </div>
+                                    <span className="category-name">{category.name}</span>
                                 </div>
-                                <span className="category-name">{category.name}</span>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </>
@@ -85,7 +88,7 @@ export default function Landing() {
                 </h2>
             </div> */}
             <div className="products-section">
-                <div className="product-row">
+                <div className="product-row ">
                     {products?.map((product, index) => (
                         <Link to={`/product/${product.producto_idproducto}`} key={index}>
                             <div key={index} className="product-item">

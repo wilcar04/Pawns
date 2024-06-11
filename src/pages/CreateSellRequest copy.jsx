@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useNavigate } from 'react-router-dom';
 import { createOfferSell } from '../api/queries';
+import { Link } from 'react-router-dom';
 
 export default function CreateSellRequest() {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ export default function CreateSellRequest() {
 
   const { isError, isPending, mutate: mutateSendRequest } = useMutation({
     mutationFn: () => createOfferSell(auth.id, formData.itemName, formData.description, formData.category, formData.pawnValue, image),
-    onSuccess: () => setIsSubmitted(true)
+    onSuccess: () => navigate('/requestSent')
   });
 
   const handleChange = (e) => {
@@ -186,6 +187,7 @@ export default function CreateSellRequest() {
           )}
           {errorMessage && <p className="text-red-600 text-sm mt-2">{errorMessage}</p>}
           <button
+          disabled={isPending}
             type="submit"
             className="w-full py-2 px-4 bg-firstColor text-white font-semibold rounded-md hover:bg-rojo"
             onClick={handleSubmit}

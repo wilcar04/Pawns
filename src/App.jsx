@@ -97,6 +97,9 @@ function App() {
           <Route path="/createSell" element={<CreateSellRequest />} />
           <Route path="/createPawn" element={<CreatePawnRequest />} />
 
+          <Route path="/sendInstructions" element={<EmpezarVender3 />} />
+          <Route path="/requestSent" element={<EmpezarEmpeñar3 />} />
+
           {/* <Route path="/CustomerInformation" element={<AccountInfo />} /> */}
 
           <Route path="/Checkout" element={<Checkout />} />

@@ -38,8 +38,8 @@ export default function Navbar(){
                 <div to="owners" className="text-sm basis-1/6 px-5 text-left justify-start flex flex-col max-h-max my-2 mx-4 rounded-2xl">
                     <p>Síguenos en</p>
                     <div className="flex">
-                        <img src={facebookIcon} className="size-4"/>
-                        <img src={instagramIcon} className="size-4 ml-4"/>
+                        <a href="https://www.facebook.com/"><img src={facebookIcon} className="size-4"/></a>
+                        <a href="https://www.instagram.com/"><img src={instagramIcon} className="size-4 ml-4"/></a>
                     </div>  
                 </div>
             </div>

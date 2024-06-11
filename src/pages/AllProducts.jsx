@@ -20,8 +20,8 @@ const AllProducts = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const filteredProducts = products.filter(product => {
-        const matchesSearchTerm = searchTerm ? product.name.toLowerCase().includes(searchTerm.toLowerCase()) : true;
-        const matchesCategory = categoryFilter ? product.category === categoryFilter : true;
+        const matchesSearchTerm = searchTerm ? product.nombre.toLowerCase().includes(searchTerm.toLowerCase()) : true;
+        const matchesCategory = categoryFilter ? product.categoria === categoryFilter.toLowerCase()  : true;
         return matchesSearchTerm && matchesCategory;
     });
 

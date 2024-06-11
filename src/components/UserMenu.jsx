@@ -52,7 +52,7 @@ export default function Example() {
             <p className='block px-4 pb-2 text-xs text-gray-700'>{authUser.email}</p>
           </div>
 
-          { authUser.type === "cliente" && authUser.id != 15 ? 
+          { authUser.type === "cliente" ? 
             <ClientMenuOptions />
             :
             <AdminMenuOptions />
