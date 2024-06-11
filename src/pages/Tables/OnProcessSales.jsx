@@ -76,7 +76,7 @@ const TablaMisCompras = () => {
           <th className="py-1 bg-gray-200">Categoria</th>
           <th className="py-1 bg-gray-200">Estado</th>
           <th className="py-1 bg-gray-200">precio</th>
-          <th className="py-1 bg-gray-200 w-20">llegó?</th>
+          <th className="py-1 bg-gray-200 w-20"></th>
         </tr>
       </thead>
       <tbody>
