@@ -6,6 +6,7 @@ import { getAllPendingSells } from '../../api/queries';
 import { imageUrlApi } from '../../api/axiosConfig';
 import { Link } from 'react-router-dom';
 import Loading from '../../components/Loading';
+import NoInfo from '../../components/NoInfo';
 
 const RedStripe = () => {
   return (
@@ -26,8 +27,12 @@ const TablaMisVentas = () => {
   })
 
 
-  if ( isLoading ){
-    return <Loading />
+  if (isLoading) {
+    return <Loading />; 
+  }
+
+  if (!solicituventas?.length) {
+    return <NoInfo message="No hay solicitudes de ventas" />;
   }
 
   return (
@@ -74,7 +79,7 @@ function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <RedStripe />
-      <div className="text-center mt-20 mb-20 text-base sm:text-3xl lg:text-xl font-bold">
+      <div className="text-center mt-20 mb-20 text-base sm:text-3xl lg:text-3xl font-bold">
         Solicitudes de venta
       </div>
       <TablaMisVentas />

@@ -5,6 +5,8 @@ import { getUserCurrentPawns } from '../../api/queries';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { imageUrlApi } from '../../api/axiosConfig';
 import { Link } from 'react-router-dom';
+import NoInfo from '../../components/NoInfo';
+import Loading from '../../components/Loading';
 
 
 const RedStripe = () => {
@@ -28,6 +30,15 @@ const TablaMisEmpeños = () => {
   function handlerecover(idempennio){
 
   }
+
+  if (isLoading) {
+    return <Loading />; 
+  }
+
+  if (!Misempenos?.length) {
+    return <NoInfo message="No hay empeños" />;
+  }
+  
 
   return (
     <table className="mx-32 max-w-full">
@@ -86,7 +97,7 @@ function Layout() {
     <div className="min-h-screen flex flex-col">
      
       <RedStripe />
-      <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold">
+      <div className="text-center mt-20 text-base sm:text-3xl lg:text-3xl font-bold">
         Mis empeños
       </div>
       <div className="text-center text-blue-800 mt-3 mb-5 text-base sm:text-xs lg:text-xs font-bold">
