@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getUserCurrentPawns } from '../../api/queries';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { imageUrlApi } from '../../api/axiosConfig';
+import { Link } from 'react-router-dom';
 
 
 const RedStripe = () => {
@@ -14,13 +15,6 @@ const RedStripe = () => {
     </div>
   );
 };
-
-const empenos = [
-  { id: 1, producto: 'Productzxvzx', montoFinal: 100000, cantidad: 2, precioRecuperar: 200000 },
-  { id: 2, producto: 'Pasfawfasfasfas', montoFinal: 100000, cantidad: 1, precioRecuperar: 200000 },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', montoFinal: 100000, cantidad: 1, precioRecuperar: 200000 },
-  { id: 4, producto: 'dfhdfhdfgwefqw', montoFinal: 100000, cantidad: 1, precioRecuperar: 200000 }
-];
 
 const TablaMisEmpeños = () => {
 
@@ -61,11 +55,11 @@ const TablaMisEmpeños = () => {
             <td className="py-4 bg-gray-100">{empeno.precio}</td>
             <td className="py-4 bg-gray-100">
 
-            <button onclick={()=>handlerecover(empeno.idempennio)} 
+            <Link to="/Checkout" state={{data: empeno, type:"pawn"}} onclick={()=>handlerecover(empeno.idempennio)} 
                     style={{ backgroundColor: '#5E1414', color: '#FFFFFF' }} 
                     className="hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-              recuperar
-            </button>
+              Recuperar
+            </Link>
              
             </td>
           </tr>
@@ -99,7 +93,6 @@ function Layout() {
         ¿Quieres recuperar tus productos? Recuerda que tienes un plazo de 2 meses para hacerlo.
       </div>
       <TablaMisEmpeños />
-      <SaveChangesButton />
       <main className="flex-1">
         <Outlet />
       </main>

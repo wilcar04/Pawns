@@ -283,7 +283,14 @@ export async function getBoughtItems(idUser){
 
 // Tienda compra
 export async function shopBuysItem(idUser, price, idProduct){
-    const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
+    try{
+        const formatDate = (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+        const date = formatDate(new Date());
     const params = { 
         seller_client_id : idUser
     };
@@ -304,7 +311,7 @@ export async function shopBuysItem(idUser, price, idProduct){
             apellidos: "Pawns",
             direccion: "Cra. 80 # 77 - 35",
             departamento: "Antioquia",
-            municipio: "Medellín",
+            municipio: "Medellin",
             telefono: "3053382615",
             correo: "pawns@gmail.com",
             precio_envio: 0,
@@ -312,7 +319,6 @@ export async function shopBuysItem(idUser, price, idProduct){
             info_adicional: "La tienda ha comprado un nuevo artilugio"
         }
     }
-    try{
         const response = await api.post(`/buy/shop`, body, {
             params: params
         });
@@ -325,10 +331,14 @@ export async function shopBuysItem(idUser, price, idProduct){
 }
 
 // Cliente compra
-export async function clientBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
-    phone, email, additionalInfo
-){
-    const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
+export async function clientBuysItem(idUser, price, idProduct){
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+    const date = formatDate(new Date());
 
     const body = {
         buy: {
@@ -343,16 +353,16 @@ export async function clientBuysItem(idUser, price, idProduct, name, lastName, a
             idFacturaCompra: 0,
             medio_pago: "PSE",
             total: 0,
-            nombres: name,
-            apellidos: lastName,
-            direccion: address,
-            departamento: department,
-            municipio: municipality,
-            telefono: phone,
-            correo: email,
+            nombres: "Yuliana",
+            apellidos: "Mejia",
+            direccion: "Cra 88 no. 44 - 03",
+            departamento: "Antioquia",
+            municipio: "Medellin",
+            telefono: "3216547659",
+            correo: "yuliana@gmail.com",
             precio_envio: 0,
             precio_IVA: 0,
-            info_adicional: additionalInfo
+            info_adicional: "Cerca a la universidad de Antioquia"
         }
     }
     try{
@@ -413,14 +423,26 @@ export async function getUserCurrentPawns(idUser){
 
 // Crear empeño
 export async function createPawn(idUser, idProduct, price){
-    const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
-    const finalDate = new Date()
-    finalDate.setMonth(finalDate.getMonth() + months)
-    const finalDateStr = finalDate.toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
+    try{
+
+    // Calculate final date (2 months from today)
+    const finalDate = new Date();
+    finalDate.setMonth(finalDate.getMonth() + 2);
+
+    // Function to format date as Y-m-d
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+    const date = formatDate(new Date());
+    // Formatted final date
+    const finalDateStr = formatDate(finalDate);
     const body = {
         idempennio: 0,
         precio: price,
-        estado: 0,
+        estado: "finalizado",
         fecha_inicio: date,
         fecha_final: finalDateStr,
         interes: 0,
@@ -429,34 +451,32 @@ export async function createPawn(idUser, idProduct, price){
         id_factura_empennio: 0,
         id_factura_pago_cliente_empennio: 0
     };
-    try{
         const response = await api.post(`/pawn/addPawn`, body);
         return response.data;
     }
     catch (error) {
         console.error('Hubo un problema con la solicitud fetch:', error);
+        throw new Error(error)
         return [];
     }
 }
 
 // Cliente paga el empeño
-export async function payPawn(idPawn, name, lastName, address, department, municipality, 
-    phone, email, info
-){
+export async function payPawn(idPawn){
     const body = {
         idFacturaEmpennio: 0,
         medio_pago: "PSE",
         total: 0,
-        nombres: name,
-        apellidos: lastName,
-        direccion: address,
-        departamento: department,
-        municipio: municipality,
-        telefono: phone,
-        correo: email,
+        nombres: "Emilio",
+        apellidos: "Alvarez",
+        direccion: "Cll 10 no.24 sur - 87",
+        departamento: "Antioquia",
+        municipio: "Medellin",
+        telefono: "3124854738",
+        correo: "emilio@gmail.com",
         precio_envio: 0,
         precio_IVA: 0,
-        info_adicional: info
+        info_adicional: "Cerca a Avenida Central"
     }
     try{
         const response = await api.put(`/pawn/payPawn/${idPawn}`, body);

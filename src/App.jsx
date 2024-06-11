@@ -64,8 +64,6 @@ function App() {
       // Convierte la lista a formato JSON
 
       
-      <Route path="/Checkout" element={<Checkout Productlist={getCarStorageItem()} />} />
-      <Route path="/Car" element={<Car />} />
       <Route path="/login" element={<LogIn />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/" element={<Layout />}>
@@ -75,6 +73,8 @@ function App() {
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
 
 
+
+        <Route element={<AuthOutlet fallbackPath='/login' />}>
           <Route path="/MyPawns" element={<MyPawns />} />
           <Route path="/MyShopping" element={<MySales />} />
 
@@ -95,8 +95,10 @@ function App() {
           <Route path="/createSell" element={<CreateSellRequest />} />
           <Route path="/createPawn" element={<CreatePawnRequest />} />
 
-          <Route path="/CustomerInformation" element={<AccountInfo />} />
-          <Route path="pawnRequest" element={<PawnRequest />}/>
+          {/* <Route path="/CustomerInformation" element={<AccountInfo />} /> */}
+
+          <Route path="/Checkout" element={<Checkout />} />
+        </Route>
 
 
 
@@ -112,8 +114,6 @@ function App() {
         {/* <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} /> */}
 
-
-        <Route path="s" element={ <Sandbox />} />
       </Route>
     </>
   ))

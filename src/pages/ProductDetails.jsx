@@ -4,6 +4,7 @@ import { getProducts } from '../utils/localStorageUtils';
 import './ProductDetails.css';
 import NoInfo from '../components/NoInfo';
 import { imageUrlApi } from '../api/axiosConfig';
+import { Link } from 'react-router-dom';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -30,9 +31,9 @@ const ProductDetails = () => {
 
           <p className='mt-8 pb-8 font-medium text-3xl border-b border-b-gray-200'>$ {product.precio}</p>
 
-          <button className='mt-7 rounded-full bg-firstColor text-white hover:opacity-80 py-1 px-6 self-center'>
-            Agregar al carrito
-          </button>
+          <Link to="/Checkout" state={{data: product, type:"buy"}} className='mt-7 rounded-full bg-firstColor text-white hover:opacity-80 py-1 px-6 self-center'>
+            Comprar
+          </Link>
 
           <div className='mt-8 border border-gray-200 p-3 rounded'>
             <h4 className='pb-2 font-semibold text-lg w-full border-b border-b-gray-200'>Descripción</h4>

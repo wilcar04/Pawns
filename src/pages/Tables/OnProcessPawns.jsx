@@ -18,13 +18,6 @@ const RedStripe = () => {
   );
 };
 
-const compras = [
-  { id: 1, producto: 'Productzxvzx', precioDado: 100000, Estado:'En camino', cantidad: 2, total: 200000 },
-  { id: 2, producto: 'Pasfawfasfasfas', precioDado: 100000, Estado: 'En camino', cantidad: 1, total: 100000 },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', precioDado: 100000, Estado: 'En camino', cantidad: 1, total: 100000 },
-  { id: 4, producto: 'dfhdfhdfgwefqw', precioDado: 100000, Estado: 'En camino', cantidad: 1, total: 100000 }
-];
-
 const TablaMisCompras = () => {
 
   const authUser = useAuthUser();
@@ -46,14 +39,14 @@ const TablaMisCompras = () => {
   })
 
   const { mutate: mutateAddPawn, isPending: isPendingAddPawn } = useMutation({
-    mutationFn: (price, idProduct) => createPawn(authUser.id, idProduct, price),
+    mutationFn: ({price, idProduct, idOfertante}) => createPawn(idOfertante, idProduct, price),
     onSuccess: () => console.log("Éxito")
   })
 
 
-  function accept(idempennio, price, idProduct){
+  function accept(idempennio, price, idProduct, idOfertante){
+    mutateAddPawn({price: price, idProduct: idProduct, idOfertante: idOfertante})
     mutateFinished(idempennio)
-    mutateAddPawn({price: price, idProduct: idProduct})
   }
     
   function cancel(idempennio){
@@ -89,7 +82,7 @@ const TablaMisCompras = () => {
             <td className="py-4 bg-gray-100">{compra.precio}</td>
             <td className="py-4 bg-gray-100">
                 <>
-                  <button onClick={() => accept(compra.idoferta, compra.precio, compra.producto_idproducto)}>
+                  <button onClick={() => accept(compra.idoferta, compra.precio, compra.producto_idproducto, compra.ofertante)}>
                   <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
                 </button>
                 <button onClick={() => cancel(compra.idoferta)}>

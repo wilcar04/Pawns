@@ -4,6 +4,10 @@ import { Outlet } from "react-router-dom";
 import { getSellOffersNotFinished } from '../../api/queries';
 import { useQuery } from '@tanstack/react-query';
 import { imageUrlApi } from '../../api/axiosConfig';
+import { useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import { changeOfferState } from '../../api/queries';
+import Loading from '../../components/Loading';
 
 const RedStripe = () => {
   return (
@@ -14,33 +18,44 @@ const RedStripe = () => {
   );
 };
 
-const compras = [
-  { id: 1, producto: 'Productzxvzx', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 2, total: 200000, estado: 'pendiente' },
-  { id: 2, producto: 'Pasfawfasfasfas', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000, estado: 'aprobado' },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000, estado: 'pendiente' },
-  { id: 4, producto: 'dfhdfhdfgwefqw', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000, estado: 'aprobado' }
-];
-
 const TablaMisCompras = () => {
 
   const authUser = useAuthUser();
+  const queryClient = useQueryClient();
 
-  const{data:Missolicitudesventas,isLoading}=useQuery({
+  const{data:Missolicitudesventas,isInitialLoading}=useQuery({
     queryKey:["getSellOffersNotFinished"],
     queryFn:()=>getSellOffersNotFinished(authUser.id)
   })
+
+  const { mutate: mutateReject, isPending: isPendingReject } = useMutation({
+    mutationFn: (idempennio) => changeOfferState(idempennio, 'rechazada'),
+    onSuccess: () => queryClient.invalidateQueries("getPawnOffersNotFinished")
+  })
+
+  const { mutate: mutateAccept, isPending: isPendingAccept } = useMutation({
+    mutationFn: (idempennio) => changeOfferState(idempennio, 'en_curso'),
+    onSuccess: () => queryClient.invalidateQueries("getPawnOffersNotFinished")
+  })
+
+
   function accept(idempennio){
-
+    mutateAccept(idempennio)
   }
+  
   function cancel(idempennio){
+    mutateReject(idempennio)
+  }
 
+  if (isInitialLoading || isPendingAccept || isPendingReject){
+    return <Loading />
   }
 
   return (
     <table className="mx-32 max-w-full">
       <thead>
         <tr className=''>
-          <th className="py-1 bg-gray-200 text-left pl-3">Producto</th>
+          <th className="w-1/3 py-1 bg-gray-200 text-left pl-3">Producto</th>
           <th className="py-1 bg-gray-200">Precio </th>  
           <th className="py-1 bg-gray-200">Estado</th>
           <th className="py-1 bg-gray-200 w-20"></th>
@@ -57,17 +72,17 @@ const TablaMisCompras = () => {
             </td>
             <td className="py-4 bg-gray-100">{compra.precio}</td>
             <td className="py-4 bg-gray-100">{compra.estado.replace(/_/g, ' ')}</td>
-            <td className="py-4 bg-gray-100">
-              {compra.estado === 'en_curso' && (
-                <>
-                  <button onClick={() => accept(compra.idoferta)}>
-                  <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
-                </button>
-                <button onClick={() => cancel(compra.idoferta)}>
-                  <img src='src/assets/cancel.png' className='w-5 ml-15' alt='cancel' />
-                </button>
-                  
-                </>
+            <td className="py-4 bg-gray-100 w-1/6">
+              {compra.estado === 'pendiente_cliente' && (
+                <div className='flex gap-x-8'>
+                <button onClick={() => accept(compra.idoferta)} >
+                <img src='src/assets/accept.png' className='size-7 object-contain' alt='accept' />
+              </button>
+              <button onClick={() => cancel(compra.idoferta)} >
+                <img src='src/assets/cancel.png' className='size-7 object-contain' alt='cancel' />
+              </button>
+                
+              </div>
               )}
          
             </td>

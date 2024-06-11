@@ -3,6 +3,12 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { getCarStorageItem, setCarStorageItem, removeCarStorageItem } from "../components/carrostorage";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { payPawn, clientBuysItem } from "../api/queries";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { imageUrlApi } from "../api/axiosConfig";
+import Loading from "../components/Loading"
 
 const handleClick = () => {
   window.location.href = "/";
@@ -13,6 +19,39 @@ function requestCar(bol) {
 }
 
 export default function Checkout() {
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const authUser = useAuthUser();
+
+  const data = location.state.data
+  const isPawn = location.state.type === "pawn"
+
+    // Cliente paga para recuperar producto
+  const { mutate: mutatePayPawn, isPending: isPendingPawn } = useMutation({
+      mutationFn: () => payPawn(data.idempennio),
+      onSuccess: () => navigate('/')
+  })
+
+  // Cliente compra
+  const { mutate: mutateClientBuys, isPending: isPendingBuy } = useMutation({
+    mutationFn: () => clientBuysItem(authUser.id, data.precio, data.producto_idproducto),
+    onSuccess: () => navigate('/')
+  })
+
+  const isPending = isPendingBuy || isPendingPawn
+
+  const pays = () => {
+    if (validateForm()) {
+      setpayed(false);
+    }
+    if (isPawn) {
+      mutatePayPawn();
+    } else {
+      mutateClientBuys();
+    }
+  };
+
   const [Productlist, setProductlist] = useState([
     {
       imagen: "https://media.revistagq.com/photos/61bb41b5d398f278a07e2bd8/3:2/w_1335,h_890,c_limit/Longines-VHP-GMT-2018.jpeg",
@@ -116,21 +155,18 @@ export default function Checkout() {
     return true;
   };
 
-  const pays = () => {
-    if (validateForm()) {
-      setpayed(false);
-    }
-  };
-
   useEffect(() => {
     setTimeout(() => {
       setLoading(true);
     }, 1000); // Simulando una carga de datos
   }, []);
 
+  if (isPending){
+    return <Loading />
+  }
+
   return NetwordPlayed ? (
     <div className="min-h-screen flex flex-col">
-      <Navbar /> {/* insertamos barra de navegacion */}
       <main className="flex-1 p-8 bg-gray-100">
         {payed ? (
           <div className="flex flex-wrap justify-between">
@@ -310,15 +346,15 @@ export default function Checkout() {
               {/* Detalles de los productos */}
               <div className="mb-4 p-4 bg-white rounded border border-gray-500">
                 <h2 className="text-xl font-semibold mb-2">Detalle del Producto</h2>
-                {Productlist.map((product, index) => (
-                  <div key={index} className="flex items-center mb-4">
-                    <img src={product.imagen} alt={product.nombre} className="w-16 h-16 object-cover rounded mr-4" />
+
+                  <div className="flex items-center mb-4">
+                    <img src={`${imageUrlApi}/${data.imagen}`} alt={data.nombre} className="w-16 h-16 object-cover rounded mr-4" />
                     <div className="flex justify-between w-full">
-                      <span className="font-medium">{product.nombre}</span>
-                      <span>${product.precio}</span>
+                      <span className="font-medium">{data.nombre}</span>
+                      <span>${data.precio}</span>
                     </div>
                   </div>
-                ))}
+
               </div>
 
               {/* Tu Compra */}
@@ -341,6 +377,7 @@ export default function Checkout() {
                   <span>{calculateOrderTotal()}</span>
                 </div>
                 <button
+                disabled={isPending}
                   onClick={pays}
                   className="w-full mt-4 p-2 bg-blue-600 text-white rounded"
                 >
@@ -363,7 +400,6 @@ export default function Checkout() {
           </div>
         )}
       </main>
-      <Footer /> {/* insertamos pie de página */}
     </div>
   ) : (
     <Box />
