@@ -284,7 +284,6 @@ export async function getBoughtItems(idUser){
 // Tienda compra
 export async function shopBuysItem(idUser, price, idProduct){
     const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
-    console.log([idUser, price, idProduct])
     const params = { 
         seller_client_id : idUser
     };
@@ -306,7 +305,7 @@ export async function shopBuysItem(idUser, price, idProduct){
             direccion: "Cra. 80 # 77 - 35",
             departamento: "Antioquia",
             municipio: "Medellín",
-            telefono: "+57 305 3382615",
+            telefono: "3053382615",
             correo: "pawns@gmail.com",
             precio_envio: 0,
             precio_IVA: 0,

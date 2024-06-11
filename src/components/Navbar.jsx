@@ -6,11 +6,12 @@ import facebookIcon from '../assets/facebookIcon.png'
 import instagramIcon from '../assets/instagramIcon.png'
 import UserMenu from './UserMenu'
 import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 export default function Navbar(){
 
     
-    const isAuth = useIsAuthenticated();
+    const authUser = useAuthUser()
 
     return(
         <nav className="flex items-center justify-start p-1 max-h-20 bg-white text-black border-b border-b-gray-300 shadow">
@@ -45,7 +46,7 @@ export default function Navbar(){
 
             <div className="inline-flex items-center mx-5 gap-x-5">
                 {
-                    isAuth ?
+                    !(authUser === null) ?
                         <>
                             {/* <Link to="/Car">
                                 <FaShoppingCart className='size-7 hover:text-gray-500' />

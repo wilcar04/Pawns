@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 import { getAllPendingSells } from '../../api/queries';
 import { imageUrlApi } from '../../api/axiosConfig';
 import { Link } from 'react-router-dom';
-
+import Loading from '../../components/Loading';
 
 const RedStripe = () => {
   return (
@@ -15,13 +15,6 @@ const RedStripe = () => {
     </div>
   );
 };
-
-const empenos = [
-  { id: 1, producto: 'Productzxvzx', Precio: 10000 },
-  { id: 2, producto: 'Pasfawfasfasfas', Precio: 10000 },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', Precio: 100000 },
-  { id: 4, producto: 'dfhdfhdfgwefqw', Precio: 100000 }
-];
 
 const TablaMisVentas = () => {
 
@@ -33,8 +26,8 @@ const TablaMisVentas = () => {
   })
 
 
-  function vermas(idempennio){
-
+  if ( isLoading ){
+    return <Loading />
   }
 
   return (
@@ -59,7 +52,7 @@ const TablaMisVentas = () => {
             <td className="py-4 bg-gray-100">{empeno.categoria}</td>
             <td className="py-4 bg-gray-100">{empeno.precio}</td>
             <td className="py-4 bg-gray-100">
-              <Link  to={`/request/${empeno.idoferta}`} className="text-blue-500 underline">Ver más</Link>
+              <Link  to={`/request/${empeno.idoferta}`} state={{ data: empeno }} className="text-blue-500 underline">Ver más</Link>
             </td>
           </tr>
         ))}

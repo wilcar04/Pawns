@@ -53,7 +53,7 @@ const TablaMisCompras = () => {
 
   function accept(idempennio, price, idProduct){
     mutateFinished(idempennio)
-    mutateAddPawn(price, idProduct)
+    mutateAddPawn({price: price, idProduct: idProduct})
   }
     
   function cancel(idempennio){

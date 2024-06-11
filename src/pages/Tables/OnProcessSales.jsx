@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Outlet } from "react-router-dom";
@@ -26,7 +26,7 @@ const compras = [
 ];
 
 const TablaMisCompras = () => {
-
+  const queryClient = useQueryClient();
   const authUser = useAuthUser();
 
   const{data:Ventasproceso,isLoading}=useQuery({
@@ -45,20 +45,20 @@ const TablaMisCompras = () => {
   })
 
   const { mutate: mutateShopping, isPending: isPendingShopping } = useMutation({
-    mutationFn: (price, idProduct) => shopBuysItem(authUser.id, price, idProduct),
+    mutationFn: ({price, idProduct}) => shopBuysItem(authUser.id, price, idProduct),
     onSuccess: () => console.log("Éxito")
   })
 
   function accept(idempennio, price, idProduct){
-    // mutateFinished(idempennio)
-    mutateShopping(price, idProduct)
+    mutateFinished(idempennio)
+    mutateShopping({price: price, idProduct: idProduct})
   }
     
   function cancel(idempennio){
     mutateReject(idempennio)
   }
 
-  if (isPendingReject || isPendingFinished || isPendingShopping){
+  if (isLoading || isPendingReject || isPendingFinished || isPendingShopping){
     return <Loading />
   }
 

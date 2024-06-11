@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import { getAllPendingPawns } from '../../api/queries';
 import { imageUrlApi } from '../../api/axiosConfig';
 import { Link } from 'react-router-dom';
+import Loading from '../../components/Loading';
 
 
 
@@ -17,13 +18,6 @@ const RedStripe = () => {
   );
 };
 
-const empenos = [
-  { id: 1, producto: 'Productzxvzx', Precio: 10000 },
-  { id: 2, producto: 'Pasfawfasfasfas', Precio: 10000 },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', Precio: 100000 },
-  { id: 4, producto: 'dfhdfhdfgwefqw', Precio: 100000 }
-];
-
 const TablaMisVentas = () => {
 
   const authUser = useAuthUser();
@@ -34,8 +28,8 @@ const TablaMisVentas = () => {
   })
 
 
-  function accept(idempennio){
-
+  if (isLoading){
+    return <Loading />
   }
 
 
@@ -61,7 +55,7 @@ const TablaMisVentas = () => {
             <td className="py-4 bg-gray-100">{empeno.categoria}</td>
             <td className="py-4 bg-gray-100">{empeno.precio}</td>
             <td className="py-4 bg-gray-100">
-             <Link  to={`/request/${empeno.idoferta}`} className="text-blue-500 underline">Ver más</Link>
+             <Link  to={`/request/${empeno.idoferta}`} state={{ data: empeno }} className="text-blue-500 underline">Ver más</Link>
             </td>
           </tr>
         ))}

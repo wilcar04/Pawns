@@ -47,10 +47,10 @@ export default function Sandbox() {
 
     // TODO: Probar
     // Contra ofertar producto
-    const { data, mutate, isPending } = useMutation({
-        mutationFn: () => shopProposePrice(2, 3),
-        onSuccess: () => console.log("Éxito")
-    })
+    // const { data, mutate, isPending } = useMutation({
+    //     mutationFn: () => shopProposePrice(2, 3),
+    //     onSuccess: () => console.log("Éxito")
+    // })
 
 
     // *    Checkout

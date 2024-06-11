@@ -4,6 +4,7 @@ import { BsArrowLeftRight } from "react-icons/bs";
 import { IoBagOutline } from "react-icons/io5";
 import { MdAttachMoney } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { CiUser } from 'react-icons/ci';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -80,7 +81,7 @@ export default function ClientMenuOptions(){
             </MenuItem>
           </div>
 
-          <div className="py-1">
+          {/* <div className="py-1">
             <MenuItem>
               {({ focus }) => (
                 <Link
@@ -99,7 +100,7 @@ export default function ClientMenuOptions(){
                 </Link>
               )}
             </MenuItem>
-          </div>
+          </div> */}
         </>
     )
 }

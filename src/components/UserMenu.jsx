@@ -3,10 +3,11 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/r
 import { FaCircleUser } from 'react-icons/fa6'
 import { CiUser } from "react-icons/ci";
 import { SlLogout } from "react-icons/sl";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ClientMenuOptions from './ClientMenuOptions';
 import AdminMenuOptions from './AdminMenuOptions';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 
 function classNames(...classes) {
@@ -15,8 +16,18 @@ function classNames(...classes) {
 
 export default function Example() {
   const signOut = useSignOut()
+  const navigate = useNavigate();
 
-  const isClient = false
+  const authUser = useAuthUser()
+
+  function handleLogOut() {
+    signOut()
+    navigate(0)
+  }
+
+  if (authUser === null){
+    return 
+  }
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -37,11 +48,11 @@ export default function Example() {
       >
         <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-3">
-            <h6 className='block px-4 pt-2 text-sm text-gray-900'>Nombre de usuario</h6>
-            <p className='block px-4 pb-2 text-xs text-gray-700'>Correo@gmail.com</p>
+            <h6 className='block px-4 pt-2 text-sm text-gray-900'>{authUser.name}</h6>
+            <p className='block px-4 pb-2 text-xs text-gray-700'>{authUser.email}</p>
           </div>
 
-          { isClient ? 
+          { authUser.type === "cliente" ? 
             <ClientMenuOptions />
             :
             <AdminMenuOptions />
@@ -58,7 +69,7 @@ export default function Example() {
                     'block px-4 py-2 text-sm'
                   )}
                 >
-                    <div className="inline-flex items-center gap-x-2 cursor-pointer" onClick={() => signOut()}>
+                    <div className="inline-flex items-center gap-x-2 cursor-pointer" onClick={handleLogOut}>
                         <SlLogout className='size-4'/>
                         <span>Cerrar sesión</span>
                     </div>
