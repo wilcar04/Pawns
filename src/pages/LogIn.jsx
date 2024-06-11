@@ -7,22 +7,20 @@ import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import { useNavigate } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import { BsExclamationTriangle } from 'react-icons/bs';
-import { logIn } from '../api/queries'
+import { logIn } from '../api/queries';
  
 function LoginForm() {
-  const [ form, setForm ] = useState({
+  const [form, setForm] = useState({
     email: '',
     password: ''
-  })
+  });
 
-  function handleChange(event){
-    const { name, value } = event.target
-    setForm( prevForm => {
-      return {
-        ...prevForm,
-        [name]: value
-      }
-    })
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setForm(prevForm => ({
+      ...prevForm,
+      [name]: value
+    }));
   }
 
   const navigate = useNavigate();
@@ -37,9 +35,9 @@ function LoginForm() {
 
   useEffect(() => {
     if (isAuthenticated){
-      navigate('/')
+      navigate('/');
     }
-  }, [])
+  }, []);
 
   function handleSuccess(data) {
     signIn({
@@ -48,10 +46,10 @@ function LoginForm() {
         type: 'Bearer'
       },
       userState: {
-          id: data.data.idusuario,
-          name: data.data.nombre,
-          email: data.data.correo_electronico,
-          type: data.data.tipo
+        id: data.data.idusuario,
+        name: data.data.nombre,
+        email: data.data.correo_electronico,
+        type: data.data.tipo
       }
     });
 
@@ -60,9 +58,8 @@ function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    checkLogIn()
+    checkLogIn();
   };
-
 
   return (
     <div className="flex min-h-screen bg-white"> {/* Fondo general blanco */}
@@ -76,11 +73,22 @@ function LoginForm() {
 
       {/* Div for the login form */}
       <div className="w-1/2 flex items-center justify-center">
-        <div className="bg-white px-16 py-10 w-full max-w-2xl"> {/* Increased max-width of the form container */}
+ 
+        <div className="bg-white px-16 py-10 w-full max-w-2xl flex flex-col justify-center items-center"> {/* Increased max-width of the form container */}
+
+        <Link
+          to="/"
+          className="absolute top-2 right-2 mt-4 mr-8 text-gray-500 hover:text-gray-700"
+          style={{ fontSize: '20px' }}
+        > {/* Adjust top and left values */}
+          &larr; Regresar
+        </Link>
+
           <div className="text-3xl font-bold mb-6 text-left">Bienvenido/a</div>
+          
           <hr className="border-gray-300 my-11" />
-          <form>
-            <div className="mb-5 text-left">
+          <form className="w-full">
+            <div className="mb-5 w-full text-left">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email:
               </label>
@@ -93,7 +101,7 @@ function LoginForm() {
                 value={form.email}
               />
             </div>
-            <div className="mb-6 text-left">
+            <div className="mb-6 w-full text-left">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Contraseña:
               </label>
@@ -106,7 +114,7 @@ function LoginForm() {
                 value={form.password}
               />
             </div>
-            <div className="mb-8">
+            <div className="mb-8 w-full text-center">
               { isError && 
                 <div className='flex content-center'>
                   <BsExclamationTriangle color='red' className='size-5 mr-4'/>
@@ -125,10 +133,10 @@ function LoginForm() {
               </button>
             </div>
             <div className="text-center">
-            <span className="text-sm text-gray-700">¿No estás registrado? </span>
-            <Link to="/signup" className="inline-block align-baseline font-medium text-sm text-yellow-600 ">
-                Regístrate ahora
-            </Link>
+              <span className="text-sm text-gray-700">¿No estás registrado? </span>
+              <Link to="/signup" className="inline-block align-baseline font-medium text-sm text-yellow-600 ">
+                  Regístrate ahora
+              </Link>
             </div>
           </form>
         </div>

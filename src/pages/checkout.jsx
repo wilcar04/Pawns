@@ -54,9 +54,74 @@ export default function Checkout() {
 
   const [NetwordPlayed, setLoading] = useState(false);
   const [payed, setpayed] = useState(true);
-  const pays = () => {
-    setpayed(false);
+
+  const validateForm = () => {
+    const nombre = document.getElementById("nombre").value;
+    const apellido = document.getElementById("apellido").value;
+    const direccion = document.getElementById("Dir").value;
+    const municipio = document.getElementById("municipio").value;
+    const codP = document.getElementById("codP").value;
+    const telefono = document.getElementById("telefono").value;
+    const email = document.getElementById("email").value;
+    const NumeroIdenteficacion = document.getElementById("NumeroIdentificacion").value;
+    const terminos = document.getElementById("terminos").checked;
+    const paymentMethod = document.querySelector('input[name="payment"]:checked');
+
+    if (!nombre || typeof nombre !== 'string') {
+      alert("Por favor, ingrese un nombre válido.");
+      return false;
+    }
+    if (!NumeroIdenteficacion || isNaN(NumeroIdenteficacion)) {
+      alert("Por favor, ingrese un número de identificacion válido.");
+      return false;
+    }
+    if (!apellido || typeof apellido !== 'string') {
+      alert("Por favor, ingrese un apellido válido.");
+      return false;
+    }
+    if (!direccion || typeof direccion !== 'string') {
+      alert("Por favor, ingrese una dirección válida.");
+      return false;
+    }
+    if (!municipio || typeof municipio !== 'string') {
+      alert("Por favor, ingrese un municipio/ciudad válido.");
+      return false;
+    }
+    if (!codP || isNaN(codP)) {
+      alert("Por favor, ingrese un código postal válido.");
+      return false;
+    }
+    if (!telefono || isNaN(telefono)) {
+      alert("Por favor, ingrese un número de teléfono válido.");
+      return false;
+    }
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email || !emailPattern.test(email)) {
+      alert("Por favor, ingrese un correo electrónico válido.");
+      return false;
+    }
+    if (!terminos) {
+      alert("Por favor, acepte los términos y condiciones.");
+      return false;
+    }
+    if (!deliveryMethod) {
+      alert("Por favor, seleccione un método de envío.");
+      return false;
+    }
+    if (!paymentMethod) {
+      alert("Por favor, seleccione un método de pago.");
+      return false;
+    }
+
+    return true;
   };
+
+  const pays = () => {
+    if (validateForm()) {
+      setpayed(false);
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(true);
@@ -81,6 +146,7 @@ export default function Checkout() {
                     id="nombre"
                     className="w-full p-2 border rounded"
                     placeholder="Ingrese sus nombres"
+                    defaultValue="John"
                   />
                 </div>
                 <div>
@@ -90,6 +156,7 @@ export default function Checkout() {
                     id="apellido"
                     className="w-full p-2 border rounded"
                     placeholder="Ingrese sus apellidos"
+                    defaultValue="Doe"
                   />
                 </div>
               </div>
@@ -116,11 +183,13 @@ export default function Checkout() {
                   id="Dir"
                   className="w-full p-2 border rounded"
                   placeholder="Calle, Avenida, etc."
+                  defaultValue="Calle Principal 123"
                 />
                 <input
                   id="Dir_ext"
                   className="w-full mt-2 p-2 border rounded"
                   placeholder="Apto, número de casa, edificio, etc."
+                  defaultValue="Apto 101"
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -130,6 +199,7 @@ export default function Checkout() {
                     id="municipio"
                     className="w-full p-2 border rounded"
                     placeholder="Ingrese su municipio/ciudad"
+                    defaultValue="Medellín"
                   />
                 </div>
 
@@ -140,6 +210,7 @@ export default function Checkout() {
                     type="number"
                     className="w-full p-2 border rounded"
                     placeholder="Ingrese su código postal"
+                    defaultValue="050001"
                   />
                 </div>
               </div>
@@ -150,6 +221,7 @@ export default function Checkout() {
                   id="telefono"
                   className="w-full p-2 border rounded"
                   placeholder="Ingrese su número de teléfono"
+                  defaultValue="3001234567"
                 />
               </div>
 
@@ -159,11 +231,12 @@ export default function Checkout() {
                   id="email"
                   className="w-full p-2 border rounded"
                   placeholder="Ingrese su correo electrónico"
+                  defaultValue="example@example.com"
                 />
               </div>
 
               <div className="mt-4 flex items-center">
-                <input id="terminos" type="checkbox" />
+                <input id="terminos" type="checkbox" defaultChecked />
                 <label className="ml-2 font-medium">Acepto Términos y Condiciones <span className="text-red-500">*</span></label>
               </div>
 
@@ -217,7 +290,7 @@ export default function Checkout() {
                 <h2 className="text-xl font-semibold mb-2">Método de Pago</h2>
                 <div className="flex flex-col">
                   <label className="font-medium">
-                    <input type="radio" name="payment" value="cash" className="mr-2" />
+                    <input type="radio" name="payment" value="cash" className="mr-2" defaultChecked/>
                     PSE
                   </label>
                   <select className="w-full p-2 mt-2 border rounded">
@@ -227,6 +300,8 @@ export default function Checkout() {
                     type="text"
                     className="w-full p-2 mt-2 border rounded"
                     placeholder="Número de identificación"
+                    id="NumeroIdentificacion"
+                    defaultValue="1234567890"
                   />
                 </div>
               </div>
