@@ -9,6 +9,7 @@ import AuthProvider from 'react-auth-kit';
 import createStore from 'react-auth-kit/createStore';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { QueryClient } from '@tanstack/react-query';
+import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
 
 // Imports de componentes
 import Landing from './pages/Landing'
@@ -43,6 +44,8 @@ import CreateSellRequest from './pages/CreateSellRequest copy';
 import CreatePawnRequest from './pages/CreatePawnRequest';
 import ProductDetailsRequest from './pages/ProductDetailsRequest';
 
+<Link to={`/request/${idOferta}`}></Link>
+
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
     <>
@@ -54,26 +57,32 @@ function App() {
         <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
 
-        <Route path="/MyPawns" element={<MyPawns />} />
-        <Route path="/MyShopping" element={<MySales />} />
+        <Route element={<AuthOutlet fallbackPath='/login' />}>
+          <Route path="/MyPawns" element={<MyPawns />} />
+          <Route path="/MyShopping" element={<MySales />} />
 
-        <Route path="/ActivePawns" element={<ActivePawns />} />
-        <Route path="/ActiveSales" element={<ActiveSales />} />
+          <Route path="/ActivePawns" element={<ActivePawns />} />
+          <Route path="/ActiveSales" element={<ActiveSales />} />
 
-        <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
-        <Route path="/OnProcessSales" element={<OnProcessSales />} />
+          <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
+          <Route path="/OnProcessSales" element={<OnProcessSales />} />
 
-        <Route path="/SalesRequest" element={<SalesRequest />} />
-        <Route path="SalesRequest/:id" element={<ProductDetailsRequest />} />
+          <Route path="/SalesRequest" element={<SalesRequest />} />
+          <Route path="request/:id" element={<ProductDetailsRequest />} />
 
-        <Route path="/PawnsRequest" element={<PawnsRequest />} />
-        <Route path="PawnsRequest/:id" element={<ProductDetailsRequest />} />
+          <Route path="/PawnsRequest" element={<PawnsRequest />} />
+          <Route path="request/:id" element={<ProductDetailsRequest />} />
 
-        <Route path="/MyPawnRequest" element={<MyPawnRequest />} />
-        <Route path="/MySalesRequest" element={<MySalesRequest />} />
+          <Route path="/MyPawnRequest" element={<MyPawnRequest />} />
+          <Route path="/MySalesRequest" element={<MySalesRequest />} />
 
-        <Route path="/createSell" element={<CreateSellRequest />} />
-        <Route path="/createPawn" element={<CreatePawnRequest />} />
+          <Route path="/createSell" element={<CreateSellRequest />} />
+          <Route path="/createPawn" element={<CreatePawnRequest />} />
+
+          <Route path="/CustomerInformation" element={<AccountInfo />} />
+          <Route path="pawnRequest" element={<PawnRequest />}/>
+        </Route>
+
 
         <Route element={<ProductContext />}>
           <Route index element={<Landing />} />
@@ -83,8 +92,6 @@ function App() {
         
         {/* <Route path="/Car" element={<Car />} /> */}
         <Route path="/about" element={<About />} />
-        <Route path="/CustomerInformation" element={<AccountInfo />} />
-        <Route path="pawnRequest" element={<PawnRequest />}/>
         {/* <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} /> */}
 

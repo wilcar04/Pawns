@@ -4,6 +4,7 @@ import { getProducts } from '../utils/localStorageUtils';
 import './AllProducts.css';
 import { IoIosSearch } from "react-icons/io";
 import { Radio, Label } from 'flowbite-react';
+import { imageUrlApi } from '../api/axiosConfig';
 
 const categories = ['Electrónica', 'Moda', 'Hogar', 'Salud', 'Entretenimiento', 'Deportes', 'Transporte', 'Mascotas', 'Arte', 'Literatura'];
 
@@ -67,7 +68,7 @@ const AllProducts = () => {
                         {currentProducts.map((product, index) => (
                             <Link to={`/product/${product.producto_idproducto}`}>
                                 <div key={index} className="product-item">
-                                    {product.imagen && <img src={product.imagen} alt={product.nombre} className="product-image" />}
+                                    {product.imagen && <img src={`${imageUrlApi}/${product.imagen}`} alt={product.nombre} className="product-image" />}
                                     <div className="pb-4">
                                         <p className="text-gray-400 text-sm mb-1 capitalize">{product.categoria}</p>
                                         <h3 className="font-bold text-black text-xl">{product.nombre}</h3>

@@ -63,81 +63,6 @@ export async function signUp(name, email, password, genre, birthdate, phone){
 }
 
 
-// *    Product
-
-// Obtener producto por Id
-export async function getProductById(idProduct){
-    try {
-        const response = await api.get(`/product/${idProduct}`); // ! Está en query y path a la vez
-        return response.data;
-    }
-    catch (err) {
-        console.error('Hubo un problema con la solicitud fetch:', err);
-        return {}
-    }
-}
-
-// Actualizar producto
-export async function updateProduct(idProduct, name, description, category, image){
-    let request = {};
-    if (!!name && !!image){
-        request = await Promise.all([
-            updateProductInfo(idProduct, name, description, category),
-            updateProductImage(idProduct, image)
-        ]);
-    } else if (name) {
-        request = await updateProductInfo(idProduct, name, description, category);
-    } else if (image) {
-        request = await updateProductImage(idProduct, image);
-    } else {
-        throw new Error("Parámetros indefinidos en el llamado a la API");
-    }
-    return request;
-}
-
-// Actualizar info de producto
-export async function updateProductInfo(idProduct, name, description, category){
-    const params = { 
-        id: idProduct,
-        nombre: name,
-        descripcion: description,
-        categoria: category
-    };
-    try{
-        const response = await api.put(`/product/`, null, {
-            params: params
-        });
-        return response.data;
-    }
-    catch (error) {
-        console.error('Hubo un problema con la solicitud fetch:', error);
-        return [];
-    }
-}
-
-// Actualizar foto de producto
-export async function updateProductImage(idProduct, image){
-    const params = { 
-        id: idProduct
-    };
-    const formData = new FormData();
-    formData.append('image', image);
-    try{
-        const response = await api.put(`/product/`, formData, {
-            params: params
-        });
-        return response.data;
-    }
-    catch (error) {
-        console.error('Hubo un problema con la solicitud fetch:', error);
-        return [];
-    }
-}
-
-
-
-
-
 // *    Offer
 
 
@@ -280,6 +205,24 @@ export async function getNotFinalizedPawnOffers(){
     catch (err) {
         console.error('Hubo un problema con la solicitud fetch:', err);
         return {}
+    }
+}
+
+// Tienda contra oferta
+export async function shopProposePrice(idOffer, price){
+    const params = { 
+        id: idOffer,
+        precio: price
+    };
+    try{
+        const response = await api.put(`/offer/shop_counteroffer`, null, {
+            params: params
+        });
+        return response.data;
+    }
+    catch (error) {
+        console.error('Hubo un problema con la solicitud fetch:', error);
+        return [];
     }
 }
 
@@ -457,16 +400,19 @@ export async function getUserCurrentPawns(idUser){
 // TODO: Aquí va una que no sé bien qué hace
 
 
-// TODO: Verificar que éste funcione
 // Crear empeño
 export async function createPawn(idUser, idProduct, price){
+    const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
+    const finalDate = new Date()
+    finalDate.setMonth(finalDate.getMonth() + months)
+    const finalDateStr = finalDate.toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
     const body = {
         idempennio: 0,
         precio: price,
-        estado: "vigente",
-        fecha_inicio: "", // ! Esto qué
-        fecha_final: "",
-        interes: 5,
+        estado: 0,
+        fecha_inicio: date,
+        fecha_final: finalDateStr,
+        interes: 0,
         usuario_idusuario: idUser,
         producto_idproducto: idProduct,
         id_factura_empennio: 0,

@@ -28,7 +28,7 @@ export default function Sandbox() {
     //     onSuccess: () => console.log("Éxito")
     // })
 
-    // TODO: Armar bien la query
+    // TODO: Probar
     // const { data, mutate, isPending } = useMutation({
     //     mutationFn: () => createPawn(auth.id, 2, 3000),
     //     onSuccess: () => console.log("Éxito")
@@ -40,11 +40,15 @@ export default function Sandbox() {
     //     onSuccess: () => console.log("Éxito")
     // })
 
-
+    
     // *    Detalle
 
-    // TODO: Backend lo va a hacer
+    // TODO: Probar
     // Contra ofertar producto
+    const { data, mutate, isPending } = useMutation({
+        mutationFn: () => shopProposePrice(2, 3),
+        onSuccess: () => console.log("Éxito")
+    })
 
 
     // *    Checkout
