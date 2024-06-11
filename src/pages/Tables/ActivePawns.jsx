@@ -1,5 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { Outlet } from "react-router-dom";
+import { getCurrentPawns } from '../../api/queries';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { imageUrlApi } from '../../api/axiosConfig';
 
 
 const RedStripe = () => {
@@ -19,32 +23,43 @@ const empenos = [
 ];
 
 const TablaMisEmpeños = () => {
+
+  const authUser = useAuthUser();
+
+  const{data:empenos,isLoading}=useQuery({
+    queryKey:["getCurrentPawns"],
+    queryFn:()=>getCurrentPawns(authUser.id)
+  })
+
+  function handlerecover(idempennio){
+
+  }
+
+
   return (
     <table className="mx-32 max-w-full">
       <thead>
-        <tr className=''>
+        <tr>
           <th className="py-1 bg-gray-200 text-left pl-3">Producto</th>
-          <th className="py-1 bg-gray-200">Monto final</th>
-          <th className="py-1 bg-gray-200">Vencimiento</th>
-          <th className="py-1 bg-gray-200">Precio a recuperar</th>
+          <th className="py-1 bg-gray-200">Fecha Inicio</th>
+          <th className="py-1 bg-gray-200">Fecha Final</th>
+          <th className="py-1 bg-gray-200">Precio</th>
 
         </tr>
       </thead>
       <tbody>
-        {empenos.map(empeno => (
-          <tr>
+        {empenos?.map(empeno => (
+          <tr key={empeno.id}>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src='src/assets/logo.png' className='w-7 ml-5' alt='Logo' />
+              <img src={`${imageUrlApi}/${empeno.imagen}`} className='w-7 ml-5' alt='Logo' />
                 <span className='mt-3 ml-5'>{empeno.producto}</span>
               </div>
             </td>
-            <td className="py-4 bg-gray-100">{empeno.montoFinal.toLocaleString()}</td>
-            <td className="py-4 bg-gray-100">{empeno.cantidad}</td>
-            <td className="py-4 bg-gray-100">{empeno.precioRecuperar.toLocaleString()}</td>
-            <td className="py-4 bg-gray-100">
-             
-            </td>
+            <td className="py-4 bg-gray-100">{empeno.fecha_inicio}</td>
+            <td className="py-4 bg-gray-100">{empeno.fecha_final}</td>
+            <td className="py-4 bg-gray-100">{empeno.precio}</td>
+            
           </tr>
         ))}
       </tbody>
@@ -70,10 +85,10 @@ function Layout() {
      
       <RedStripe />
       <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold">
-        Mis empeños
+        Empeños Activos
       </div>
       <div className="text-center text-blue-800 mt-3 mb-5 text-base sm:text-xs lg:text-xs font-bold">
-        ¿Quieres recuperar tus productos? Recuerda que tienes un plazo de 2 meses para hacerlo.
+        
       </div>
       <TablaMisEmpeños />
       <SaveChangesButton />

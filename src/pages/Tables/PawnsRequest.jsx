@@ -1,5 +1,12 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { Outlet, Link } from "react-router-dom";
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { Outlet } from "react-router-dom";
+import { getAllPendingPawns } from '../../api/queries';
+import { imageUrlApi } from '../../api/axiosConfig';
+import { Link } from 'react-router-dom';
+
+
 
 const RedStripe = () => {
   return (
@@ -18,27 +25,43 @@ const empenos = [
 ];
 
 const TablaMisVentas = () => {
+
+  const authUser = useAuthUser();
+
+  const{data:solicitudempenos,isLoading}=useQuery({
+    queryKey:["getAllPendingPawns"],
+    queryFn:()=>getAllPendingPawns()
+  })
+
+
+  function accept(idempennio){
+
+  }
+
+
   return (
     <table className="mx-32 max-w-full">
       <thead>
         <tr className=''>
           <th className="py-1 bg-gray-200 text-left pl-3">Producto</th>
+          <th className="py-1 bg-gray-200">categoria</th>
           <th className="py-1 bg-gray-200">Precio usuario</th>
           <th className="py-1 bg-gray-200">Detalles del producto</th>
         </tr>
       </thead>
       <tbody>
-        {empenos.map(empeno => (
+        {solicitudempenos?.map(empeno => (
           <tr key={empeno.id}>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src='src/assets/logo.png' className='w-7 ml-5' alt='Logo' />
-                <span className='mt-3 ml-5'>{empeno.producto}</span>
+                <img src={`${imageUrlApi}/${empeno.imagen}`} className='w-7 ml-5' alt='Logo' />
+                <span className='mt-3 ml-5'>{empeno.nombre}</span>
               </div>
             </td>
-            <td className="py-4 bg-gray-100">{empeno.Precio.toLocaleString()}</td>
+            <td className="py-4 bg-gray-100">{empeno.categoria}</td>
+            <td className="py-4 bg-gray-100">{empeno.precio}</td>
             <td className="py-4 bg-gray-100">
-              <Link to={`/ventas/${empeno.id}`} className="text-blue-500 underline">Ver más</Link>
+             <Link  to={`/request/${empeno.idoferta}`} className="text-blue-500 underline">Ver más</Link>
             </td>
           </tr>
         ))}
@@ -61,7 +84,7 @@ function Layout() {
     <div className="min-h-screen flex flex-col">
       <RedStripe />
       <div className="text-center mt-20 mb-20 text-base sm:text-3xl lg:text-xl font-bold">
-        Solicitudes de venta
+        Solicitudes de empeño
       </div>
       <TablaMisVentas />
       <main className="flex-1">

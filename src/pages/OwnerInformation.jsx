@@ -1,5 +1,5 @@
 import React from 'react';
-import profileImage from '../assets/usuario_incognito.png'; // Asegúrate de que la ruta es correcta
+import profileImage from '../assets/usuario_incognito.png'; 
 
 const RedStripe = () => {
   return (

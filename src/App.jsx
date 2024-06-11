@@ -22,12 +22,11 @@ import Checkout from "./pages/checkout"
 import EmpezarEmpeñar from './pages/EmpezarEmpeñar'
 import EmpezarVender from './pages/EmpezarVender'
 import MyPawns from './pages/Tables/MyPawns'
-import ActivePawns from './pages/Tables/ActivePawns'
-import ActiveSales from './pages/Tables/ActiveSales'
 import MySales from './pages/Tables/MySales'
 import OnProcessPawns from './pages/Tables/OnProcessPawns'
 import OnProcessSales from './pages/Tables/OnProcessSales'
 import Pawn_request from './pages/CreatePawnRequest'
+import ActivePawns from './pages/Tables/ActivePawns'
 import SalesRequest from './pages/Tables/SalesRequest'
 import PawnsRequest from './pages/Tables/PawnsRequest'
 import MyPawnRequest from './pages/Tables/MyPawnRequest'
@@ -46,7 +45,8 @@ import CreateSellRequest from './pages/CreateSellRequest copy';
 import CreatePawnRequest from './pages/CreatePawnRequest';
 import ProductDetailsRequest from './pages/ProductDetailsRequest';
 
-<Link to={`/request/${idOferta}`}></Link>
+import CustomerInformation from './pages/CustomerInformation';
+
 
 function App() {
   useEffect(() => {
@@ -109,9 +109,8 @@ function App() {
         
         {/* <Route path="/Car" element={<Car />} /> */}
         <Route path="/about" element={<About />} />
-        {/* <Route path="/CustomerInformation" element={<CustomerInformation />} />
-        <Route path="/OwnerInformation" element={<OwnerInformation />} /> */}
-        {/* <Route path="/MetodoPago" element={<MetodoPago />} /> */}
+        <Route path="/CustomerInformation" element={<CustomerInformation />} />
+        <Route path="/MetodoPago" element={<MetodoPago />} /> 
         <Route path="pawnRequest" element={<PawnRequest />}/>
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} />
