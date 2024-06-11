@@ -63,81 +63,6 @@ export async function signUp(name, email, password, genre, birthdate, phone){
 }
 
 
-// *    Product
-
-// Obtener producto por Id
-export async function getProductById(idProduct){
-    try {
-        const response = await api.get(`/product/${idProduct}`); // ! Está en query y path a la vez
-        return response.data;
-    }
-    catch (err) {
-        console.error('Hubo un problema con la solicitud fetch:', err);
-        return {}
-    }
-}
-
-// Actualizar producto
-export async function updateProduct(idProduct, name, description, category, image){
-    let request = {};
-    if (!!name && !!image){
-        request = await Promise.all([
-            updateProductInfo(idProduct, name, description, category),
-            updateProductImage(idProduct, image)
-        ]);
-    } else if (name) {
-        request = await updateProductInfo(idProduct, name, description, category);
-    } else if (image) {
-        request = await updateProductImage(idProduct, image);
-    } else {
-        throw new Error("Parámetros indefinidos en el llamado a la API");
-    }
-    return request;
-}
-
-// Actualizar info de producto
-export async function updateProductInfo(idProduct, name, description, category){
-    const params = { 
-        id: idProduct,
-        nombre: name,
-        descripcion: description,
-        categoria: category
-    };
-    try{
-        const response = await api.put(`/product/`, null, {
-            params: params
-        });
-        return response.data;
-    }
-    catch (error) {
-        console.error('Hubo un problema con la solicitud fetch:', error);
-        return [];
-    }
-}
-
-// Actualizar foto de producto
-export async function updateProductImage(idProduct, image){
-    const params = { 
-        id: idProduct
-    };
-    const formData = new FormData();
-    formData.append('image', image);
-    try{
-        const response = await api.put(`/product/`, formData, {
-            params: params
-        });
-        return response.data;
-    }
-    catch (error) {
-        console.error('Hubo un problema con la solicitud fetch:', error);
-        return [];
-    }
-}
-
-
-
-
-
 // *    Offer
 
 
@@ -283,6 +208,24 @@ export async function getNotFinalizedPawnOffers(){
     }
 }
 
+// Tienda contra oferta
+export async function shopProposePrice(idOffer, price){
+    const params = { 
+        id: idOffer,
+        precio: price
+    };
+    try{
+        const response = await api.put(`/offer/shop_counteroffer`, null, {
+            params: params
+        });
+        return response.data;
+    }
+    catch (error) {
+        console.error('Hubo un problema con la solicitud fetch:', error);
+        return [];
+    }
+}
+
 // Cambiar estado de oferta
 export async function changeOfferState(idOffer, newState, id_Acceptant=undefined){
     let params;
@@ -299,7 +242,7 @@ export async function changeOfferState(idOffer, newState, id_Acceptant=undefined
         };
     }
     try{
-        const response = await api.post(`/offer/MakePawnByClient`, null, {
+        const response = await api.put(`/offer/update_offer_state`, null, {
             params: params
         });
         return response.data;
@@ -327,9 +270,7 @@ export async function getBoughtItems(idUser){
 }
 
 // Tienda compra
-export async function clientBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
-    phone, email, additionalInfo
-){
+export async function shopBuysItem(idUser, price, idProduct){
     const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
 
     const params = { 
@@ -348,16 +289,16 @@ export async function clientBuysItem(idUser, price, idProduct, name, lastName, a
             idFacturaCompra: 0,
             medio_pago: "PSE",
             total: 0,
-            nombres: name,
-            apellidos: lastName,
-            direccion: address,
-            departamento: department,
-            municipio: municipality,
-            telefono: phone,
-            correo: email,
+            nombres: "Propietario",
+            apellidos: "Pawns",
+            direccion: "Cra. 80 # 77 - 35",
+            departamento: "Antioquia",
+            municipio: "Medellín",
+            telefono: "+57 305 3382615",
+            correo: "pawns@gmail.com",
             precio_envio: 0,
             precio_IVA: 0,
-            info_adicional: additionalInfo
+            info_adicional: "La tienda ha comprado un nuevo artilugio"
         }
     }
     try{
@@ -373,7 +314,7 @@ export async function clientBuysItem(idUser, price, idProduct, name, lastName, a
 }
 
 // Cliente compra
-export async function shopBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
+export async function clientBuysItem(idUser, price, idProduct, name, lastName, address, department, municipality,
     phone, email, additionalInfo
 ){
     const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
@@ -459,16 +400,19 @@ export async function getUserCurrentPawns(idUser){
 // TODO: Aquí va una que no sé bien qué hace
 
 
-// TODO: Verificar que éste funcione
 // Crear empeño
 export async function createPawn(idUser, idProduct, price){
+    const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
+    const finalDate = new Date()
+    finalDate.setMonth(finalDate.getMonth() + months)
+    const finalDateStr = finalDate.toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
     const body = {
         idempennio: 0,
         precio: price,
-        estado: "vigente",
-        fecha_inicio: "", // ! Esto qué
-        fecha_final: "",
-        interes: 5,
+        estado: 0,
+        fecha_inicio: date,
+        fecha_final: finalDateStr,
+        interes: 0,
         usuario_idusuario: idUser,
         producto_idproducto: idProduct,
         id_factura_empennio: 0,
@@ -484,17 +428,27 @@ export async function createPawn(idUser, idProduct, price){
     }
 }
 
-
-// TODO: Verificar
 // Cliente paga el empeño
-export async function payPawn(idPawn, idBill){
-    const params = { 
-        id_factura_pago_cliente_empennio: idBill,
-    };
+export async function payPawn(idPawn, name, lastName, address, department, municipality, 
+    phone, email, info
+){
+    const body = {
+        idFacturaEmpennio: 0,
+        medio_pago: "PSE",
+        total: 0,
+        nombres: name,
+        apellidos: lastName,
+        direccion: address,
+        departamento: department,
+        municipio: municipality,
+        telefono: phone,
+        correo: email,
+        precio_envio: 0,
+        precio_IVA: 0,
+        info_adicional: info
+    }
     try{
-        const response = await api.put(`/pawn/payPawn/${idPawn}`, null, {
-            params: params
-        });
+        const response = await api.put(`/pawn/payPawn/${idPawn}`, body);
         return response.data;
     }
     catch (error) {

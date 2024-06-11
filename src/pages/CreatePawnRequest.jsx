@@ -5,7 +5,7 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useNavigate } from 'react-router-dom';
 import { createOfferPawn } from '../api/queries';
 
-export default function Pawn_request() {
+export default function CreatePawnRequest() {
   const [formData, setFormData] = useState({
     itemName: '',
     description: '',
@@ -14,7 +14,7 @@ export default function Pawn_request() {
     pawnValue: '',
     category: '',
   });
-  const [images, setImages] = useState([]);
+  const [image, setImage] = useState(undefined);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -22,7 +22,7 @@ export default function Pawn_request() {
   const navigate = useNavigate();
 
   const { isError, isPending, mutate: mutateSendRequest } = useMutation({
-    mutationFn: () => createOfferPawn(auth.id, formData.itemName, formData.description, formData.category, formData.pawnValue, images[0]),
+    mutationFn: () => createOfferPawn(auth.id, formData.itemName, formData.description, formData.category, formData.pawnValue, image),
     onSuccess: () => setIsSubmitted(true)
   });
 
@@ -32,17 +32,16 @@ export default function Pawn_request() {
   };
 
   const handleImageChange = (e) => {
-    setImages([...e.target.files]);
+    const file = e.target.files[0];
+    if (file && file instanceof File) {
+      setImage(file);
+    } else {
+      console.error('El archivo seleccionado no es válido');
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (images.length < 3) {
-    //   setErrorMessage('Debes subir al menos 3 imágenes.');
-    //   return;
-    // }
-    console.log('Datos del formulario:', formData);
-    console.log('Imágenes:', images);
     mutateSendRequest();
   };
 
@@ -64,21 +63,19 @@ export default function Pawn_request() {
             Valor del empeño: {formData.pawnValue}
           </p>
           <div>
-            {images.length > 0 && (
+          {!!image && (
               <div className="mt-4">
                 <p className="text-gray-700 font-semibold">Imágenes adjuntadas:</p>
-                <div className="grid grid-cols-2 gap-4 mt-2">
-                  {images.map((image, index) => (
-                    <div key={index} className="border border-gray-300 p-2 rounded-md">
+                  <div className="border border-gray-300 p-2 rounded-md">
+                    <div className="flex justify-center">
                       <img
                         src={URL.createObjectURL(image)}
-                        alt={`Imagen ${index + 1}`}
-                        className="w-full h-auto object-cover rounded-md"
+                        alt={`Imagen`}
+                        className="w-32 h-auto object-cover rounded-md"
                       />
-                      <p className="text-gray-600 text-sm mt-1">{image.name}</p>
                     </div>
-                  ))}
-                </div>
+                    <p className="text-gray-600 text-sm mt-1">{image.name}</p>
+                  </div>
               </div>
             )}
           </div>
@@ -117,13 +114,15 @@ export default function Pawn_request() {
             >
               <option value="">Selecciona una categoría</option>
               <option value="Electrónica">Electrónica</option>
-              <option value="Joyería">Joyería</option>
-              <option value="Gaming">Gaming</option>
+              <option value="Moda">Moda</option>
+              <option value="Hogar">Hogar</option>
+              <option value="Salud">Salud</option>
+              <option value="Entretenimiento">Entretenimiento</option>
               <option value="Deportes">Deportes</option>
-              <option value="Juguetes">Juguetes</option>
-              <option value="Muebles">Muebles</option>
-              <option value="Otro">Otro</option>
-              <option value="Libros">Libros</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Mascotas">Mascotas</option>
+              <option value="Arte">Arte</option>
+              <option value="Literatura">Literatura</option>
             </select>
           </div>
           <div>
@@ -153,21 +152,24 @@ export default function Pawn_request() {
               </button>
             </div>
           </div>
-          {images.length > 0 && (
+          {!!image && (
             <div className="mt-4">
               <p className="text-gray-700 font-semibold">Archivos seleccionados:</p>
-              <ul className="list-disc list-inside">
-                {images.map((image, index) => (
-                  <li key={index} className="text-gray-600 text-sm">{image.name}</li>
-                ))}
-              </ul>
+                <div className="flex justify-center">
+                  <img
+                    src={URL.createObjectURL(image)}
+                    alt={`Imagen`}
+                    className="w-32 h-auto object-cover rounded-md my-2"
+                  />
+                </div>
+                <p className="text-gray-600 text-sm mt-1">{image.name}</p>
             </div>
           )}
           {errorMessage && <p className="text-red-600 text-sm mt-2">{errorMessage}</p>}
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-naranja text-white font-semibold rounded-md hover:bg-rojo"
-            onChange={handleSubmit}
+            className="w-full py-2 px-4 bg-firstColor text-white font-semibold rounded-md hover:bg-rojo"
+            onClick={handleSubmit}
           >
             Enviar
           </button>

@@ -7,6 +7,7 @@ import { Carousel } from "flowbite-react";
 import imagenCarrusel1 from "../assets/landing(assets)/sliderImage.png"
 import imagenCarrusel2 from "../assets/landing(assets)/Publicidad 1.png"
 import imagenCarrusel3 from "../assets/landing(assets)/Publicidad 2.png"
+import { imageUrlApi } from '../api/axiosConfig';
 
 
 const categories = [
@@ -88,7 +89,7 @@ export default function Landing() {
                     {products?.map((product, index) => (
                         <Link to={`/product/${product.producto_idproducto}`} key={index}>
                             <div key={index} className="product-item">
-                                {product.img && <img src={product.imagen} alt={product.name} className="product-image" />}
+                                {product.img && <img src={`${imageUrlApi}/${product.imagen}`} alt={product.name} className="product-image" />}
                                 <div className="pb-4">
                                     <p className="text-gray-400 text-sm mb-1 capitalize">{product.categoria}</p>
                                     <h3 className="font-bold text-black text-xl">{product.nombre}</h3>

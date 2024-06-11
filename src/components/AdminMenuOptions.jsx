@@ -3,6 +3,8 @@ import { BsArrowLeftRight } from "react-icons/bs";
 import { IoBagOutline } from "react-icons/io5";
 import { RiLoader2Fill } from "react-icons/ri";
 import { FaRegCalendarMinus } from 'react-icons/fa'
+import { TbTruckLoading } from "react-icons/tb";
+import { Link } from 'react-router-dom';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -15,7 +17,7 @@ export default function ClientMenuOptions(){
                 <MenuItem>
                     {({ focus }) => (
                         <Link
-                        to="#"
+                        to="/OnProcessPawns"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -23,7 +25,7 @@ export default function ClientMenuOptions(){
                         >
                             <div className="inline-flex items-center gap-x-2">
                                 <RiLoader2Fill  className='size-4'/>
-                                <span>Empeños en proceso</span>
+                                <span>Empeños en envío</span>
                             </div>
                         </Link>
                     )}
@@ -32,7 +34,24 @@ export default function ClientMenuOptions(){
                 <MenuItem>
                     {({ focus }) => (
                         <Link
-                        to="#"
+                        to="/OnProcessSales"
+                        className={classNames(
+                            focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                            'block px-4 py-2 text-sm'
+                        )}
+                        >
+                            <div className="inline-flex items-center gap-x-2">
+                                <TbTruckLoading  className='size-4'/>
+                                <span>Ventas en envío</span>
+                            </div>
+                        </Link>
+                    )}
+                </MenuItem>
+
+                <MenuItem>
+                    {({ focus }) => (
+                        <Link
+                        to="/ActivePawns"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -51,7 +70,7 @@ export default function ClientMenuOptions(){
                 <MenuItem>
                     {({ focus }) => (
                         <Link
-                        to="#"
+                        to="/PawnsRequest"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'
@@ -68,7 +87,7 @@ export default function ClientMenuOptions(){
                 <MenuItem>
                     {({ focus }) => (
                         <Link
-                        to="#"
+                        to="/SalesRequest"
                         className={classNames(
                             focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'

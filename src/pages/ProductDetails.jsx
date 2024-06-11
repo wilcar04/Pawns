@@ -3,6 +3,7 @@ import { useOutletContext, useParams, useSearchParams } from 'react-router-dom';
 import { getProducts } from '../utils/localStorageUtils';
 import './ProductDetails.css';
 import NoInfo from '../components/NoInfo';
+import { imageUrlApi } from '../api/axiosConfig';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -14,14 +15,12 @@ const ProductDetails = () => {
     setProduct(products.find(product => id == product.producto_idproducto));
   }, [id]);
 
-  return ( <NoInfo message={"No se encontró"}/>)
-
   return (
     <div className="flex flex-col items-center py-8">
       <h2 className=' font-medium text-2xl text-gray-500'>Detalles de producto</h2>
       <div className="flex gap-x-16 w-full pl-60 pr-48 my-10">
         <div className="w-2/5">
-          <img className=" w-full h-auto" src={product.imagen} alt={product.nombre} />
+          <img className=" w-full h-auto" src={`${imageUrlApi}/${product.imagen}`} alt={product.nombre} />
         </div>
         <div className="flex flex-col pl-5 pr-20 pt-5 text-left flex-1">
           <div className="border-b border-b-gray-200 pb-2 mb-2">
