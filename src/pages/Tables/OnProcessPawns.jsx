@@ -1,9 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, QueryClient } from '@tanstack/react-query';
 import React from 'react';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Outlet } from "react-router-dom";
 import { getOnTheWayOfferPawns } from '../../api/queries';
 import { imageUrlApi } from '../../api/axiosConfig';
+import { useMutation, useQueryClient  } from '@tanstack/react-query';
+import Loading from '../../components/Loading';
+import { changeOfferState, createPawn } from '../../api/queries';
 
 
 const RedStripe = () => {
@@ -25,20 +28,41 @@ const compras = [
 const TablaMisCompras = () => {
 
   const authUser = useAuthUser();
+  const queryClient = useQueryClient();
 
-  const{data:Empenosproceso,isLoading}=useQuery({
+  const{data:Empenosproceso, isLoading}=useQuery({
     queryKey:["getOnTheWayOfferPawns"],
     queryFn:()=>getOnTheWayOfferPawns()
   })
 
+  const { mutate: mutateReject, isPending: isPendingReject } = useMutation({
+    mutationFn: (idempennio) => changeOfferState(idempennio, 'rechazada'),
+    onSuccess: () => queryClient.invalidateQueries('getOnTheWayOfferPawns')
+  })
 
-  function accept(idempennio){
+  const { mutate: mutateFinished, isPending: isPendingFinished } = useMutation({
+    mutationFn: (idempennio) => changeOfferState(idempennio, 'finalizada', 8),
+    onSuccess: () => queryClient.invalidateQueries('getOnTheWayOfferPawns')
+  })
 
+  const { mutate: mutateAddPawn, isPending: isPendingAddPawn } = useMutation({
+    mutationFn: (price, idProduct) => createPawn(authUser.id, idProduct, price),
+    onSuccess: () => console.log("Éxito")
+  })
+
+
+  function accept(idempennio, price, idProduct){
+    mutateFinished(idempennio)
+    mutateAddPawn(price, idProduct)
   }
+    
   function cancel(idempennio){
-
+    mutateReject(idempennio)
   }
 
+  if (isLoading || isPendingReject || isPendingFinished || isPendingAddPawn){
+    return <Loading />
+  }
 
   return (
     <table className="mx-32 max-w-full">
@@ -65,7 +89,7 @@ const TablaMisCompras = () => {
             <td className="py-4 bg-gray-100">{compra.precio}</td>
             <td className="py-4 bg-gray-100">
                 <>
-                  <button onClick={() => accept(compra.idoferta)}>
+                  <button onClick={() => accept(compra.idoferta, compra.precio, compra.producto_idproducto)}>
                   <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
                 </button>
                 <button onClick={() => cancel(compra.idoferta)}>
@@ -88,7 +112,7 @@ function Layout() {
     <div className="min-h-screen flex flex-col">
  
       <RedStripe />
-      <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold mb-20">
+      <div className="text-center mt-20 text-base sm:text-3xl lg:text-2xl font-bold mb-20">
         Empeños en proceso 
       </div>
       <TablaMisCompras />

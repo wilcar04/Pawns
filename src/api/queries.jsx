@@ -284,7 +284,7 @@ export async function getBoughtItems(idUser){
 // Tienda compra
 export async function shopBuysItem(idUser, price, idProduct){
     const date = new Date().toLocaleDateString('en-us', { year:"numeric", day:"numeric", month:"numeric" })
-
+    console.log([idUser, price, idProduct])
     const params = { 
         seller_client_id : idUser
     };
@@ -314,7 +314,7 @@ export async function shopBuysItem(idUser, price, idProduct){
         }
     }
     try{
-        const response = await api.post(`/buy/sell`, body, {
+        const response = await api.post(`/buy/shop`, body, {
             params: params
         });
         return response.data;

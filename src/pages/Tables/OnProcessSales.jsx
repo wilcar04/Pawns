@@ -4,8 +4,9 @@ import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Outlet } from "react-router-dom";
 import { getOnTheWayOfferSells } from '../../api/queries';
 import { imageUrlApi } from '../../api/axiosConfig';
-
-
+import Loading from '../../components/Loading';
+import { changeOfferState, shopBuysItem } from '../../api/queries';
+import { useMutation } from '@tanstack/react-query';
 
 
 const RedStripe = () => {
@@ -33,12 +34,32 @@ const TablaMisCompras = () => {
     queryFn:()=>getOnTheWayOfferSells()
   })
 
+  const { mutate: mutateReject, isPending: isPendingReject } = useMutation({
+    mutationFn: (idempennio) => changeOfferState(idempennio, 'rechazada'),
+    onSuccess: () => queryClient.invalidateQueries('getOnTheWayOfferSells')
+  })
 
-  function accept(idempennio){
+  const { mutate: mutateFinished, isPending: isPendingFinished } = useMutation({
+    mutationFn: (idempennio) => changeOfferState(idempennio, 'finalizada', 8),
+    onSuccess: () => queryClient.invalidateQueries('getOnTheWayOfferSells')
+  })
 
+  const { mutate: mutateShopping, isPending: isPendingShopping } = useMutation({
+    mutationFn: (price, idProduct) => shopBuysItem(authUser.id, price, idProduct),
+    onSuccess: () => console.log("Éxito")
+  })
+
+  function accept(idempennio, price, idProduct){
+    // mutateFinished(idempennio)
+    mutateShopping(price, idProduct)
   }
+    
   function cancel(idempennio){
+    mutateReject(idempennio)
+  }
 
+  if (isPendingReject || isPendingFinished || isPendingShopping){
+    return <Loading />
   }
 
 
@@ -67,12 +88,12 @@ const TablaMisCompras = () => {
             <td className="py-4 bg-gray-100">{compra.precio}</td>
             <td className="py-4 bg-gray-100">
                 <>
-                  <button onClick={() => accept(compra.idoferta)}>
-                  <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
-                </button>
-                <button onClick={() => cancel(compra.idoferta)}>
-                  <img src='src/assets/cancel.png' className='w-5 ml-15' alt='cancel' />
-                </button>
+                  <button onClick={() => accept(compra.idoferta, compra.precio, compra.producto_idproducto)}>
+                    <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
+                  </button>
+                  <button onClick={() => cancel(compra.idoferta)}>
+                    <img src='src/assets/cancel.png' className='w-5 ml-15' alt='cancel' />
+                  </button>
                   
                 </>
               

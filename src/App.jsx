@@ -79,7 +79,6 @@ function App() {
           <Route path="/MyShopping" element={<MySales />} />
 
           <Route path="/ActivePawns" element={<ActivePawns />} />
-          <Route path="/ActiveSales" element={<ActiveSales />} />
 
           <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
           <Route path="/OnProcessSales" element={<OnProcessSales />} />
@@ -109,11 +108,7 @@ function App() {
         
         {/* <Route path="/Car" element={<Car />} /> */}
         <Route path="/about" element={<About />} />
-        <Route path="/CustomerInformation" element={<CustomerInformation />} />
-        <Route path="/MetodoPago" element={<MetodoPago />} /> 
-        <Route path="pawnRequest" element={<PawnRequest />}/>
-        <Route path="/add-product" element={<AddProduct />} />
-        <Route path="/edit-product/:index" element={<EditProduct />} />
+
         {/* <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} /> */}
 
