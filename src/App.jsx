@@ -20,7 +20,9 @@ import  { useEffect } from 'react';
 import { getCarStorageItem, setCarStorageItem, removeCarStorageItem } from "./components/carrostorage"
 import Checkout from "./pages/checkout"
 import EmpezarEmpeñar from './pages/EmpezarEmpeñar'
+import EmpezarEmpeñar3 from './pages/EmpezarEmpeñar3'
 import EmpezarVender from './pages/EmpezarVender'
+import EmpezarVender3 from './pages/EmpezarVender3'
 import MyPawns from './pages/Tables/MyPawns'
 import MySales from './pages/Tables/MySales'
 import OnProcessPawns from './pages/Tables/OnProcessPawns'
