@@ -1,5 +1,9 @@
 import React from 'react';
 import { Outlet } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { getUserCurrentPawns } from '../../api/queries';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
+import { imageUrlApi } from '../../api/axiosConfig';
 
 
 const RedStripe = () => {
@@ -11,47 +15,56 @@ const RedStripe = () => {
   );
 };
 
-const compras = [
-  { id: 1, producto: 'Productzxvzx', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 2, total: 200000 },
-  { id: 2, producto: 'Pasfawfasfasfas', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000 },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000 },
-  { id: 4, producto: 'dfhdfhdfgwefqw', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000 }
+const empenos = [
+  { id: 1, producto: 'Productzxvzx', montoFinal: 100000, cantidad: 2, precioRecuperar: 200000 },
+  { id: 2, producto: 'Pasfawfasfasfas', montoFinal: 100000, cantidad: 1, precioRecuperar: 200000 },
+  { id: 3, producto: 'dfhdfhdfhdhdfh', montoFinal: 100000, cantidad: 1, precioRecuperar: 200000 },
+  { id: 4, producto: 'dfhdfhdfgwefqw', montoFinal: 100000, cantidad: 1, precioRecuperar: 200000 }
 ];
 
-const TablaMisCompras = () => {
+const TablaMisEmpeños = () => {
+
+  const authUser = useAuthUser();
+
+  const{data:Misempenos,isLoading}=useQuery({
+    queryKey:["getmisempeños"],
+    queryFn:()=>getUserCurrentPawns(authUser.id)
+  })
+
+  function handlerecover(idempennio){
+
+  }
+
   return (
     <table className="mx-32 max-w-full">
       <thead>
-        <tr className=''>
-          <th className="py-1 bg-gray-200 text-left pl-3">Producto</th>
-          <th className="py-1 bg-gray-200">Precio Dado</th>
-          <th className="py-1 bg-gray-200">Fecha Compra</th>  
-          <th className="py-1 bg-gray-200">Total</th>
-          <th className="py-1 bg-gray-200 w-20"></th>
+        <tr>
+      <th className="py-1 bg-gray-200 text-left pl-3">Producto</th>
+          <th className="py-1 bg-gray-200">Fecha Inicio</th>
+          <th className="py-1 bg-gray-200">Fecha Final</th>
+          <th className="py-1 bg-gray-200">Precio</th>
+          <th className="py-1 bg-gray-200">Acciones</th> 
+
         </tr>
       </thead>
       <tbody>
-        {compras.map(compra => (
-          <tr>
+      {Misempenos?.map(empeno => (
+          <tr key={empeno.id}>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src='src/assets/logo.png' className='w-7 ml-5' alt='Logo' />
-                <span className='mt-3 ml-5'>{compra.producto}</span>
+                <img src={`${imageUrlApi}/${empeno.imagen}`} className='w-7 ml-5' alt='Logo' />
+                <span className='mt-3 ml-5'>{empeno.producto}</span>
               </div>
             </td>
-            <td className="py-4 bg-gray-100">{compra.precioDado.toLocaleString()}</td>
-            <td className="py-4 bg-gray-100">{compra.fechaCompra}</td>
-            <td className="py-4 bg-gray-100">{compra.total.toLocaleString()}</td>
+            <td className="py-4 bg-gray-100">{empeno.fecha_inicio}</td>
+            <td className="py-4 bg-gray-100">{empeno.fecha_final}</td>
+            <td className="py-4 bg-gray-100">{empeno.precio}</td>
             <td className="py-4 bg-gray-100">
-            <button>
-                <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
+
+             <button onclick={()=>handlerecover(empeno.idempennio)}className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                recuperar
               </button>
-              <button>
-                <img src='src/assets/cancel.png' className='w-5 ml-15' alt='cancel' />
-              </button>
-              <button>
-                <img src='src/assets/Download.png' className='w-5 ml-15' alt='Donwload' />
-              </button>
+             
             </td>
           </tr>
         ))}
@@ -59,10 +72,13 @@ const TablaMisCompras = () => {
     </table>
   );
 };
+
 function SaveChangesButton() {
   return (
     <div className='flex justify-between items-center'>
       <div className="flex items-center">
+        <img src='src/assets/Download.png' className='w-5 h-5 ml-10 mt-40' alt='Download' />
+        <button className='ml-2 text-xs mt-40'>Enviar productos a vender</button>
       </div>
       <button className='bg-rojo h-10 rounded w-40 text-white text-xs mt-40 mr-20'>Guardar cambios</button>
     </div>
@@ -72,22 +88,25 @@ function SaveChangesButton() {
 function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
- 
+     
       <RedStripe />
-      <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold mb-20">
+      <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold">
         Mis empeños
       </div>
-      <TablaMisCompras />
+      <div className="text-center text-blue-800 mt-3 mb-5 text-base sm:text-xs lg:text-xs font-bold">
+        ¿Quieres recuperar tus productos? Recuerda que tienes un plazo de 2 meses para hacerlo.
+      </div>
+      <TablaMisEmpeños />
+      <SaveChangesButton />
       <main className="flex-1">
-        <SaveChangesButton></SaveChangesButton>
         <Outlet />
       </main>
-   
+     
     </div>
   );
 }
 
-export default function MyPawns() {
+export default function ActivePawns() {
   return (
     <Layout />
   );

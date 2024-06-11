@@ -21,11 +21,10 @@ import Checkout from "./pages/checkout"
 import EmpezarEmpeñar from './pages/EmpezarEmpeñar'
 import EmpezarVender from './pages/EmpezarVender'
 import MyPawns from './pages/Tables/MyPawns'
-import ActivePawns from './pages/Tables/ActivePawns'
-import ActiveSales from './pages/Tables/ActiveSales'
 import MySales from './pages/Tables/MySales'
 import OnProcessPawns from './pages/Tables/OnProcessPawns'
 import OnProcessSales from './pages/Tables/OnProcessSales'
+import ActivePawns from './pages/Tables/ActivePawns'
 import Pawn_request from './pages/Pawn_request'
 import SalesRequest from './pages/Tables/SalesRequest'
 import PawnsRequest from './pages/Tables/PawnsRequest'
@@ -40,6 +39,9 @@ import AllProducts from './pages/AllProducts';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
 import ProductContext from './components/ProductContext';
+import CustomerInformation from './pages/CustomerInformation';
+import MetodoPago from './pages/MetodoPago';
+
 
 function App() {
   useEffect(() => {
@@ -66,11 +68,10 @@ function App() {
         <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
         <Route path="/MyPawns" element={<MyPawns />} />
-        <Route path="/ActivePawns" element={<ActivePawns />} />
-        <Route path="/ActiveSales" element={<ActiveSales />} />
         <Route path="/MySales" element={<MySales />} />
         <Route path="/OnProcessPawns" element={<OnProcessPawns />} />
         <Route path="/OnProcessSales" element={<OnProcessSales />} />
+        <Route path="/ActivePawns" element={<ActivePawns />} />
         <Route path="/Pawn_request" element={<Pawn_request />} />
         <Route path="/SalesRequest" element={<SalesRequest />} />
         <Route path="/PawnsRequest" element={<PawnsRequest />} />
@@ -85,9 +86,8 @@ function App() {
         
         <Route path="/Car" element={<Car />} />
         <Route path="/about" element={<About />} />
-        {/* <Route path="/CustomerInformation" element={<CustomerInformation />} />
-        <Route path="/OwnerInformation" element={<OwnerInformation />} /> */}
-        {/* <Route path="/MetodoPago" element={<MetodoPago />} /> */}
+        <Route path="/CustomerInformation" element={<CustomerInformation />} />
+        <Route path="/MetodoPago" element={<MetodoPago />} /> 
         <Route path="pawnRequest" element={<PawnRequest />}/>
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product/:index" element={<EditProduct />} />

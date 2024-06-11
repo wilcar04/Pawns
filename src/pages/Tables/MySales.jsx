@@ -1,5 +1,9 @@
 import React from 'react';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Outlet } from "react-router-dom";
+import { getBoughtItems } from '../../api/queries';
+import { useQuery } from '@tanstack/react-query';
+import { imageUrlApi } from '../../api/axiosConfig';
 
 
 const RedStripe = () => {
@@ -19,40 +23,42 @@ const compras = [
 ];
 
 const TablaMisCompras = () => {
+
+  const authUser = useAuthUser();
+
+  const{data:Misventas,isLoading}=useQuery({
+    queryKey:["getBoughtItems"],
+    queryFn:()=>getBoughtItems(authUser.id)
+  })
+
+  function handlerecover(idempennio){
+
+  }
+
+
   return (
     <table className="mx-32 max-w-full">
       <thead>
         <tr className=''>
           <th className="py-1 bg-gray-200 text-left pl-3">Producto</th>
-          <th className="py-1 bg-gray-200">Precio Dado</th>
+          <th className="py-1 bg-gray-200">Categoria</th>  
           <th className="py-1 bg-gray-200">Fecha Compra</th>  
-          <th className="py-1 bg-gray-200">Total</th>
-          <th className="py-1 bg-gray-200 w-20"></th>
+          <th className="py-1 bg-gray-200">precio</th>
         </tr>
       </thead>
       <tbody>
-        {compras.map(compra => (
+        {Misventas?.map(compra => (
           <tr>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src='src/assets/logo.png' className='w-7 ml-5' alt='Logo' />
-                <span className='mt-3 ml-5'>{compra.producto}</span>
+                <img src={`${imageUrlApi}/${compra.imagen}`} className='w-7 ml-5' alt='Logo' />
+                <span className='mt-3 ml-5'>{compra.nombre}</span>
               </div>
             </td>
-            <td className="py-4 bg-gray-100">{compra.precioDado.toLocaleString()}</td>
-            <td className="py-4 bg-gray-100">{compra.fechaCompra}</td>
-            <td className="py-4 bg-gray-100">{compra.total.toLocaleString()}</td>
-            <td className="py-4 bg-gray-100">
-            <button>
-                <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
-              </button>
-              <button>
-                <img src='src/assets/cancel.png' className='w-5 ml-15' alt='cancel' />
-              </button>
-              <button>
-                <img src='src/assets/Download.png' className='w-5 ml-15' alt='Donwload' />
-              </button>
-            </td>
+            <td className="py-4 bg-gray-100">{compra.categoria}</td>
+            <td className="py-4 bg-gray-100">{compra.fecha}</td>
+            <td className="py-4 bg-gray-100">{compra.precio}</td>
+           
           </tr>
         ))}
       </tbody>

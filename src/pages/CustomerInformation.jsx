@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import profileImage from '../assets/usuario_incognito.png'; // Asegúrate de que la ruta es correcta
+import profileImage from '../assets/usuario_incognito.png'; 
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 
 const RedStripe = () => {
   return (
@@ -12,6 +13,11 @@ const RedStripe = () => {
 };
 
 function AccountInfo() {
+
+  const authUser = useAuthUser();
+  console.log(authUser);
+
+
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-50">
       {/* Red Stripe at the top */}
@@ -49,6 +55,8 @@ function AccountInfo() {
                   type="text"
                   id="firstName"
                   className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
+                  value={authUser ? authUser.name : ''}
+                  
                 />
               </div>
               <div>
@@ -69,6 +77,7 @@ function AccountInfo() {
                   type="email"
                   id="email"
                   className="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500"
+                  value={authUser ? authUser.email : ''}
                 />
               </div>
               <div>

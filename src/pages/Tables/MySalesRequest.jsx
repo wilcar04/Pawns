@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { Outlet } from "react-router-dom";
+import { getSellOffersNotFinished } from '../../api/queries';
+import { useQuery } from '@tanstack/react-query';
+import { imageUrlApi } from '../../api/axiosConfig';
 
 const RedStripe = () => {
   return (
@@ -18,49 +22,54 @@ const compras = [
 ];
 
 const TablaMisCompras = () => {
+
+  const authUser = useAuthUser();
+
+  const{data:Missolicitudesventas,isLoading}=useQuery({
+    queryKey:["getSellOffersNotFinished"],
+    queryFn:()=>getSellOffersNotFinished(authUser.id)
+  })
+  function accept(idempennio){
+
+  }
+  function cancel(idempennio){
+
+  }
+
   return (
     <table className="mx-32 max-w-full">
       <thead>
         <tr className=''>
           <th className="py-1 bg-gray-200 text-left pl-3">Producto</th>
-          <th className="py-1 bg-gray-200">Precio Dado</th>
-          <th className="py-1 bg-gray-200">Fecha Compra</th>  
-          <th className="py-1 bg-gray-200">Total</th>
+          <th className="py-1 bg-gray-200">Precio </th>  
           <th className="py-1 bg-gray-200">Estado</th>
           <th className="py-1 bg-gray-200 w-20"></th>
         </tr>
       </thead>
       <tbody>
-        {compras.map(compra => (
+        {Missolicitudesventas?.map(compra => (
           <tr>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src='src/assets/logo.png' className='w-7 ml-5' alt='Logo' />
-                <span className='mt-3 ml-5'>{compra.producto}</span>
+                <img src={`${imageUrlApi}/${compra.imagen}`} className='w-7 ml-5' alt='Logo' />
+                <span className='mt-3 ml-5'>{compra.nombre}</span>
               </div>
             </td>
-            <td className="py-4 bg-gray-100">{compra.precioDado.toLocaleString()}</td>
-            <td className="py-4 bg-gray-100">{compra.fechaCompra}</td>
-            <td className="py-4 bg-gray-100">{compra.total.toLocaleString()}</td>
-            <td className="py-4 bg-gray-100">{compra.estado}</td>
+            <td className="py-4 bg-gray-100">{compra.precio}</td>
+            <td className="py-4 bg-gray-100">{compra.estado.replace(/_/g, ' ')}</td>
             <td className="py-4 bg-gray-100">
-              {compra.estado === 'aprobado' && (
+              {compra.estado === 'en_curso' && (
                 <>
-                  <button>
-                    <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
-                  </button>
-                  <button>
-                    <img src='src/assets/cancel.png' className='w-5 ml-15' alt='cancel' />
-                  </button>
-                  <button>
-                    <img src='src/assets/Download.png' className='w-5 ml-15' alt='Download' />
-                  </button>
+                  <button onClick={() => accept(compra.idoferta)}>
+                  <img src='src/assets/accept.png' className='w-5 ml-15' alt='accept' />
+                </button>
+                <button onClick={() => cancel(compra.idoferta)}>
+                  <img src='src/assets/cancel.png' className='w-5 ml-15' alt='cancel' />
+                </button>
+                  
                 </>
               )}
-              {compra.estado === 'pendiente' && (
-                <>
-                </>
-              )}
+         
             </td>
           </tr>
         ))}
