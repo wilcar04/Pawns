@@ -74,7 +74,7 @@ function App() {
         <Route path="/EmpezarEmpeñar" element={<EmpezarEmpeñar />} />
         <Route path="/EmpezarVender" element={<EmpezarVender />} />
 
-        <Route element={<AuthOutlet fallbackPath='/login' />}>
+
           <Route path="/MyPawns" element={<MyPawns />} />
           <Route path="/MyShopping" element={<MySales />} />
 
@@ -97,7 +97,7 @@ function App() {
 
           <Route path="/CustomerInformation" element={<AccountInfo />} />
           <Route path="pawnRequest" element={<PawnRequest />}/>
-        </Route>
+
 
 
         <Route element={<ProductContext />}>

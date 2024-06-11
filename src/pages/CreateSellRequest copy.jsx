@@ -3,7 +3,7 @@ import { TbCloudUpload } from "react-icons/tb";
 import { useMutation } from '@tanstack/react-query';
 import useAuthUser from 'react-auth-kit/hooks/useAuthUser';
 import { useNavigate } from 'react-router-dom';
-import { createOfferPawn, createOfferSell } from '../api/queries';
+import { createOfferSell } from '../api/queries';
 
 export default function CreateSellRequest() {
   const [formData, setFormData] = useState({
@@ -42,12 +42,25 @@ export default function CreateSellRequest() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (images.length < 3) {
-    //   setErrorMessage('Debes subir al menos 3 imágenes.');
-    //   return;
-    // }
-    console.log('Datos del formulario:', formData);
-    console.log('Imágenes:', image);
+
+    // Validación de campos vacíos
+    if (!formData.itemName || !formData.description || !formData.category || !formData.pawnValue || !image) {
+      setErrorMessage('Por favor completa todos los campos y adjunta una imagen.');
+      return;
+    }
+
+    // Validación de tipos de datos
+    if (typeof formData.itemName !== 'string' || typeof formData.description !== 'string') {
+      setErrorMessage('El nombre del artículo y la descripción deben ser cadenas de texto.');
+      return;
+    }
+
+    if (isNaN(formData.pawnValue) || parseFloat(formData.pawnValue) <= 0) {
+      setErrorMessage('El valor del empeño debe ser un número mayor que cero.');
+      return;
+    }
+
+    // Si pasa todas las validaciones, enviar la solicitud
     mutateSendRequest();
   };
 
@@ -56,7 +69,7 @@ export default function CreateSellRequest() {
       <h1 className="text-2xl font-bold text-center mb-6 font-poppins text-azulOscuro">Solicitud de Venta</h1>
       {isSubmitted ? (
         <div className="text-center mb-4">
-          <p className="text-green-600 font-semibold">Solicitud de empeño enviada</p>
+          <p className="text-green-600 font-semibold">Solicitud de venta enviada</p>
           <p className="text-gray-700">
             Información ingresada:
             <br />
@@ -66,7 +79,7 @@ export default function CreateSellRequest() {
             <br />
             Categoría: {formData.category}
             <br />
-            Valor del empeño: {formData.pawnValue}
+            Valor de venta: {formData.pawnValue}
           </p>
           <div>
             {!!image && (
@@ -132,7 +145,7 @@ export default function CreateSellRequest() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 font-poppins">Valor del empeño:</label>
+            <label className="block text-sm font-medium text-gray-700 font-poppins">Valor de venta:</label>
             <input
               type="number"
               name="pawnValue"
@@ -184,9 +197,3 @@ export default function CreateSellRequest() {
     </div>
   );
 }
-
-
-
-
-
-

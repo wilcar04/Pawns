@@ -42,6 +42,25 @@ export default function CreatePawnRequest() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validación de campos vacíos
+    if (!formData.itemName || !formData.description || !formData.category || !formData.pawnValue || !image) {
+      setErrorMessage('Por favor completa todos los campos y adjunta una imagen.');
+      return;
+    }
+
+    // Validación de tipos de datos
+    if (typeof formData.itemName !== 'string' || typeof formData.description !== 'string') {
+      setErrorMessage('El nombre del artículo y la descripción deben ser cadenas de texto.');
+      return;
+    }
+
+    if (isNaN(formData.pawnValue) || parseFloat(formData.pawnValue) <= 0) {
+      setErrorMessage('El valor del empeño debe ser un número mayor que cero.');
+      return;
+    }
+
+    // Si pasa todas las validaciones, enviar la solicitud
     mutateSendRequest();
   };
 
@@ -178,9 +197,3 @@ export default function CreatePawnRequest() {
     </div>
   );
 }
-
-
-
-
-
-
