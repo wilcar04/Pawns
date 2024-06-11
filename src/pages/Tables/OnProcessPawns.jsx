@@ -7,6 +7,7 @@ import { imageUrlApi } from '../../api/axiosConfig';
 import { useMutation, useQueryClient  } from '@tanstack/react-query';
 import Loading from '../../components/Loading';
 import { changeOfferState, createPawn } from '../../api/queries';
+import NoInfo from '../../components/NoInfo';
 
 
 const RedStripe = () => {
@@ -53,8 +54,12 @@ const TablaMisCompras = () => {
     mutateReject(idempennio)
   }
 
-  if (isLoading || isPendingReject || isPendingFinished || isPendingAddPawn){
-    return <Loading />
+  if (isLoading) {
+    return <Loading />; 
+  }
+
+  if (!Empenosproceso?.length) {
+    return <NoInfo message="No hay empeños en proceso" />;
   }
 
   return (
@@ -105,7 +110,7 @@ function Layout() {
     <div className="min-h-screen flex flex-col">
  
       <RedStripe />
-      <div className="text-center mt-20 text-base sm:text-3xl lg:text-2xl font-bold mb-20">
+      <div className="text-center mt-20 text-base sm:text-3xl lg:text-3xl font-bold mb-20">
         Empeños en proceso 
       </div>
       <TablaMisCompras />
