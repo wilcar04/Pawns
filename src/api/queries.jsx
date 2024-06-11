@@ -211,6 +211,18 @@ export async function getAllPendingPawns(){
     }
 }
 
+// Obtener todas las solicitudes de empeño que están en pendiente
+export async function getAllPendingSells(){
+    try {
+        const response = await api.get(`/offer/getAllClientPendingSales`);
+        return response.data;
+    }
+    catch (err) {
+        console.error('Hubo un problema con la solicitud fetch:', err);
+        return []
+    }
+}
+
 // Obtener ofertas de empeño no finalizadas de un usuario
 export async function getPawnOffersNotFinished(idUser){
     try {

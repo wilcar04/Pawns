@@ -43,7 +43,7 @@ const TablaMisEmpeños = () => {
           <th className="py-1 bg-gray-200">Fecha Inicio</th>
           <th className="py-1 bg-gray-200">Fecha Final</th>
           <th className="py-1 bg-gray-200">Precio</th>
-          <th className="py-1 bg-gray-200">Acciones</th> 
+          <th className="py-1 bg-gray-200"></th> 
 
         </tr>
       </thead>
@@ -53,7 +53,7 @@ const TablaMisEmpeños = () => {
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
                 <img src={`${imageUrlApi}/${empeno.imagen}`} className='w-7 ml-5' alt='Logo' />
-                <span className='mt-3 ml-5'>{empeno.producto}</span>
+                <span className='mt-3 ml-5'>{empeno.nombre}</span>
               </div>
             </td>
             <td className="py-4 bg-gray-100">{empeno.fecha_inicio}</td>
@@ -61,9 +61,11 @@ const TablaMisEmpeños = () => {
             <td className="py-4 bg-gray-100">{empeno.precio}</td>
             <td className="py-4 bg-gray-100">
 
-             <button onclick={()=>handlerecover(empeno.idempennio)}className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                recuperar
-              </button>
+            <button onclick={()=>handlerecover(empeno.idempennio)} 
+                    style={{ backgroundColor: '#5E1414', color: '#FFFFFF' }} 
+                    className="hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              recuperar
+            </button>
              
             </td>
           </tr>

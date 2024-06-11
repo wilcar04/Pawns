@@ -84,7 +84,7 @@ function Layout() {
     <div className="min-h-screen flex flex-col">
       <RedStripe />
       <div className="text-center mt-20 mb-20 text-base sm:text-3xl lg:text-xl font-bold">
-        Solicitudes de venta
+        Solicitudes de empeño
       </div>
       <TablaMisVentas />
       <main className="flex-1">

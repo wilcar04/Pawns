@@ -89,7 +89,7 @@ function Layout() {
  
       <RedStripe />
       <div className="text-center mt-20 text-base sm:text-3xl lg:text-xl font-bold mb-20">
-        Mis Compras
+        Empeños en proceso 
       </div>
       <TablaMisCompras />
       <main className="flex-1">
