@@ -64,7 +64,7 @@ function LoginForm() {
   return (
     <div className="flex min-h-screen bg-white"> {/* Fondo general blanco */}
       {/* Div for the image and logo */}
-      <div className="w-1/2 relative" style={{ backgroundColor: "#AD8786" }}>
+      <div className="w-1/2 relative " style={{ backgroundColor: "#AD8786" }}>
         <img src={logo} alt="Logo" className="absolute top-2 left-2" style={{ width: '180px', height: '180px' }} />
         <div className="h-full bg-no-repeat bg-center" style={{ backgroundImage: `url(${hombreEnCarrito})`, backgroundSize: "65% auto" }}>
           {/* Empty if only displaying the image */}

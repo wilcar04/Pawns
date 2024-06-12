@@ -17,13 +17,6 @@ const RedStripe = () => {
   );
 };
 
-const compras = [
-  { id: 1, producto: 'Productzxvzx', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 2, total: 200000 },
-  { id: 2, producto: 'Pasfawfasfasfas', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000 },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000 },
-  { id: 4, producto: 'dfhdfhdfgwefqw', precioDado: 100000, fechaCompra: '10/10/23', cantidad: 1, total: 100000 }
-];
-
 const TablaMisCompras = () => {
 
   const authUser = useAuthUser();
@@ -61,7 +54,6 @@ const TablaMisCompras = () => {
           <tr>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src={`${imageUrlApi}/${compra.imagen}`} className='w-7 ml-5' alt='Logo' />
                 <span className='mt-3 ml-5'>{compra.nombre}</span>
               </div>
             </td>

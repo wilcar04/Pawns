@@ -92,7 +92,7 @@ export default function Landing() {
                     {products?.map((product, index) => (
                         <Link to={`/product/${product.producto_idproducto}`} key={index}>
                             <div key={index} className="product-item">
-                                {product.img && <img src={`${imageUrlApi}/${product.imagen}`} alt={product.name} className="product-image" />}
+                                {product.imagen && <img src={`${imageUrlApi}/${product.imagen}`} alt={product.name} className="product-image" />}
                                 <div className="pb-4">
                                     <p className="text-gray-400 text-sm mb-1 capitalize">{product.categoria}</p>
                                     <h3 className="font-bold text-black text-xl">{product.nombre}</h3>
@@ -106,7 +106,7 @@ export default function Landing() {
                 </div>
             </div>
             <div className="my-4 h-20">
-                <Link className='rounded-full border-firstColor border-2 p-3 hover:bg-firstColor hover:text-white'>
+                <Link to="/all-products" className='rounded-full border-firstColor border-2 p-3 hover:bg-firstColor hover:text-white'>
                     Ver todos los productos
                 </Link>
             </div>

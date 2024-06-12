@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer(){
     return(
-        <footer className="flex mx-10 border-t border-gray-300 p-8 items-center text-gray-700">
+        <footer className="flex mx-10 mt-20 border-t border-gray-300 p-8 items-center text-gray-700">
             <img className='h-14' src={logo} alt='logo' />
             <div className='ml-20 flex items-center'>
                 <FaRegCopyright className='size-3'/>

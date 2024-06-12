@@ -56,7 +56,6 @@ const TablaMisEmpeños = () => {
           <tr key={empeno.id}>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src={`${imageUrlApi}/${empeno.imagen}`} className='w-7 ml-5' alt='Producto' />
                 <span className='mt-3 ml-5'>{empeno.nombre}</span>
               </div>
             </td>
@@ -70,19 +69,6 @@ const TablaMisEmpeños = () => {
   );
 };
 
-
-function SaveChangesButton() {
-  return (
-    <div className='flex justify-between items-center'>
-      <div className="flex items-center">
-        <img src='src/assets/Download.png' className='w-5 h-5 ml-10 mt-40' alt='Download' />
-        <button className='ml-2 text-xs mt-40'></button>
-      </div>
-      <button className='bg-rojo h-10 rounded w-40 text-white text-xs mt-40 mr-20'>Guardar cambios</button>
-    </div>
-  );
-}
-
 function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
@@ -95,7 +81,6 @@ function Layout() {
           
       </div>
       <TablaMisEmpeños />
-      <SaveChangesButton />
       <main className="flex-1">
         <Outlet />
       </main>

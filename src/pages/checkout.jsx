@@ -30,16 +30,13 @@ export default function Checkout() {
     // Cliente paga para recuperar producto
   const { mutate: mutatePayPawn, isPending: isPendingPawn } = useMutation({
       mutationFn: () => payPawn(data.idempennio),
-      onSuccess: () => navigate('/')
+      onSuccess: () => navigate('/'),
+      onError: () => alert('Por favor ingresa todos los datos correctamente')
   })
 
-  // Cliente compra
-  const { mutate: mutateClientBuys, isPending: isPendingBuy } = useMutation({
-    mutationFn: () => clientBuysItem(authUser.id, data.precio, data.producto_idproducto),
-    onSuccess: () => navigate('/')
-  })
 
-  const isPending = isPendingBuy || isPendingPawn
+
+  
 
   const pays = () => {
     if (validateForm()) {
@@ -63,7 +60,7 @@ export default function Checkout() {
   ]);
 
   const [deliveryMethod, setDeliveryMethod] = useState("free"); // Default to free delivery
-
+  
   const calculateSubTotal = () => {
     let subTotal = 0;
     Productlist.forEach((item) => {
@@ -71,12 +68,12 @@ export default function Checkout() {
     });
     return subTotal;
   };
-
+  
   const calculateIva = () => {
     const subTotal = calculateSubTotal();
     const iva = subTotal * 0.19;
     return iva;
-  };
+    };
 
   const calculateOrderTotal = () => {
     const subTotal = calculateSubTotal();
@@ -86,13 +83,14 @@ export default function Checkout() {
     if (deliveryMethod === "standard") {
       envio = 12000; // Standard delivery cost
     }
-
+    
     const orderTotal = subTotal + iva + envio;
     return orderTotal;
-  };
-
-  const [NetwordPlayed, setLoading] = useState(false);
-  const [payed, setpayed] = useState(true);
+    };
+    
+    
+    const [NetwordPlayed, setLoading] = useState(false);
+    const [payed, setpayed] = useState(true);
 
   const validateForm = () => {
     const nombre = document.getElementById("nombre").value;
@@ -154,6 +152,15 @@ export default function Checkout() {
 
     return true;
   };
+
+    // Cliente compra
+    const { mutate: mutateClientBuys, isPending: isPendingBuy } = useMutation({
+      mutationFn: () => clientBuysItem(authUser.id, calculateSubTotal(), data.producto_idproducto),
+      onSuccess: () => navigate('/'),
+      onError: () => alert('Por favor ingresa todos los datos correctamente')
+    })
+
+    const isPending = isPendingBuy || isPendingPawn
 
   useEffect(() => {
     setTimeout(() => {

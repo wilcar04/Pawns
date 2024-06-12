@@ -52,7 +52,6 @@ const TablaMisVentas = () => {
           <tr key={empeno.id}>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src={`${imageUrlApi}/${empeno.imagen}`} className='w-7 ml-5' alt='Logo' />
                 <span className='mt-3 ml-5'>{empeno.nombre}</span>
               </div>
             </td>

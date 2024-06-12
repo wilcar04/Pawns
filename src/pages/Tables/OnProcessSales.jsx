@@ -19,18 +19,11 @@ const RedStripe = () => {
   );
 };
 
-const compras = [
-  { id: 1, producto: 'Productzxvzx', precioDado: 100000, Estado:'En camino', cantidad: 2, total: 200000 },
-  { id: 2, producto: 'Pasfawfasfasfas', precioDado: 100000, Estado: 'En camino', cantidad: 1, total: 100000 },
-  { id: 3, producto: 'dfhdfhdfhdhdfh', precioDado: 100000, Estado: 'En camino', cantidad: 1, total: 100000 },
-  { id: 4, producto: 'dfhdfhdfgwefqw', precioDado: 100000, Estado: 'En camino', cantidad: 1, total: 100000 }
-];
-
 const TablaMisCompras = () => {
   const queryClient = useQueryClient();
   const authUser = useAuthUser();
 
-  const{data:Ventasproceso,isLoading}=useQuery({
+  const{data:Ventasproceso,isFetching, isFetched}=useQuery({
     queryKey:["getOnTheWayOfferSells"],
     queryFn:()=>getOnTheWayOfferSells()
   })
@@ -59,7 +52,7 @@ const TablaMisCompras = () => {
     mutateReject(idempennio)
   }
 
-  if (isLoading) {
+  if ((isFetching && !isFetched) || isPendingFinished || isPendingReject || isPendingShopping) {
     return <Loading />; 
   }
 
@@ -84,7 +77,6 @@ const TablaMisCompras = () => {
           <tr>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-              <img src={`${imageUrlApi}/${compra.imagen}`} className='w-7 ml-5' alt='Logo' />
                 <span className='mt-3 ml-5'>{compra.nombre}</span>
               </div>
             </td>

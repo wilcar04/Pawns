@@ -24,7 +24,7 @@ const TablaMisCompras = () => {
   const authUser = useAuthUser();
   const queryClient = useQueryClient();
 
-  const{data:Missolicitudesventas,isLoading}=useQuery({
+  const{data:Missolicitudesventas,isFetching, isFetched}=useQuery({
     queryKey:["getSellOffersNotFinished"],
     queryFn:()=>getSellOffersNotFinished(authUser.id)
   })
@@ -48,7 +48,7 @@ const TablaMisCompras = () => {
     mutateReject(idempennio)
   }
 
-  if (isLoading) {
+  if ((isFetching && !isFetched) || isPendingAccept || isPendingReject) {
     return <Loading />; 
   }
 
@@ -71,7 +71,6 @@ const TablaMisCompras = () => {
           <tr>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-                <img src={`${imageUrlApi}/${compra.imagen}`} className='w-7 ml-5' alt='Logo' />
                 <span className='mt-3 ml-5'>{compra.nombre}</span>
               </div>
             </td>

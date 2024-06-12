@@ -32,7 +32,7 @@ function SignUp() {
         form.birthdate,
         '+57 320 0384548'
       ), // ! Telefono quemado
-    onSuccess: () => navigate('/'),
+    onSuccess: () => navigate('/login'),
     onError: (e) => {
       console.log(e);
       setError('Ingresa todos los campos correctamente');

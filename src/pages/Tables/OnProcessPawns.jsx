@@ -24,7 +24,7 @@ const TablaMisCompras = () => {
   const authUser = useAuthUser();
   const queryClient = useQueryClient();
 
-  const{data:Empenosproceso, isLoading}=useQuery({
+  const{data:Empenosproceso, isFetching, isFetched}=useQuery({
     queryKey:["getOnTheWayOfferPawns"],
     queryFn:()=>getOnTheWayOfferPawns()
   })
@@ -54,7 +54,7 @@ const TablaMisCompras = () => {
     mutateReject(idempennio)
   }
 
-  if (isLoading) {
+  if ((isFetching && !isFetched) || isPendingAddPawn || isPendingFinished || isPendingReject) {
     return <Loading />; 
   }
 
@@ -78,7 +78,6 @@ const TablaMisCompras = () => {
           <tr>
             <td className="py-4 bg-gray-100">
               <div className='flex items-center'>
-              <img src={`${imageUrlApi}/${compra.imagen}`} className='w-7 ml-5' alt='Logo' />
                 <span className='mt-3 ml-5'>{compra.nombre}</span>
               </div>
             </td>

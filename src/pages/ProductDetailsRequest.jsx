@@ -59,13 +59,15 @@ const ProductDetailsRequest = () => {
             state.estado === "pendiente_tienda" ?
 
             <div className="">
-              <label className='text-gray-500 mt-5'>Precio a proponer</label>
-              <input
-                type="number"
-                className='text-gray-500 rounded border border-gray-300 px-3 py-1 my-2'
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
+              <div className="flex gap-x-4 items-center justify-center mt-3">
+                <label className='text-gray-500'>Precio a proponer</label>
+                <input
+                  type="number"
+                  className='text-gray-500 rounded border border-gray-300 px-3 py-1 my-2'
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
               <div className="flex items-center gap-x-5">
                 <button onClick={handleAccept} className='mt-7 rounded-full bg-firstColor text-white hover:opacity-80 py-1 px-6 self-center'>
                   Aceptar producto
